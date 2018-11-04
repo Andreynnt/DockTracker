@@ -58,9 +58,9 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
     
     @IBAction func clickMainButton(_ sender: UIButton) {
         if (container.isStarted()) {
-            stopContainer(with: container.firstName)
+            stopContainer(with: container.name)
         } else {
-            startContainer(with: container.firstName)
+            startContainer(with: container.name)
         }
     }
 

@@ -1,5 +1,5 @@
 //
-//  SettingsTableCell.swift
+//  buttonCell.swift
 //  DockTracker
 //
 //  Created by Андрей Бабков on 04/11/2018.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class SettingsTableCell: UITableViewCell {
+class ButtonCell: UITableViewCell {
 
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var actionButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,10 +19,11 @@ class SettingsTableCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+
         // Configure the view for the selected state
     }
 
     func fillCell(with text: String) {
-        label.text = text
+        actionButton.setTitle(text, for: .normal)
     }
 }

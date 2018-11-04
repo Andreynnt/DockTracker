@@ -12,8 +12,8 @@ struct Container {
     var image = ""
     var state = ""
     var names = [String]()
-    var firstName = ""
-    var id = ""
+    var name = ""
+    //var id = ""
     var status = ""
     var command = ""
     
@@ -30,18 +30,18 @@ extension Container {
         
         if let names = dict["Names"] as? [String] {
             self.names = names
-            if var firstName = names.first {
-                firstName.remove(at: firstName.startIndex)
-                self.firstName = firstName
+            if var name = names.first {
+                name.remove(at: name.startIndex)
+                self.name = name
             }
         }
         
         if let state = dict["State"] as? String {
             self.state = state
         }
-        if let id = dict["Id"] as? String {
-            self.id = id
-        }
+//        if let id = dict["Id"] as? String {
+//            self.id = id
+//        }
         if let status = dict["Status"] as? String {
             self.status = status
         }

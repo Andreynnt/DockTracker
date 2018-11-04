@@ -25,7 +25,7 @@ class ContainerTableCell: UITableViewCell {
     }
     
     func fillCell(with container: Container) {
-        self.containerNameLabel.text = container.firstName
+        self.containerNameLabel.text = container.name
         if container.isStarted() {
             stateImage.image = UIImage(named:"green-circle.png")
         } else {
