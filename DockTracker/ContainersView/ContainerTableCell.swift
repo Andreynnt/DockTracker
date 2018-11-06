@@ -10,28 +10,28 @@ import UIKit
 
 class ContainerTableCell: UITableViewCell {
    
-    @IBOutlet weak var containerNameLabel: UILabel!
-    @IBOutlet weak var imageLabel: UILabel!
-    @IBOutlet weak var stateImage: UIImageView!
+    @IBOutlet var containersAmountLabel: UILabel!
+    @IBOutlet var imageNameTitle: UILabel!
+    @IBOutlet var stateImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
 
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
     
-    func fillCell(with container: Container) {
-        self.containerNameLabel.text = container.name
-        if container.isStarted() {
-            stateImage.image = UIImage(named:"green-circle.png")
-        } else {
-            stateImage.image = UIImage(named:"grey-circle.png")
-        }
-        self.imageLabel.text = container.image
+    func fillCell(with tuple: (name: String, amount: Int)) {
+        imageNameTitle.text = tuple.name
+        containersAmountLabel.text = String(tuple.amount)
+        stateImage.image = UIImage(named: "icons8-cancel-40")
+//        if container.isStarted() {
+//            stateImage.image = UIImage(named:"green-circle.png")
+//        } else {
+//            stateImage.image = UIImage(named:"grey-circle.png")
+//        }
     }
 
     

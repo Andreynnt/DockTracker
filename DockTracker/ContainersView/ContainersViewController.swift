@@ -10,40 +10,43 @@ import UIKit
 
 class ContainersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet weak var containersTable: UITableView!
-    var containerModels = [Container]()
+    
+    var containers = [Container]()
     var selectedContainer = Container()
-    let cellIdentifier = "containerCell"
+    var groupedContainers = [String: [Container]]()
+    var idArray = [String]()
     var containerNum = 0
-
+    var reloadButtonIsBlocked = false
+    let cellIdentifier = "containerCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         UserSettings.saveUrl(domain: "andrey-babkov.ru", port: 5555)
         tableView.dataSource = self
         tableView.delegate = self
-        getContainers()
+        getContainers(callback: updateTable)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return containerModels.count
+        return groupedContainers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = containerModels[indexPath.row]
+        let id = idArray[indexPath.row]
+        let groupOfContainers = groupedContainers[id]
+        let amount = groupOfContainers?.count
+        let imageName = groupOfContainers?.first?.image ?? "No name"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        
         if let castedCell = cell as? ContainerTableCell {
-            castedCell.fillCell(with: model)
+            castedCell.fillCell(with: (imageName, amount!))
         }
-        
         return cell
     }
     
-    func getContainers() {
+    func getContainers(callback: (() -> Void)? = nil) {
         guard let savedUrl = UserSettings.url else { return }
         let urlString = savedUrl + "/containers/json?all=1"
-        print("url is: \(urlString)")
         guard let url = URL(string: urlString) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -57,12 +60,13 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                 self.parseContainers(from: json)
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    if (callback != nil) {
+                        callback!()
+                    }
                 }
             } catch {
                 print(error.localizedDescription)
             }
-            
             }.resume()
     }
     
@@ -71,24 +75,27 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
             print("Parse error")
             return
         }
-        
         var tmp = [Container]()
+        
         for i in postsArray {
             guard let postDict = i as? NSDictionary,
                 let container = Container(dict: postDict) else { continue }
             tmp.append(container)
+            
+            if groupedContainers[container.imageId] != nil {
+                groupedContainers[container.imageId]?.append(container)
+            } else {
+                groupedContainers[container.imageId] = [container]
+                idArray.append(container.imageId)
+            }
         }
-        self.containerModels = tmp
+        self.containers = tmp
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedContainer = containerModels[indexPath.row]
+        selectedContainer = containers[indexPath.row]
         self.containerNum = indexPath.row
         performSegue(withIdentifier: "openContainer", sender: self)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -100,13 +107,34 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func changeContainerState(_ newState: String) -> Void {
-        containerModels[containerNum].state = newState
+        containers[containerNum].state = newState
         let indexPath = IndexPath(item: containerNum, section: 0)
         tableView.reloadRows(at: [indexPath], with: .none)
     }
     
     @IBAction func pressReloadButton(_ sender: UIBarButtonItem) {
-        getContainers()
+        if reloadButtonIsBlocked { return }
+        blockReloadButton()
+        clearData()
+        getContainers(callback: {() -> Void in
+            self.blockReloadButton()
+            self.updateTable()
+        })
+    }
+    
+    func clearData() {
+        containers.removeAll()
+        groupedContainers.removeAll()
+        selectedContainer = Container()
+        containerNum = 0
+    }
+    
+    func blockReloadButton() {
+        reloadButtonIsBlocked = !reloadButtonIsBlocked
+    }
+    
+    func updateTable() {
+        self.tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {

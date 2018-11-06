@@ -16,6 +16,7 @@ struct Container {
     //var id = ""
     var status = ""
     var command = ""
+    var imageId = ""
     
     func isStarted() -> Bool {
         return state == "running"
@@ -42,6 +43,10 @@ extension Container {
 //        if let id = dict["Id"] as? String {
 //            self.id = id
 //        }
+        if let imageId = dict["ImageID"] as? String {
+            self.imageId = imageId
+        }
+        
         if let status = dict["Status"] as? String {
             self.status = status
         }
