@@ -50,7 +50,7 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         let parameter = parameteres[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "containerCell", for: indexPath)
         
-        if let castedCell = cell as? ParametersTableCell {
+        if let castedCell = cell as? ContainerDataCell {
             castedCell.fillCell(with: parameter)
         }
         return cell
@@ -65,7 +65,7 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
     }
 
     func startContainer(with name: String) {
-        guard let savedUrl = UserSettings.url else { return }
+        guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/\(name)/start?p=80:3000"
       
         guard let url = URL(string: urlString) else { return }
@@ -105,7 +105,7 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func stopContainer(with name: String) {
-        guard let savedUrl = UserSettings.url else { return }
+        guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/\(name)/stop"
         
         guard let url = URL(string: urlString) else { return }

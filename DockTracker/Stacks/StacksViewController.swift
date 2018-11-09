@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContainersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class StacksViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var containersTable: UITableView!
     
@@ -19,10 +19,14 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     var containerNum = 0
     var reloadButtonIsBlocked = false
     let cellIdentifier = "containerCell"
+    var selectedId: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserSettings.saveUrl(domain: "andrey-babkov.ru", port: 5555)
+        UserSettings.clearUrls()
+        //to do separate view with validation
+        UserSettings.addUrl(domain: "andrey-babkov.ru", port: 5555)
+        UserSettings.addUrl(domain: "mail.ru", port: 88)
         tableView.dataSource = self
         tableView.delegate = self
         getContainers(callback: updateTable)
@@ -38,14 +42,14 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         let amount = groupOfContainers?.count
         let imageName = groupOfContainers?.first?.image ?? "No name"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        if let castedCell = cell as? ContainerTableCell {
+        if let castedCell = cell as? StackTableCell {
             castedCell.fillCell(with: (imageName, amount!))
         }
         return cell
     }
     
     func getContainers(callback: (() -> Void)? = nil) {
-        guard let savedUrl = UserSettings.url else { return }
+        guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/json?all=1"
         guard let url = URL(string: urlString) else { return }
         
@@ -93,16 +97,20 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedContainer = containers[indexPath.row]
-        self.containerNum = indexPath.row
-        performSegue(withIdentifier: "openContainer", sender: self)
+        //selectedContainer = containers[indexPath.row]
+        //self.containerNum = indexPath.row
+        self.selectedId = idArray[indexPath.row]
+        performSegue(withIdentifier: "openGroup", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "openContainer" {
-            let container = segue.destination as! ContainerViewController
-            container.container = selectedContainer
-            container.changeContainersControllerState = changeContainerState
+        if segue.identifier == "openGroup" {
+            let groupOfContainers = groupedContainers[self.selectedId]
+            let groupController = segue.destination as! StackViewController
+            groupController.containers = groupOfContainers!
+            //let container = segue.destination as! ContainerViewController
+            //container.container = selectedContainer
+            //container.changeContainersControllerState = changeContainerState
         }
     }
     
@@ -142,4 +150,5 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
             tableView.deselectRow(at: index, animated: true)
         }
     }
+    
 }

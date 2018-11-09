@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContainerTableCell: UITableViewCell {
+class StackTableCell: UITableViewCell {
    
     @IBOutlet var containersAmountLabel: UILabel!
     @IBOutlet var imageNameTitle: UILabel!
@@ -26,7 +26,7 @@ class ContainerTableCell: UITableViewCell {
     func fillCell(with tuple: (name: String, amount: Int)) {
         imageNameTitle.text = tuple.name
         containersAmountLabel.text = String(tuple.amount)
-        stateImage.image = UIImage(named: "icons8-cancel-40")
+        stateImage.image = UIImage(named: "play")
 //        if container.isStarted() {
 //            stateImage.image = UIImage(named:"green-circle.png")
 //        } else {

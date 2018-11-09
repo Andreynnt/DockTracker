@@ -7,35 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6D0344AA218E0C740012E85D /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0344A9218E0C740012E85D /* UserSettings.swift */; };
-		6D08575F2189C29E0048894A /* ParametersTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D08575E2189C29E0048894A /* ParametersTableCell.swift */; };
+		6D08575F2189C29E0048894A /* ContainerDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D08575E2189C29E0048894A /* ContainerDataCell.swift */; };
+		6D09243E2192DF19004E138B /* ServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D09243D2192DF19004E138B /* ServerViewController.swift */; };
+		6D0924412192DF6F004E138B /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0924402192DF6F004E138B /* AccountViewController.swift */; };
 		6D0FD12A218F92B4005D7088 /* buttonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FD129218F92B4005D7088 /* buttonCell.swift */; };
 		6D47EF37218E4E930054F7E3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D47EF36218E4E930054F7E3 /* SettingsViewController.swift */; };
 		6D87F84A21904305005DE656 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D87F84921904305005DE656 /* icons.xcassets */; };
+		6D98688A2192110000683574 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9868892192110000683574 /* SettingsManager.swift */; };
+		6D98688D219237B000683574 /* StackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D98688C219237B000683574 /* StackViewController.swift */; };
+		6D98688F2192398800683574 /* ContainerInStackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D98688E2192398800683574 /* ContainerInStackCell.swift */; };
 		6DFA98B12187200C00F0AD0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFA98B02187200C00F0AD0C /* AppDelegate.swift */; };
 		6DFA98B62187200C00F0AD0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DFA98B42187200C00F0AD0C /* Main.storyboard */; };
 		6DFA98BB2187200D00F0AD0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DFA98B92187200D00F0AD0C /* LaunchScreen.storyboard */; };
-		6DFA98C32187222F00F0AD0C /* ContainersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFA98C22187222F00F0AD0C /* ContainersViewController.swift */; };
+		6DFA98C32187222F00F0AD0C /* StacksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFA98C22187222F00F0AD0C /* StacksViewController.swift */; };
 		6DFA98C5218723B300F0AD0C /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFA98C4218723B300F0AD0C /* ContainerViewController.swift */; };
 		6DFA98C72187251D00F0AD0C /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFA98C62187251D00F0AD0C /* Container.swift */; };
-		6DFA98C9218725CD00F0AD0C /* ContainerTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFA98C8218725CD00F0AD0C /* ContainerTableCell.swift */; };
+		6DFA98C9218725CD00F0AD0C /* StackTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFA98C8218725CD00F0AD0C /* StackTableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6D0344A9218E0C740012E85D /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
-		6D08575E2189C29E0048894A /* ParametersTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersTableCell.swift; sourceTree = "<group>"; };
+		6D08575E2189C29E0048894A /* ContainerDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerDataCell.swift; sourceTree = "<group>"; };
+		6D09243D2192DF19004E138B /* ServerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerViewController.swift; sourceTree = "<group>"; };
+		6D0924402192DF6F004E138B /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		6D0FD129218F92B4005D7088 /* buttonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buttonCell.swift; sourceTree = "<group>"; };
 		6D47EF36218E4E930054F7E3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		6D87F84921904305005DE656 /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = icons.xcassets; sourceTree = "<group>"; };
+		6D9868892192110000683574 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		6D98688C219237B000683574 /* StackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewController.swift; sourceTree = "<group>"; };
+		6D98688E2192398800683574 /* ContainerInStackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerInStackCell.swift; sourceTree = "<group>"; };
 		6DFA98AD2187200C00F0AD0C /* DockTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DockTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6DFA98B02187200C00F0AD0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6DFA98B52187200C00F0AD0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6DFA98BA2187200D00F0AD0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6DFA98BC2187200D00F0AD0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6DFA98C22187222F00F0AD0C /* ContainersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainersViewController.swift; sourceTree = "<group>"; };
+		6DFA98C22187222F00F0AD0C /* StacksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StacksViewController.swift; sourceTree = "<group>"; };
 		6DFA98C4218723B300F0AD0C /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		6DFA98C62187251D00F0AD0C /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
-		6DFA98C8218725CD00F0AD0C /* ContainerTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerTableCell.swift; sourceTree = "<group>"; };
+		6DFA98C8218725CD00F0AD0C /* StackTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackTableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,40 +57,68 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6D47EF38218E50BF0054F7E3 /* ContainersView */ = {
+		6D09243C2192DEF6004E138B /* ServerView */ = {
 			isa = PBXGroup;
 			children = (
-				6DFA98C8218725CD00F0AD0C /* ContainerTableCell.swift */,
-				6DFA98C22187222F00F0AD0C /* ContainersViewController.swift */,
+				6D09243D2192DF19004E138B /* ServerViewController.swift */,
 			);
-			path = ContainersView;
+			path = ServerView;
+			sourceTree = "<group>";
+		};
+		6D09243F2192DF53004E138B /* AccountView */ = {
+			isa = PBXGroup;
+			children = (
+				6D0924402192DF6F004E138B /* AccountViewController.swift */,
+			);
+			path = AccountView;
+			sourceTree = "<group>";
+		};
+		6D47EF38218E50BF0054F7E3 /* Stacks */ = {
+			isa = PBXGroup;
+			children = (
+				6D98688B2192375800683574 /* StackView */,
+				6DFA98C8218725CD00F0AD0C /* StackTableCell.swift */,
+				6DFA98C22187222F00F0AD0C /* StacksViewController.swift */,
+			);
+			path = Stacks;
 			sourceTree = "<group>";
 		};
 		6D47EF39218E50E40054F7E3 /* ContainerView */ = {
 			isa = PBXGroup;
 			children = (
-				6D08575E2189C29E0048894A /* ParametersTableCell.swift */,
+				6D08575E2189C29E0048894A /* ContainerDataCell.swift */,
 				6DFA98C4218723B300F0AD0C /* ContainerViewController.swift */,
 			);
 			path = ContainerView;
 			sourceTree = "<group>";
 		};
-		6D47EF3A218E50F10054F7E3 /* SettingsView */ = {
+		6D47EF3A218E50F10054F7E3 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				6D09243F2192DF53004E138B /* AccountView */,
+				6D09243C2192DEF6004E138B /* ServerView */,
 				6D47EF36218E4E930054F7E3 /* SettingsViewController.swift */,
 				6D0FD129218F92B4005D7088 /* buttonCell.swift */,
+				6D9868892192110000683574 /* SettingsManager.swift */,
 			);
-			path = SettingsView;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		6D47EF3C218E516B0054F7E3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				6DFA98C62187251D00F0AD0C /* Container.swift */,
-				6D0344A9218E0C740012E85D /* UserSettings.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		6D98688B2192375800683574 /* StackView */ = {
+			isa = PBXGroup;
+			children = (
+				6D98688C219237B000683574 /* StackViewController.swift */,
+				6D98688E2192398800683574 /* ContainerInStackCell.swift */,
+			);
+			path = StackView;
 			sourceTree = "<group>";
 		};
 		6DFA98A42187200B00F0AD0C = {
@@ -105,13 +141,13 @@
 			isa = PBXGroup;
 			children = (
 				6DFA98B42187200C00F0AD0C /* Main.storyboard */,
+				6D47EF38218E50BF0054F7E3 /* Stacks */,
 				6D47EF3C218E516B0054F7E3 /* Models */,
-				6D47EF3A218E50F10054F7E3 /* SettingsView */,
+				6D47EF3A218E50F10054F7E3 /* Settings */,
 				6D47EF39218E50E40054F7E3 /* ContainerView */,
-				6D47EF38218E50BF0054F7E3 /* ContainersView */,
 				6DFA98B02187200C00F0AD0C /* AppDelegate.swift */,
-				6DFA98BC2187200D00F0AD0C /* Info.plist */,
 				6DFA98B92187200D00F0AD0C /* LaunchScreen.storyboard */,
+				6DFA98BC2187200D00F0AD0C /* Info.plist */,
 				6D87F84921904305005DE656 /* icons.xcassets */,
 			);
 			path = DockTracker;
@@ -188,14 +224,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DFA98C32187222F00F0AD0C /* ContainersViewController.swift in Sources */,
+				6DFA98C32187222F00F0AD0C /* StacksViewController.swift in Sources */,
 				6DFA98C72187251D00F0AD0C /* Container.swift in Sources */,
-				6D08575F2189C29E0048894A /* ParametersTableCell.swift in Sources */,
+				6D0924412192DF6F004E138B /* AccountViewController.swift in Sources */,
+				6D08575F2189C29E0048894A /* ContainerDataCell.swift in Sources */,
+				6D09243E2192DF19004E138B /* ServerViewController.swift in Sources */,
 				6DFA98C5218723B300F0AD0C /* ContainerViewController.swift in Sources */,
 				6D0FD12A218F92B4005D7088 /* buttonCell.swift in Sources */,
-				6D0344AA218E0C740012E85D /* UserSettings.swift in Sources */,
-				6DFA98C9218725CD00F0AD0C /* ContainerTableCell.swift in Sources */,
+				6DFA98C9218725CD00F0AD0C /* StackTableCell.swift in Sources */,
 				6DFA98B12187200C00F0AD0C /* AppDelegate.swift in Sources */,
+				6D98688D219237B000683574 /* StackViewController.swift in Sources */,
+				6D98688F2192398800683574 /* ContainerInStackCell.swift in Sources */,
+				6D98688A2192110000683574 /* SettingsManager.swift in Sources */,
 				6D47EF37218E4E930054F7E3 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

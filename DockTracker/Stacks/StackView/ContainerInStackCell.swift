@@ -1,16 +1,16 @@
 //
-//  buttonCell.swift
+//  ContainerCell.swift
 //  DockTracker
 //
-//  Created by Андрей Бабков on 04/11/2018.
+//  Created by Андрей Бабков on 07/11/2018.
 //  Copyright © 2018 Андрей Бабков. All rights reserved.
 //
 
 import UIKit
 
-class ButtonCell: UITableViewCell {
+class ContainerInStackCell: UITableViewCell {
 
-    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet var nameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,11 +19,10 @@ class ButtonCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
-
-    func fillCell(with text: String) {
-        actionButton.setTitle(text, for: .normal)
+    
+    func fillCell(with name: String) {
+        nameLabel.text = name
     }
 }

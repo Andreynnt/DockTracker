@@ -10,15 +10,27 @@ import Foundation
 
 
 class UserSettings {
-    
-    static var url: String? {
-        return UserDefaults.standard.string(forKey: "url")
+    struct Settings {
+        
     }
     
     static func saveUrl(domain: String, port: Int = 80) {
         let parsedDomain = parseDomain(domain)
-        let url = "http://" + parsedDomain + ":" + String(port);
-        UserDefaults.standard.set(url, forKey: "url")
+        if var arrayOfUrls = UserDefaults.standard.array(forKey: "urls") {
+            arrayOfUrls.append((domain: parsedDomain, port: port))
+            UserDefaults.standard.set(arrayOfUrls, forKey: "urls")
+        } else {
+            let newUrlArray = [(domain: parsedDomain, port: port)]
+            UserDefaults.standard.set(newUrlArray, forKey: "urls")
+        }
+    }
+    
+    func getSettings() -> Settings {
+        if var settings = UserDefaults.standard.object(forKey: "settings") {
+            return settings as! UserSettings.Settings
+        }
+        UserDefaults.standard.set(settings, forKey: "settings")
+  
     }
     
     static func savePort(_ port: Int) {

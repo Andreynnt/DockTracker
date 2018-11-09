@@ -25,20 +25,26 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        sections = [Sections(name: "Servers", fields: ["andrey-babkov.ru", "google.com"], footer: "Tracked servers"),
+        let savedDomains = UserSettings.getDomains()
+        sections = [Sections(name: "Servers", fields: savedDomains, footer: "Tracked servers"),
                     Sections(name: "", fields: ["Add new"], footer: ""),
                     Sections(name: "Account", fields: ["Your name"], footer: "Yout account information")
         ]
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if currentSectionNum == sections.first?.fields.count {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "settingsButtonCell", for: indexPath)
-                currentSectionNum += 1
-                if let castedCell = cell as? ButtonCell {
-                    castedCell.fillCell(with: sections[indexPath.section].fields[indexPath.row])
-                    return castedCell
-                }
+        if indexPath.section == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "settingsButtonCell", for: indexPath)
+            currentSectionNum += 1
+            if let castedCell = cell as? ButtonCell {
+                castedCell.callback = { () -> Void in
+                    print("Add server")
+                        //performSegue(withIdentifier: "open", sender: <#T##Any?#>)
+                    }
+    
+                castedCell.fillCell(with: sections[indexPath.section].fields[indexPath.row])
+                return castedCell
+            }
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
@@ -63,5 +69,16 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         return sections[section].footer
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            performSegue(withIdentifier: "openServer", sender: self)
+        } else if indexPath.section == 2 {
+             performSegue(withIdentifier: "openAccount", sender: self)
+        }
+    }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 40
+//    }
         
 }
