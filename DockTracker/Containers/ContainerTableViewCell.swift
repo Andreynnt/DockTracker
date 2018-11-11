@@ -1,0 +1,34 @@
+//
+//  ContainerTableViewCell.swift
+//  DockTracker
+//
+//  Created by Андрей Бабков on 10/11/2018.
+//  Copyright © 2018 Андрей Бабков. All rights reserved.
+//
+
+import UIKit
+
+class ContainerTableViewCell: UITableViewCell {
+
+    @IBOutlet var statusImage: UIImageView!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var imageLabel: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+    
+    func fillCell(with container: Container) {
+        nameLabel.text = container.name
+        imageLabel.text = container.image
+        statusImage.image = UIImage(named: "play")
+    }
+
+}

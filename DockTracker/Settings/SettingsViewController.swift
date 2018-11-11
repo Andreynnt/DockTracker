@@ -26,9 +26,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.dataSource = self
         tableView.delegate = self
         let savedDomains = UserSettings.getDomains()
-        sections = [Sections(name: "Servers", fields: savedDomains, footer: "Tracked servers"),
-                    Sections(name: "", fields: ["Add new"], footer: ""),
-                    Sections(name: "Account", fields: ["Your name"], footer: "Yout account information")
+        sections = [
+                Sections(name: "Servers", fields: savedDomains, footer: "Tracked servers"),
+                Sections(name: "", fields: ["Add new"], footer: ""),
+                Sections(name: "Account", fields: ["Your name"], footer: "Yout account information")
         ]
     }
     

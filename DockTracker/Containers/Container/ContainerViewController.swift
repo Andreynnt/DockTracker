@@ -29,6 +29,8 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         setParametersArray(container)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
     }
     
     func setParametersArray(_ container: Container) {
@@ -49,9 +51,11 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let parameter = parameteres[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "containerCell", for: indexPath)
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         
         if let castedCell = cell as? ContainerDataCell {
             castedCell.fillCell(with: parameter)
+            castedCell.delegate = self
         }
         return cell
     }
@@ -84,7 +88,6 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
             
             switch httpResponse.statusCode {
             case 204:
-                print("Successful start")
                 DispatchQueue.main.async {
                     self.container.state = "running"
                     self.changeContainersControllerState?("running")
@@ -150,7 +153,6 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.reloadRows(at: [indexPath], with: .fade)
     }
 
-    
     func searchStatusRow() -> Int {
         if let statusFieldNum = parameteres.index(where: { (item) -> Bool in
             item.name == "state"
@@ -159,4 +161,27 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         }
         return -1
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        if let castedCell = cell as? ContainerDataCell {
+            if castedCell.needHideText {
+                castedCell.changeText()
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let index = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: index, animated: true)
+        }
+    }
 }
+
+extension ContainerViewController: CellDelegate {
+    func contentDidChange(cell: ContainerDataCell) {
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
+    }
+}
+
