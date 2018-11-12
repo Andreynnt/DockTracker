@@ -26,8 +26,8 @@ class ContainerTableViewCell: UITableViewCell {
     }
     
     func fillCell(with container: Container) {
-        nameLabel.text = container.name
-        imageLabel.text = container.image
+        nameLabel.text = container.name.value
+        imageLabel.text = container.image.value
         statusImage.image = UIImage(named: "play")
     }
 

@@ -63,6 +63,10 @@ class ContainerDataCell: UITableViewCell {
         delegate?.contentDidChange(cell: self)
     }
     
+    @IBAction func clickMoreButton(_ sender: UIButton) {
+        changeText()
+    }
+    
 }
 
 

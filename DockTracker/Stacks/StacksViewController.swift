@@ -40,7 +40,7 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         let id = idArray[indexPath.row]
         let groupOfContainers = groupedContainers[id]
         let amount = groupOfContainers?.count
-        let imageName = groupOfContainers?.first?.image ?? "No name"
+        let imageName = groupOfContainers?.first?.image.value ?? "No name"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         if let castedCell = cell as? StackTableCell {
             castedCell.fillCell(with: (imageName, amount!))
@@ -86,11 +86,11 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
                 let container = Container(dict: postDict) else { continue }
             tmp.append(container)
             
-            if groupedContainers[container.imageId] != nil {
-                groupedContainers[container.imageId]?.append(container)
+            if groupedContainers[container.imageId.value] != nil {
+                groupedContainers[container.imageId.value]?.append(container)
             } else {
-                groupedContainers[container.imageId] = [container]
-                idArray.append(container.imageId)
+                groupedContainers[container.imageId.value] = [container]
+                idArray.append(container.imageId.value)
             }
         }
         self.containers = tmp
@@ -115,7 +115,7 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func changeContainerState(_ newState: String) -> Void {
-        containers[containerNum].state = newState
+        containers[containerNum].state.value = newState
         let indexPath = IndexPath(item: containerNum, section: 0)
         tableView.reloadRows(at: [indexPath], with: .none)
     }

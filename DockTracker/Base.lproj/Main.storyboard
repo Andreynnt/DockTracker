@@ -48,7 +48,7 @@
                                                     </constraints>
                                                     <state key="normal" title="More" image="expand-arrow-light40"/>
                                                     <connections>
-                                                        <action selector="touchMoreButton:" destination="N0z-7J-1hE" eventType="touchUpInside" id="RDb-d8-1a8"/>
+                                                        <action selector="clickMoreButton:" destination="N0z-7J-1hE" eventType="touchUpInside" id="njy-yl-V0u"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -81,9 +81,6 @@
                                 <state key="normal" title="Start">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
-                                <connections>
-                                    <action selector="clickMainButton:" destination="9RU-53-90V" eventType="touchUpInside" id="fTF-tQ-9XI"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -130,7 +127,7 @@
         <scene sceneID="eYC-Wj-mTN">
             <objects>
                 <navigationController id="FCG-ai-Vrs" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Containers" image="icons8-docker-filled-50" id="iIc-Kz-QEs"/>
+                    <tabBarItem key="tabBarItem" title="Containers" image="icons8-docker-66" id="iIc-Kz-QEs"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="psR-ev-7Np">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -251,7 +248,7 @@
         <scene sceneID="WqE-MP-dum">
             <objects>
                 <navigationController id="rcM-rF-SrR" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Stacks" image="icons8-docker-50" id="jSC-aW-aIp"/>
+                    <tabBarItem key="tabBarItem" title="Stacks" image="icons8-stack-42" id="jSC-aW-aIp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jCc-1A-Tyj">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -272,7 +269,7 @@
         <scene sceneID="hok-Dj-ZRj">
             <objects>
                 <navigationController id="BFs-hj-IKh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="icons8-settings-50" id="vfK-ff-FGj"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="icons8-settings-60" id="vfK-ff-FGj"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="TOJ-hh-n0D">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -538,12 +535,12 @@
     </scenes>
     <resources>
         <image name="expand-arrow-light40" width="30" height="30"/>
-        <image name="icons8-docker-50" width="37.5" height="37.5"/>
-        <image name="icons8-docker-filled-50" width="37.5" height="37.5"/>
+        <image name="icons8-docker-66" width="49.5" height="49.5"/>
         <image name="icons8-health-data-40" width="30" height="30"/>
-        <image name="icons8-settings-50" width="37.5" height="37.5"/>
+        <image name="icons8-settings-60" width="45" height="45"/>
+        <image name="icons8-stack-42" width="31.5" height="31.5"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gz2-79-Ovg"/>
+        <segue reference="AeE-Es-ij0"/>
     </inferredMetricsTieBreakers>
 </document>

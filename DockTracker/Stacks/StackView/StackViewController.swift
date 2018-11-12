@@ -29,7 +29,7 @@ class StackViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         if let castedCell = cell as? ContainerInStackCell {
-            castedCell.fillCell(with: containers[indexPath.row].name)
+            castedCell.fillCell(with: containers[indexPath.row].name.value)
         }
         return cell
     }
