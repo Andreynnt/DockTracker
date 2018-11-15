@@ -11,8 +11,8 @@ import UIKit
 class ContainerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var mainButton: UIButton!
     
+    @IBOutlet var mainButton: UIButton!
     var container = Container()
     var changeContainersControllerState: ((_ newSate: String) -> Void)?
     var stateFieldNum = -1
@@ -24,7 +24,7 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         }
         mainButton.layer.cornerRadius = 20
         mainButton.clipsToBounds = true
-        self.navigationItem.title = container.image.value
+        //self.navigationItem.title = container.image.value
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
@@ -47,22 +47,24 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         return cell
     }
     
-    @IBAction func clickMainButton(_ sender: UIButton) {
+    @IBAction func startStopContainer(_ sender: UIButton) {
         if (container.isStarted()) {
             stopContainer(with: container.name.value)
         } else {
             startContainer(with: container.name.value)
         }
     }
-
+    
     func startContainer(with name: String) {
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/\(name)/start?p=80:3000"
       
+        self.mainButton.setTitle("Starting", for: .normal)
+        print("Going to request \(urlString)")
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
- 
+        
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)
@@ -78,7 +80,7 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
                 DispatchQueue.main.async {
                     self.container.state.value = "running"
                     self.changeContainersControllerState?("running")
-                    self.mainButton.setTitle("Stop", for: .normal)
+                     self.changeMainButtonTitle("Stop")
 //                    let i = self.searchStatusRow()
 //                    if (i >= 0) {
 //                        self.changeContainerState("running", i)
@@ -86,10 +88,13 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
                 }
             case 304:
                 print("Container already started")
+                self.changeMainButtonTitle("Start")
             case 500:
                 print("Server error")
+                self.changeMainButtonTitle("Start")
             default:
                 print("Unexpected error")
+                self.changeMainButtonTitle("Start")
             }
         }.resume()
     }
@@ -98,6 +103,8 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/\(name)/stop"
         
+        self.mainButton.setTitle("Stopping", for: .normal)
+        print("Going to request \(urlString)")
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -118,7 +125,7 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
                 DispatchQueue.main.async {
                     self.container.state.value = "exited"
                     self.changeContainersControllerState?("exited")
-                    self.mainButton.setTitle("Start", for: .normal)
+                    self.changeMainButtonTitle("Start")
 //                    let i = self.searchStatusRow()
 //                    if (i >= 0) {
 //                        self.changeContainerState("exited", i)
@@ -126,10 +133,13 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
                 }
             case 304:
                 print("Container already stopped")
+                self.changeMainButtonTitle("Stop")
             case 500:
                 print("Server error")
+                self.changeMainButtonTitle("Stop")
             default:
                 print("Unexpected error")
+                self.changeMainButtonTitle("Stop")
             }
        }.resume()
     }
@@ -149,6 +159,12 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
 //        return -1
 //    }
     
+    func changeMainButtonTitle(_ status: String) {
+        DispatchQueue.main.async {
+            self.mainButton.setTitle(status, for: .normal)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         if let castedCell = cell as? ContainerDataCell {
@@ -161,6 +177,17 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillAppear(_ animated: Bool) {
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
+        }
+    }
+    
+    @IBAction func touchLogsButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "openLogs", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "openLogs" {
+            let logsView = segue.destination as! LogsViewController
+            logsView.containerName = container.name.value
         }
     }
 }
