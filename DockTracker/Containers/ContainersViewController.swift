@@ -77,7 +77,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
                 if (callback != nil) {
                     callback!()
                 }
-                
+        
                 guard let callbackInMain = mainCallback else { return }
                 DispatchQueue.main.async {
                     callbackInMain()
@@ -93,15 +93,19 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
             print("Parse error")
             return
         }
+        var allContainers = [Container]()
         for i in postsArray {
             guard let postDict = i as? NSDictionary,
                 let container = Container(dict: postDict) else { continue }
+            
             if (container.isStarted()) {
                 sections[runningSectionNum].fields.append(container)
             } else {
                 sections[stoppedSectionNum].fields.append(container)
             }
+            allContainers.append(container)
         }
+        ContainersManager.containers = allContainers
         checkIfSectionsAreEmpty()
     }
     

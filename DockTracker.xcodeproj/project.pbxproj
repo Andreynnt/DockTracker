@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		695764C695EE9DE0290417A3 /* Pods_DockTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE36A0832E26957440A0BE9C /* Pods_DockTracker.framework */; };
+		6D0802EA21A006D4001708F3 /* ContainersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0802E921A006D4001708F3 /* ContainersManager.swift */; };
 		6D08575F2189C29E0048894A /* ContainerDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D08575E2189C29E0048894A /* ContainerDataCell.swift */; };
 		6D09243E2192DF19004E138B /* ServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D09243D2192DF19004E138B /* ServerViewController.swift */; };
 		6D0924412192DF6F004E138B /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0924402192DF6F004E138B /* AccountViewController.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D0802E921A006D4001708F3 /* ContainersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainersManager.swift; sourceTree = "<group>"; };
 		6D08575E2189C29E0048894A /* ContainerDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerDataCell.swift; sourceTree = "<group>"; };
 		6D09243D2192DF19004E138B /* ServerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerViewController.swift; sourceTree = "<group>"; };
 		6D0924402192DF6F004E138B /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 			children = (
 				6D98688B2192375800683574 /* StackView */,
 				6DFA98C8218725CD00F0AD0C /* StackTableCell.swift */,
+				6DFA98C22187222F00F0AD0C /* StacksViewController.swift */,
 			);
 			path = Stacks;
 			sourceTree = "<group>";
@@ -117,7 +120,6 @@
 		6D47EF3C218E516B0054F7E3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6DFA98C22187222F00F0AD0C /* StacksViewController.swift */,
 				6DFA98C62187251D00F0AD0C /* Container.swift */,
 			);
 			path = Models;
@@ -138,6 +140,7 @@
 				6D47EF39218E50E40054F7E3 /* Container */,
 				6DBAD77821962A69005F03AC /* ContainersViewController.swift */,
 				6DBAD77A21962FB8005F03AC /* ContainerTableViewCell.swift */,
+				6D0802E921A006D4001708F3 /* ContainersManager.swift */,
 			);
 			path = Containers;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 				6DFA98C9218725CD00F0AD0C /* StackTableCell.swift in Sources */,
 				6DFA98B12187200C00F0AD0C /* AppDelegate.swift in Sources */,
 				6DBAD77B21962FB8005F03AC /* ContainerTableViewCell.swift in Sources */,
+				6D0802EA21A006D4001708F3 /* ContainersManager.swift in Sources */,
 				6D98688D219237B000683574 /* StackViewController.swift in Sources */,
 				6D98688F2192398800683574 /* ContainerInStackCell.swift in Sources */,
 				6D98688A2192110000683574 /* SettingsManager.swift in Sources */,

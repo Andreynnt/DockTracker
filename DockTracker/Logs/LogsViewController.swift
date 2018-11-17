@@ -11,19 +11,41 @@ import Starscream
 
 
 class LogsViewController: UIViewController {
-    @IBOutlet var logsTitle: UILabel!
+   
+    @IBOutlet var textView: UITextView!
     
     var containerName: String?
     var socket: WebSocket?
+    var host = "andrey-babkov.ru:5555"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        startSocket()
+        textView.isEditable = false
+        getLogs()
+    }
+    
+    func getLogs() {
+        guard let parsedName = containerName else { return }
+        let parsedUrl = "http://\(self.host)/containers/\(parsedName)/logs?stderr=1&stdout=1"
+        
+        let url = URL(string: parsedUrl)!
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            guard let parsedData = data else { return }
+            guard let content = String(data: parsedData, encoding: String.Encoding.utf8) else { return }
+            DispatchQueue.main.async {
+                self.fillTextView(with: content)
+            }
+            self.startSocket()
+        }.resume()
     }
     
     func startSocket() {
         guard let name = containerName else { return }
-        socket = WebSocket(url: URL(string: "ws://andrey-babkov.ru:5555/containers/\(name)/attach/ws?stream=true")!)
+        socket = WebSocket(url: URL(string: "ws://\(host)/containers/\(name)/attach/ws?stream=true")!)
         
         socket?.onConnect = {
             print("websocket is connected")
@@ -43,10 +65,23 @@ class LogsViewController: UIViewController {
         
         socket?.onData = { (data: Data) in
             guard let content = String(data: data, encoding: String.Encoding.utf8) else { return }
-            self.logsTitle.text = self.logsTitle.text! + content
+            self.fillTextView(with: content)
         }
         
         socket?.connect()
+    }
+    
+    func fillTextView(with content: String) {
+        self.textView.text = self.textView.text! + content
+        scrollToBottom()
+    }
+    
+    func scrollToBottom() {
+        if textView.text.count > 0 {
+            let location = textView.text.count - 1
+            let bottom = NSMakeRange(location, 1)
+            textView.scrollRangeToVisible(bottom)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

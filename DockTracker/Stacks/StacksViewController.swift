@@ -49,6 +49,17 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func getContainers(callback: (() -> Void)? = nil) {
+        
+        if ContainersManager.gotContainers {
+            self.parseContainers(containers: ContainersManager.containers!)
+            DispatchQueue.main.async {
+                if (callback != nil) {
+                    callback!()
+                }
+            }
+            return
+        }
+        
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/json?all=1"
         guard let url = URL(string: urlString) else { return }
@@ -94,6 +105,18 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }
         self.containers = tmp
+    }
+    
+    func parseContainers(containers: [Container]) {
+        for container in containers {
+            if groupedContainers[container.imageId.value] != nil {
+                groupedContainers[container.imageId.value]?.append(container)
+            } else {
+                groupedContainers[container.imageId.value] = [container]
+                idArray.append(container.imageId.value)
+            }
+        }
+        self.containers = containers
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

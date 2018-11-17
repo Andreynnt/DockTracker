@@ -70,11 +70,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DockTracker/Models/StacksViewController.swift"
-            timestampString = "563907693.998064"
+            timestampString = "564046109.295843"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "66"
@@ -83,14 +83,14 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DockTracker.StacksViewController.getContainers(callback: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
                   moduleName = "DockTracker"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/andreynnt/Documents/park/ios/DockTrack/DockTracker/DockTracker/Models/StacksViewController.swift"
-                  timestampString = "564011944.784308"
+                  timestampString = "564045891.526037"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "66"
@@ -98,14 +98,14 @@
                   offsetFromSymbolStart = "1251">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "closure #1 () -&gt; () in closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in DockTracker.StacksViewController.getContainers(callback: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
                   moduleName = "DockTracker"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/andreynnt/Documents/park/ios/DockTrack/DockTracker/DockTracker/Models/StacksViewController.swift"
-                  timestampString = "564011944.788393"
+                  timestampString = "564045891.5286551"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "67"
