@@ -94,10 +94,10 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
             return
         }
         var allContainers = [Container]()
+        
         for i in postsArray {
             guard let postDict = i as? NSDictionary,
                 let container = Container(dict: postDict) else { continue }
-            
             if (container.isStarted()) {
                 sections[runningSectionNum].fields.append(container)
             } else {
@@ -105,6 +105,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
             }
             allContainers.append(container)
         }
+        
         ContainersManager.containers = allContainers
         checkIfSectionsAreEmpty()
     }

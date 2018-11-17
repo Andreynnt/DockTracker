@@ -137,7 +137,6 @@
 		6DBAD777219629F2005F03AC /* Containers */ = {
 			isa = PBXGroup;
 			children = (
-				6D47EF39218E50E40054F7E3 /* Container */,
 				6DBAD77821962A69005F03AC /* ContainersViewController.swift */,
 				6DBAD77A21962FB8005F03AC /* ContainerTableViewCell.swift */,
 				6D0802E921A006D4001708F3 /* ContainersManager.swift */,
@@ -180,9 +179,10 @@
 				6D47EF3C218E516B0054F7E3 /* Models */,
 				6D47EF3A218E50F10054F7E3 /* Settings */,
 				6DBAD777219629F2005F03AC /* Containers */,
-				6DFA98B92187200D00F0AD0C /* LaunchScreen.storyboard */,
+				6D47EF39218E50E40054F7E3 /* Container */,
 				6DFA98B02187200C00F0AD0C /* AppDelegate.swift */,
 				6DFA98BC2187200D00F0AD0C /* Info.plist */,
+				6DFA98B92187200D00F0AD0C /* LaunchScreen.storyboard */,
 				6D87F84921904305005DE656 /* icons.xcassets */,
 			);
 			path = DockTracker;

@@ -27,8 +27,8 @@ class LogsViewController: UIViewController {
     func getLogs() {
         guard let parsedName = containerName else { return }
         let parsedUrl = "http://\(self.host)/containers/\(parsedName)/logs?stderr=1&stdout=1"
-        
         let url = URL(string: parsedUrl)!
+        
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)

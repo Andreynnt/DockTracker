@@ -24,7 +24,7 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         }
         mainButton.layer.cornerRadius = 20
         mainButton.clipsToBounds = true
-        //self.navigationItem.title = container.image.value
+        self.navigationItem.title = container.name.value
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
@@ -60,7 +60,6 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         let urlString = savedUrl + "/containers/\(name)/start?p=80:3000"
       
         self.mainButton.setTitle("Starting", for: .normal)
-        print("Going to request \(urlString)")
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

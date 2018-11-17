@@ -77,9 +77,5 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
              performSegue(withIdentifier: "openAccount", sender: self)
         }
     }
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 40
-//    }
         
 }
