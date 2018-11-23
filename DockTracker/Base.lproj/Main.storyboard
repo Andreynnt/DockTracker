@@ -138,14 +138,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jls-YW-2S9">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jls-YW-2S9">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="375" id="EiK-B5-5ae"/>
-                                </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
@@ -153,6 +150,7 @@
                         <constraints>
                             <constraint firstItem="Jls-YW-2S9" firstAttribute="bottom" secondItem="a0l-qI-JqE" secondAttribute="bottom" id="NYx-ko-MRB"/>
                             <constraint firstItem="Jls-YW-2S9" firstAttribute="top" secondItem="a0l-qI-JqE" secondAttribute="top" id="P3a-8A-hf0"/>
+                            <constraint firstAttribute="trailing" secondItem="Jls-YW-2S9" secondAttribute="trailing" priority="250" id="dXX-sK-Jl4"/>
                             <constraint firstItem="Jls-YW-2S9" firstAttribute="leading" secondItem="K2g-k2-bfD" secondAttribute="leading" id="mdj-39-Ofr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="a0l-qI-JqE"/>

@@ -35,7 +35,8 @@ class LogsViewController: UIViewController {
                 return
             }
             guard let parsedData = data else { return }
-            guard let content = String(data: parsedData, encoding: String.Encoding.utf8) else { return }
+            let content = String(decoding: parsedData, as: UTF8.self)
+            
             DispatchQueue.main.async {
                 self.fillTextView(with: content)
             }
