@@ -11,24 +11,34 @@ import UIKit
 class ContainerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var startStopButton: UIButton!
+    @IBOutlet var logsButton: UIButton!
     
-    @IBOutlet var mainButton: UIButton!
     var container = Container()
+ 
     var changeContainersControllerState: ((_ newSate: String) -> Void)?
     var stateFieldNum = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if container.state.value == "running" {
-            self.mainButton.setTitle("Stop", for: .normal)
+            self.startStopButton.setTitle("Stop", for: .normal)
         }
-        mainButton.layer.cornerRadius = 20
-        mainButton.clipsToBounds = true
+        makeButtonStylish(startStopButton)
+        makeButtonStylish(logsButton)
         self.navigationItem.title = container.name.value
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
+    }
+    
+    func makeButtonStylish(_ button: UIButton!) {
+        button.layer.cornerRadius = button.frame.height / 2
+        button.layer.shadowColor = UIColor.darkGray.cgColor
+        button.layer.shadowRadius = 3
+        button.layer.shadowOpacity = 0.3
+        button.layer.shadowOffset = CGSize(width: 0, height: 5)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,7 +69,7 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/\(name)/start?p=80:3000"
       
-        self.mainButton.setTitle("Starting", for: .normal)
+        self.startStopButton.setTitle("Starting", for: .normal)
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -102,7 +112,7 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/\(name)/stop"
         
-        self.mainButton.setTitle("Stopping", for: .normal)
+        self.startStopButton.setTitle("Stopping", for: .normal)
         print("Going to request \(urlString)")
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
@@ -160,7 +170,7 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
     
     func changeMainButtonTitle(_ status: String) {
         DispatchQueue.main.async {
-            self.mainButton.setTitle(status, for: .normal)
+            self.startStopButton.setTitle(status, for: .normal)
         }
     }
     
@@ -192,7 +202,7 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
 }
 
 extension ContainerViewController: CellDelegate {
-    func contentDidChange(cell: ContainerDataCell) {
+    func contentDidChange() {
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
     }

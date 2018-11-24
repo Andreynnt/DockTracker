@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CellDelegate: class {
-    func contentDidChange(cell: ContainerDataCell)
+    func contentDidChange()
 }
 
 class ContainerDataCell: UITableViewCell {
@@ -58,7 +58,7 @@ class ContainerDataCell: UITableViewCell {
             value.text = fullText
         }
         fullTextIsShown = !fullTextIsShown
-        delegate?.contentDidChange(cell: self)
+        delegate?.contentDidChange()
     }
     
     @IBAction func clickMoreButton(_ sender: UIButton) {

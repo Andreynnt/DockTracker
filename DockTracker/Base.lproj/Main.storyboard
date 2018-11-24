@@ -72,56 +72,53 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mzc-4g-DJe">
-                                <rect key="frame" x="120" y="597" width="135" height="40"/>
-                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="06y-Dq-U4p">
+                                <rect key="frame" x="30" y="607" width="315" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mzc-4g-DJe">
+                                        <rect key="frame" x="0.0" y="0.0" width="147.5" height="40"/>
+                                        <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="kYt-vM-nKG"/>
+                                        </constraints>
+                                        <state key="normal" title="Start">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="startStopContainer:" destination="9RU-53-90V" eventType="touchUpInside" id="Dyt-6S-8FU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIu-tV-9Df">
+                                        <rect key="frame" x="167.5" y="0.0" width="147.5" height="40"/>
+                                        <color key="backgroundColor" red="0.25861066579999997" green="0.58017712830000001" blue="0.97259587049999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Logs">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchLogsButton:" destination="9RU-53-90V" eventType="touchUpInside" id="R1l-he-Tk8"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="ZcU-Jb-2Kr"/>
+                                    <constraint firstItem="TIu-tV-9Df" firstAttribute="height" secondItem="Mzc-4g-DJe" secondAttribute="height" id="HP7-MR-qdy"/>
                                 </constraints>
-                                <state key="normal" title="Start">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="startStopContainer:" destination="9RU-53-90V" eventType="touchUpInside" id="Dyt-6S-8FU"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIu-tV-9Df">
-                                <rect key="frame" x="325" y="597" width="40" height="40"/>
-                                <color key="backgroundColor" red="0.25861066579999997" green="0.58017712830000001" blue="0.97259587049999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="OgU-8X-jTR"/>
-                                    <constraint firstAttribute="height" constant="40" id="SW6-Nk-oiM"/>
-                                </constraints>
-                                <state key="normal" title="Logs">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="touchLogsButton:" destination="9RU-53-90V" eventType="touchUpInside" id="R1l-he-Tk8"/>
-                                </connections>
-                            </button>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="yN3-8F-VUB" firstAttribute="leading" secondItem="R4K-cq-6by" secondAttribute="leading" id="Fbx-Fm-ml2"/>
                             <constraint firstItem="yN3-8F-VUB" firstAttribute="top" secondItem="dzE-2A-YLg" secondAttribute="top" id="FdO-H0-VfR"/>
-                            <constraint firstItem="TIu-tV-9Df" firstAttribute="firstBaseline" secondItem="Mzc-4g-DJe" secondAttribute="firstBaseline" id="Tit-Uh-bwP"/>
-                            <constraint firstItem="dzE-2A-YLg" firstAttribute="trailing" secondItem="Mzc-4g-DJe" secondAttribute="trailing" constant="120" id="XUq-sH-N0k"/>
-                            <constraint firstItem="yN3-8F-VUB" firstAttribute="centerX" secondItem="Mzc-4g-DJe" secondAttribute="centerX" id="bor-Lg-C4W"/>
+                            <constraint firstItem="06y-Dq-U4p" firstAttribute="leading" secondItem="dzE-2A-YLg" secondAttribute="leading" constant="30" id="Gfg-GW-c8R"/>
+                            <constraint firstItem="dzE-2A-YLg" firstAttribute="trailing" secondItem="06y-Dq-U4p" secondAttribute="trailing" constant="30" id="J9Y-wI-h60"/>
+                            <constraint firstItem="06y-Dq-U4p" firstAttribute="bottom" secondItem="dzE-2A-YLg" secondAttribute="bottom" constant="-20" id="d7x-8r-gjd"/>
                             <constraint firstItem="yN3-8F-VUB" firstAttribute="bottom" secondItem="dzE-2A-YLg" secondAttribute="bottom" id="dAX-dV-Aup"/>
-                            <constraint firstItem="dzE-2A-YLg" firstAttribute="trailing" secondItem="TIu-tV-9Df" secondAttribute="trailing" constant="10" id="gCV-P4-lqH"/>
-                            <constraint firstItem="dzE-2A-YLg" firstAttribute="bottom" secondItem="Mzc-4g-DJe" secondAttribute="bottom" constant="30" id="jjK-DZ-pSU"/>
-                            <constraint firstItem="Mzc-4g-DJe" firstAttribute="leading" secondItem="dzE-2A-YLg" secondAttribute="leading" constant="120" id="q1Y-O7-B3U"/>
+                            <constraint firstItem="yN3-8F-VUB" firstAttribute="width" secondItem="dzE-2A-YLg" secondAttribute="width" id="pQc-8j-I6N"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dzE-2A-YLg"/>
                     </view>
                     <connections>
-                        <outlet property="mainButton" destination="Mzc-4g-DJe" id="8dl-pQ-UMp"/>
+                        <outlet property="logsButton" destination="TIu-tV-9Df" id="hVx-hO-Mz1"/>
+                        <outlet property="startStopButton" destination="Mzc-4g-DJe" id="jdk-nE-y2s"/>
                         <outlet property="tableView" destination="yN3-8F-VUB" id="EcF-L6-zdA"/>
                         <segue destination="uks-L4-RtB" kind="show" identifier="openLogs" id="5vL-zQ-CXC"/>
                     </connections>
