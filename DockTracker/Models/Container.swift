@@ -10,16 +10,16 @@ import Foundation
 
 struct Container {
     
-    var image = (name: "Image", value: "")
-    var state = (name: "State", value: "")
+    var image = СontainerParameter(name: "Image", value: "")
+    var state = СontainerParameter(name: "State", value: "")
     var names = [String]()
-    var name = (name: "Name", value: "")
-    var id = (name: "Id", value: "")
-    var status = (name: "Status", value: "")
-    var command = (name: "Command", value: "")
-    var imageId = (name: "Image id", value: "")
+    var name = СontainerParameter(name: "Name", value: "")
+    var id = СontainerParameter(name: "Id", value: "")
+    var status = СontainerParameter(name: "Status", value: "")
+    var command = СontainerParameter(name: "Command", value: "")
+    var imageId = СontainerParameter(name: "Image id", value: "")
     
-    var parametersArray = [(name: String, value: String)]()
+    var parametersArray = [СontainerParameter]()
     
     func isStarted() -> Bool {
         return state.value == "running"
@@ -49,7 +49,7 @@ struct Container {
         }
     }
     
-    func getParametersArray() -> [(name: String, value: String)] {
+    func getParametersArray() -> [СontainerParameter] {
         return parametersArray
     }
 }

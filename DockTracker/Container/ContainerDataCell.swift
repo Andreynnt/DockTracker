@@ -34,14 +34,14 @@ class ContainerDataCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func fillCell(with parameter: (name: String, value: String)) {
-        self.name.text = parameter.name
-        self.value.text = parameter.value
-        fullText = parameter.value
+    func fillCell(with containerParameter: СontainerParameter) {
+        self.name.text = containerParameter.name
+        self.value.text = containerParameter.value
+        fullText = containerParameter.value
         
-        if parameter.value.count > maxLength {
+        if containerParameter.value.count > maxLength {
             needHideText = true
-            shortText = String(parameter.value.prefix(maxLength))
+            shortText = String(containerParameter.value.prefix(maxLength))
             shortText! += "..."
             value.text = shortText
             return

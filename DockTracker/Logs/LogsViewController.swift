@@ -17,6 +17,8 @@ class LogsViewController: UIViewController {
     var containerName: String?
     var socket: WebSocket?
     var host = "andrey-babkov.ru:5555"
+    var needDates = false
+    var tail = "-1"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +28,11 @@ class LogsViewController: UIViewController {
     
     func getLogs() {
         guard let parsedName = containerName else { return }
-        let parsedUrl = "http://\(self.host)/containers/\(parsedName)/logs?stderr=1&stdout=1"
+        var parsedTail = tail
+        if parsedTail == "-1" {
+            parsedTail = "all"
+        }
+        let parsedUrl = "http://\(self.host)/containers/\(parsedName)/logs?stderr=1&stdout=1&timestamps=\(needDates)&tail=\(parsedTail)"
         let url = URL(string: parsedUrl)!
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in

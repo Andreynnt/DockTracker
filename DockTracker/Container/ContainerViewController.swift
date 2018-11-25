@@ -9,21 +9,47 @@
 import UIKit
 
 class ContainerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet var startStopButton: UIButton!
     @IBOutlet var logsButton: UIButton!
     
     var container = Container()
+    var numberOfLogs = -1
+    var needLogsDates = false
+    var numberOfLogsCell: NumberOfLogsCell?
  
     var changeContainersControllerState: ((_ newSate: String) -> Void)?
     var stateFieldNum = -1
+    
+    //segues names
+    let openLogsSegue = "openLogs"
+    let openNumberOfLogsSegue = "openNumberOfLogs"
+    
+    //cells names
+    let containerDataCellIdentifier = "ContainerDataCell"
+    let LogsDateCellIdentifier = "LogsDateCell"
+    let numberOfLogsCellIdentifier = "NumberOfLogsCell"
+    
+    struct ParametersSections {
+        var name: String!
+        var fields: [Any]!
+        var footer: String!
+    }
+    
+    var sections = [
+        ParametersSections(name: "Container's information", fields: [СontainerParameter](), footer: ""),
+        ParametersSections(name: "Options", fields: ["Date switch", "NumberOfLogsCell"], footer: "Logs options"),
+        //пустые секции в самом конце, чтобы было расстояние над кнопками
+        ParametersSections(name: "", fields: [String](), footer: ""),
+        ParametersSections(name: "", fields: [String](), footer: "")
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if container.state.value == "running" {
             self.startStopButton.setTitle("Stop", for: .normal)
         }
+        sections[0].fields = container.getParametersArray()
         makeButtonStylish(startStopButton)
         makeButtonStylish(logsButton)
         self.navigationItem.title = container.name.value
@@ -41,20 +67,29 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         button.layer.shadowOffset = CGSize(width: 0, height: 5)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return container.getParametersArray().count
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let parameter = container.getParametersArray()[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "containerCell", for: indexPath)
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        
-        if let castedCell = cell as? ContainerDataCell {
-            castedCell.fillCell(with: parameter)
-            castedCell.delegate = self
+        var cell: UITableViewCell?
+        if indexPath.section == 0 {
+            let parameter = sections[indexPath.section].fields[indexPath.row]
+            cell = tableView.dequeueReusableCell(withIdentifier: containerDataCellIdentifier, for: indexPath)
+            if let castedCell = cell as? ContainerDataCell {
+                castedCell.fillCell(with: parameter as! СontainerParameter)
+                castedCell.delegate = self
+            }
+        } else if indexPath.section == 1 && indexPath.row == 1 {
+            cell = tableView.dequeueReusableCell(withIdentifier: numberOfLogsCellIdentifier, for: indexPath)
+            if let castedCell = cell as? NumberOfLogsCell {
+                castedCell.fill(with: String(numberOfLogs))
+                numberOfLogsCell = castedCell
+            }
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: LogsDateCellIdentifier, for: indexPath)
+            if let castedCell = cell as? LogsDateSwitchCell {
+                castedCell.delegate = self
+            }
         }
-        return cell
+        cell?.selectionStyle = UITableViewCell.SelectionStyle.none
+        return cell!
     }
     
     @IBAction func startStopContainer(_ sender: UIButton) {
@@ -90,10 +125,6 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
                     self.container.state.value = "running"
                     self.changeContainersControllerState?("running")
                      self.changeMainButtonTitle("Stop")
-//                    let i = self.searchStatusRow()
-//                    if (i >= 0) {
-//                        self.changeContainerState("running", i)
-//                    }
                 }
             case 304:
                 print("Container already started")
@@ -135,10 +166,6 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
                     self.container.state.value = "exited"
                     self.changeContainersControllerState?("exited")
                     self.changeMainButtonTitle("Start")
-//                    let i = self.searchStatusRow()
-//                    if (i >= 0) {
-//                        self.changeContainerState("exited", i)
-//                    }
                 }
             case 304:
                 print("Container already stopped")
@@ -153,28 +180,33 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
        }.resume()
     }
     
-//    func changeContainerState(_ newState: String, _ num: Int) -> Void {
-//        parameteres[num].value = newState
-//        let indexPath = IndexPath(item: num, section: 0)
-//        tableView.reloadRows(at: [indexPath], with: .fade)
-//    }
-
-//    func searchStatusRow() -> Int {
-//        if let statusFieldNum = parameteres.index(where: { (item) -> Bool in
-//            item.name == "state"
-//        }) {
-//            return statusFieldNum
-//        }
-//        return -1
-//    }
-    
     func changeMainButtonTitle(_ status: String) {
         DispatchQueue.main.async {
             self.startStopButton.setTitle(status, for: .normal)
         }
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection num: Int) -> Int {
+        return sections[num].fields.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section].name
+    }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        return sections[section].footer
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (indexPath.section == 1 && indexPath.row == 1) {
+            performSegue(withIdentifier: openNumberOfLogsSegue, sender: self)
+        }
+        
         let cell = tableView.cellForRow(at: indexPath)
         if let castedCell = cell as? ContainerDataCell {
             if castedCell.needHideText {
@@ -190,13 +222,20 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @IBAction func touchLogsButton(_ sender: UIButton) {
-        performSegue(withIdentifier: "openLogs", sender: self)
+        performSegue(withIdentifier: openLogsSegue, sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "openLogs" {
+        if segue.identifier == openLogsSegue {
             let logsView = segue.destination as! LogsViewController
             logsView.containerName = container.name.value
+            logsView.needDates = needLogsDates
+            logsView.tail = String(numberOfLogs)
+        }
+        if segue.identifier == openNumberOfLogsSegue {
+            let view = segue.destination as! ChoiceOfLogsAmountController
+            view.selectedValue = numberOfLogs
+            view.delegate = self
         }
     }
 }
@@ -208,3 +247,15 @@ extension ContainerViewController: CellDelegate {
     }
 }
 
+extension ContainerViewController: ChoiceOfLogsAmountControllerDelegate {
+    func changeAmountOfLogs(amount: Int) {
+        self.numberOfLogs = amount
+        self.numberOfLogsCell?.fill(with: String(amount))
+    }
+}
+
+extension ContainerViewController: LogsDateSwitchCellDelegate {
+    func chageNeedLogs(need: Bool) {
+        self.needLogsDates = need
+    }
+}
