@@ -33,10 +33,17 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     var runningSectionNum = 0
     var stoppedSectionNum = 1
     
+    lazy var refresher: UIRefreshControl = {
+        let refreshControll = UIRefreshControl()
+        refreshControll.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
+        return refreshControll
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.refreshControl = refresher
         getContainers(mainCallback: self.updateTable)
     }
     
@@ -72,11 +79,12 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
             guard let data = data else { return }
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
-                self.parseContainers(from: json)
                 
                 if (callback != nil) {
                     callback!()
                 }
+            
+                self.parseContainers(from: json)
         
                 guard let callbackInMain = mainCallback else { return }
                 DispatchQueue.main.async {
@@ -177,16 +185,6 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         return sections[section].footer
     }
     
-    @IBAction func updatePage(_ sender: Any) {
-        if reloadButtonIsBlocked { return }
-        blockReloadButton()
-        clearData()
-        getContainers(mainCallback: {() -> Void in
-            self.blockReloadButton()
-            self.updateTable()
-        })
-    }
-    
     func updateTable() {
         self.tableView.reloadData()
     }
@@ -198,7 +196,13 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    func blockReloadButton() {
-        reloadButtonIsBlocked = !reloadButtonIsBlocked
+    @objc
+    func refreshTable() {
+        getContainers(mainCallback: {() -> Void in
+            self.updateTable()
+            self.refresher.endRefreshing()
+        }, callback: {() -> Void in
+            self.clearData()
+        })
     }
 }

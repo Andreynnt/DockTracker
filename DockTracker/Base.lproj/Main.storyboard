@@ -404,14 +404,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="sRc-uC-Nnu"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Containers" id="shX-hQ-kcT">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="refresh" id="3vp-TA-lnF">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="updatePage:" destination="PVR-zf-QMc" id="H9E-HL-XZL"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Containers" id="shX-hQ-kcT"/>
                     <connections>
                         <outlet property="tableView" destination="0BX-tC-WnP" id="PnM-Td-1gW"/>
                         <segue destination="9RU-53-90V" kind="show" identifier="containers-container" id="gz2-79-Ovg"/>
@@ -642,14 +635,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="wbr-Kw-sUk"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Stacks" id="4Id-sN-A7K">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="eYe-T0-zy1">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="pressReloadButton:" destination="az2-Me-uLl" id="hpx-iw-doX"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Stacks" id="4Id-sN-A7K"/>
                     <connections>
                         <outlet property="containersTable" destination="mNP-Xd-Dej" id="OST-VQ-aY3"/>
                         <outlet property="tableView" destination="mNP-Xd-Dej" id="ngW-Y1-7Ef"/>
@@ -722,6 +708,6 @@
         <image name="icons8-stack-42" width="31.5" height="31.5"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AeE-Es-ij0"/>
+        <segue reference="gz2-79-Ovg"/>
     </inferredMetricsTieBreakers>
 </document>

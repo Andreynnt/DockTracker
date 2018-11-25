@@ -21,6 +21,12 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
     let cellIdentifier = "containerCell"
     var selectedId: String!
     
+    lazy var refresher: UIRefreshControl = {
+        let refreshControll = UIRefreshControl()
+        refreshControll.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
+        return refreshControll
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         UserSettings.clearUrls()
@@ -29,6 +35,7 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         UserSettings.addUrl(domain: "mail.ru", port: 88)
         tableView.dataSource = self
         tableView.delegate = self
+         tableView.refreshControl = refresher
         getContainers(callback: updateTable)
     }
     
@@ -48,18 +55,16 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
     }
     
-    func getContainers(callback: (() -> Void)? = nil) {
-        
+    func getContainers(mainCallback: (()-> Void)? = nil, callback: (()-> Void)? = nil) {
         if ContainersManager.gotContainers {
             self.parseContainers(containers: ContainersManager.containers!)
-            DispatchQueue.main.async {
-                if (callback != nil) {
-                    callback!()
-                }
-            }
+            mainCallback?()
             return
         }
-        
+        requestContainers(mainCallback: mainCallback, callback: callback)
+    }
+    
+    func requestContainers(mainCallback: (()-> Void)? = nil, callback: (()-> Void)? = nil) {
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/json?all=1"
         guard let url = URL(string: urlString) else { return }
@@ -73,11 +78,10 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
             
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
+                callback?()
                 self.parseContainers(from: json)
                 DispatchQueue.main.async {
-                    if (callback != nil) {
-                        callback!()
-                    }
+                   mainCallback?()
                 }
             } catch {
                 print(error.localizedDescription)
@@ -143,27 +147,13 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.reloadRows(at: [indexPath], with: .none)
     }
     
-    @IBAction func pressReloadButton(_ sender: UIBarButtonItem) {
-        if reloadButtonIsBlocked { return }
-        blockReloadButton()
-        clearData()
-        getContainers(callback: {() -> Void in
-            self.blockReloadButton()
-            self.updateTable()
-        })
-    }
-    
     func clearData() {
         containers.removeAll()
         groupedContainers.removeAll()
         selectedContainer = Container()
         containerNum = 0
     }
-    
-    func blockReloadButton() {
-        reloadButtonIsBlocked = !reloadButtonIsBlocked
-    }
-    
+
     func updateTable() {
         self.tableView.reloadData()
     }
@@ -172,6 +162,16 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
+    }
+    
+    @objc
+    func refreshTable() {
+        requestContainers(mainCallback: {() -> Void in
+            self.updateTable()
+            self.refresher.endRefreshing()
+        }, callback: {() -> Void in
+            self.clearData()
+        })
     }
     
 }
