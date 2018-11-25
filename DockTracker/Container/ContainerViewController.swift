@@ -55,8 +55,6 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         self.navigationItem.title = container.name.value
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 100
     }
     
     func makeButtonStylish(_ button: UIButton!) {

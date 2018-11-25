@@ -41,9 +41,11 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserSettings.addUrl(domain: "andrey-babkov.ru", port: 5555)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.refreshControl = refresher
+        tableView.separatorStyle = .none
         getContainers(mainCallback: self.updateTable)
     }
     
@@ -146,7 +148,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         if noRunningContainers && indexPath.section == runningSectionNum {
             return 50
         }
-        return 70
+        return 80
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

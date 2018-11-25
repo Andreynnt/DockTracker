@@ -35,7 +35,8 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         UserSettings.addUrl(domain: "mail.ru", port: 88)
         tableView.dataSource = self
         tableView.delegate = self
-         tableView.refreshControl = refresher
+        tableView.refreshControl = refresher
+        tableView.separatorStyle = .none
         getContainers(callback: updateTable)
     }
     
@@ -172,6 +173,10 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         }, callback: {() -> Void in
             self.clearData()
         })
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
     
 }

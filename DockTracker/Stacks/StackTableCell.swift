@@ -14,12 +14,25 @@ class StackTableCell: UITableViewCell {
     @IBOutlet var imageNameTitle: UILabel!
     @IBOutlet var stateImage: UIImageView!
     
+    @IBOutlet var background: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        makeStyle()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func makeStyle() {
+        self.selectionStyle = UITableViewCell.SelectionStyle.none
+        background.layer.cornerRadius = 10.0
+        background.layer.masksToBounds = false
+        background.layer.shadowColor = UIColor.darkGray.cgColor
+        background.layer.shadowRadius = 3
+        background.layer.shadowOpacity = 0.3
+        background.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
     
     func fillCell(with tuple: (name: String, amount: Int)) {
