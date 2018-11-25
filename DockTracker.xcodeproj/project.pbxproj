@@ -13,6 +13,7 @@
 		6D09243E2192DF19004E138B /* ServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D09243D2192DF19004E138B /* ServerViewController.swift */; };
 		6D0924412192DF6F004E138B /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0924402192DF6F004E138B /* AccountViewController.swift */; };
 		6D0FD12A218F92B4005D7088 /* buttonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FD129218F92B4005D7088 /* buttonCell.swift */; };
+		6D1560DC21AABDC100A0CD3B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1560DB21AABDC100A0CD3B /* TabBarController.swift */; };
 		6D47EF37218E4E930054F7E3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D47EF36218E4E930054F7E3 /* SettingsViewController.swift */; };
 		6D4D363F21A99C0C005E0F93 /* СontainerParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D363E21A99C0C005E0F93 /* СontainerParameter.swift */; };
 		6D4D364121A9A245005E0F93 /* LogsDateSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D364021A9A245005E0F93 /* LogsDateSwitchCell.swift */; };
@@ -41,6 +42,7 @@
 		6D09243D2192DF19004E138B /* ServerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerViewController.swift; sourceTree = "<group>"; };
 		6D0924402192DF6F004E138B /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		6D0FD129218F92B4005D7088 /* buttonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buttonCell.swift; sourceTree = "<group>"; };
+		6D1560DB21AABDC100A0CD3B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		6D47EF36218E4E930054F7E3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		6D4D363E21A99C0C005E0F93 /* СontainerParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СontainerParameter.swift"; sourceTree = "<group>"; };
 		6D4D364021A9A245005E0F93 /* LogsDateSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsDateSwitchCell.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				6DFA98BC2187200D00F0AD0C /* Info.plist */,
 				6DFA98B92187200D00F0AD0C /* LaunchScreen.storyboard */,
 				6D87F84921904305005DE656 /* icons.xcassets */,
+				6D1560DB21AABDC100A0CD3B /* TabBarController.swift */,
 			);
 			path = DockTracker;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				6DFA98C72187251D00F0AD0C /* Container.swift in Sources */,
 				6D0924412192DF6F004E138B /* AccountViewController.swift in Sources */,
 				6D08575F2189C29E0048894A /* ContainerDataCell.swift in Sources */,
+				6D1560DC21AABDC100A0CD3B /* TabBarController.swift in Sources */,
 				6D4D364621A9B8E2005E0F93 /* ChoiceOfLogsAmountCell.swift in Sources */,
 				6DBAD77921962A69005F03AC /* ContainersViewController.swift in Sources */,
 				6D09243E2192DF19004E138B /* ServerViewController.swift in Sources */,

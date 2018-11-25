@@ -282,13 +282,14 @@
         <!--Tab Bar Controller-->
         <scene sceneID="RSP-KW-kaa">
             <objects>
-                <tabBarController id="cDQ-uZ-BD8" sceneMemberID="viewController">
+                <tabBarController id="cDQ-uZ-BD8" customClass="TabBarController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bcU-ws-b6Q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <outlet property="myBar" destination="bcU-ws-b6Q" id="aWY-w3-eaa"/>
                         <segue destination="FCG-ai-Vrs" kind="relationship" relationship="viewControllers" id="jDY-4h-uAm"/>
                         <segue destination="rcM-rF-SrR" kind="relationship" relationship="viewControllers" id="Qzc-tZ-y3h"/>
                         <segue destination="BFs-hj-IKh" kind="relationship" relationship="viewControllers" id="amh-Qx-TK4"/>
