@@ -17,8 +17,6 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
     var numberOfLogs = -1
     var needLogsDates = false
     var numberOfLogsCell: NumberOfLogsCell?
- 
-    var changeContainersControllerState: ((_ newSate: String) -> Void)?
     var stateFieldNum = -1
     
     //segues names
@@ -121,7 +119,6 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
             case 204:
                 DispatchQueue.main.async {
                     self.container.state.value = "running"
-                    self.changeContainersControllerState?("running")
                      self.changeMainButtonTitle("Stop")
                 }
             case 304:
@@ -162,7 +159,6 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
                 print("Successful stop")
                 DispatchQueue.main.async {
                     self.container.state.value = "exited"
-                    self.changeContainersControllerState?("exited")
                     self.changeMainButtonTitle("Start")
                 }
             case 304:

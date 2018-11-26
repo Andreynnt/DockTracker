@@ -20,6 +20,7 @@
 		6D4D364321A9B00B005E0F93 /* NumberOfLogsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D364221A9B00B005E0F93 /* NumberOfLogsCell.swift */; };
 		6D4D364621A9B8E2005E0F93 /* ChoiceOfLogsAmountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D364521A9B8E2005E0F93 /* ChoiceOfLogsAmountCell.swift */; };
 		6D4D364821A9B92D005E0F93 /* ChoiceOfLogsAmountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D364721A9B92D005E0F93 /* ChoiceOfLogsAmountController.swift */; };
+		6D65BF6521AC104B006D9D2D /* PreloaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D65BF6421AC104B006D9D2D /* PreloaderViewController.swift */; };
 		6D87F84A21904305005DE656 /* icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D87F84921904305005DE656 /* icons.xcassets */; };
 		6D98688A2192110000683574 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9868892192110000683574 /* SettingsManager.swift */; };
 		6D98688D219237B000683574 /* StackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D98688C219237B000683574 /* StackViewController.swift */; };
@@ -49,6 +50,7 @@
 		6D4D364221A9B00B005E0F93 /* NumberOfLogsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOfLogsCell.swift; sourceTree = "<group>"; };
 		6D4D364521A9B8E2005E0F93 /* ChoiceOfLogsAmountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceOfLogsAmountCell.swift; sourceTree = "<group>"; };
 		6D4D364721A9B92D005E0F93 /* ChoiceOfLogsAmountController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceOfLogsAmountController.swift; sourceTree = "<group>"; };
+		6D65BF6421AC104B006D9D2D /* PreloaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreloaderViewController.swift; sourceTree = "<group>"; };
 		6D87F84921904305005DE656 /* icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = icons.xcassets; sourceTree = "<group>"; };
 		6D9868892192110000683574 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		6D98688C219237B000683574 /* StackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewController.swift; sourceTree = "<group>"; };
@@ -158,12 +160,27 @@
 			path = StackView;
 			sourceTree = "<group>";
 		};
+		6D9F9BB421AC7D500084DEAD /* Preloader */ = {
+			isa = PBXGroup;
+			children = (
+				6D65BF6421AC104B006D9D2D /* PreloaderViewController.swift */,
+			);
+			path = Preloader;
+			sourceTree = "<group>";
+		};
+		6D9F9BB521AC7D610084DEAD /* ContainersManager */ = {
+			isa = PBXGroup;
+			children = (
+				6D0802E921A006D4001708F3 /* ContainersManager.swift */,
+			);
+			path = ContainersManager;
+			sourceTree = "<group>";
+		};
 		6DBAD777219629F2005F03AC /* Containers */ = {
 			isa = PBXGroup;
 			children = (
 				6DBAD77821962A69005F03AC /* ContainersViewController.swift */,
 				6DBAD77A21962FB8005F03AC /* ContainerTableViewCell.swift */,
-				6D0802E921A006D4001708F3 /* ContainersManager.swift */,
 			);
 			path = Containers;
 			sourceTree = "<group>";
@@ -198,6 +215,8 @@
 			isa = PBXGroup;
 			children = (
 				6DFA98B42187200C00F0AD0C /* Main.storyboard */,
+				6D9F9BB521AC7D610084DEAD /* ContainersManager */,
+				6D9F9BB421AC7D500084DEAD /* Preloader */,
 				6D4D364421A9B7FA005E0F93 /* ChoiceOfLogsAmount */,
 				6DDC447F219E0ED90084F73E /* Logs */,
 				6D47EF38218E50BF0054F7E3 /* Stacks */,
@@ -206,10 +225,10 @@
 				6DBAD777219629F2005F03AC /* Containers */,
 				6D47EF39218E50E40054F7E3 /* Container */,
 				6DFA98B02187200C00F0AD0C /* AppDelegate.swift */,
+				6D1560DB21AABDC100A0CD3B /* TabBarController.swift */,
 				6DFA98BC2187200D00F0AD0C /* Info.plist */,
 				6DFA98B92187200D00F0AD0C /* LaunchScreen.storyboard */,
 				6D87F84921904305005DE656 /* icons.xcassets */,
-				6D1560DB21AABDC100A0CD3B /* TabBarController.swift */,
 			);
 			path = DockTracker;
 			sourceTree = "<group>";
@@ -372,6 +391,7 @@
 				6D98688D219237B000683574 /* StackViewController.swift in Sources */,
 				6D4D364321A9B00B005E0F93 /* NumberOfLogsCell.swift in Sources */,
 				6D98688F2192398800683574 /* ContainerInStackCell.swift in Sources */,
+				6D65BF6521AC104B006D9D2D /* PreloaderViewController.swift in Sources */,
 				6D98688A2192110000683574 /* SettingsManager.swift in Sources */,
 				6D47EF37218E4E930054F7E3 /* SettingsViewController.swift in Sources */,
 			);

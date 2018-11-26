@@ -15,6 +15,9 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     let cellIdentifier = "containerCell"
     let emptyCellIdentificator = "empty-cell"
     var containerNum = 0
+    var runningSectionNum = 0
+    var stoppedSectionNum = 1
+    
     
     var reloadButtonIsBlocked = false
     var noRunningContainers = false
@@ -30,9 +33,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         Sections(name: "Working containers", fields: [Container](), footer: "Running and paused containers"),
         Sections(name: "Stopped containers", fields: [Container](), footer: "Containers wich were stopped by user or error")
     ]
-    var runningSectionNum = 0
-    var stoppedSectionNum = 1
-    
+
     lazy var refresher: UIRefreshControl = {
         let refreshControll = UIRefreshControl()
         refreshControll.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
@@ -46,11 +47,10 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         tableView.delegate = self
         tableView.refreshControl = refresher
         tableView.separatorStyle = .none
-        getContainers(mainCallback: self.updateTable)
+        fillContainers(ContainersManager.shared().containers)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if noRunningContainers == true && indexPath.section == runningSectionNum && indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: emptyCellIdentificator, for: indexPath)
             return cell
@@ -68,55 +68,14 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
     
-    func getContainers(mainCallback: (()-> Void)? = nil, callback: (()-> Void)? = nil) {
-        guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
-        let urlString = savedUrl + "/containers/json?all=1"
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            guard let data = data else { return }
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options: [])
-                
-                if (callback != nil) {
-                    callback!()
-                }
-            
-                self.parseContainers(from: json)
-        
-                guard let callbackInMain = mainCallback else { return }
-                DispatchQueue.main.async {
-                    callbackInMain()
-                }
-            } catch {
-                print(error.localizedDescription)
-            }
-        }.resume()
-    }
-    
-    func parseContainers(from json: Any) {
-        guard let postsArray = json as? NSArray else {
-            print("Parse error")
-            return
-        }
-        var allContainers = [Container]()
-        
-        for i in postsArray {
-            guard let postDict = i as? NSDictionary,
-                let container = Container(dict: postDict) else { continue }
+    func fillContainers(_ containersFromManager: [Container]) {
+        for container in containersFromManager {
             if (container.isStarted()) {
-                sections[runningSectionNum].fields.append(container)
+                    sections[runningSectionNum].fields.append(container)
             } else {
-                sections[stoppedSectionNum].fields.append(container)
+                    sections[stoppedSectionNum].fields.append(container)
             }
-            allContainers.append(container)
         }
-        
-        ContainersManager.containers = allContainers
         checkIfSectionsAreEmpty()
     }
     
@@ -153,16 +112,9 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "containers-container" {
-            let container = segue.destination as! ContainerViewController
-            container.container = selectedContainer
-            container.changeContainersControllerState = changeContainerState
+            let containerView = segue.destination as! ContainerViewController
+            containerView.container = selectedContainer
         }
-    }
-    
-    func changeContainerState(_ newState: String) -> Void {
-//        containerModels[containerNum].state = newState
-//        let indexPath = IndexPath(item: containerNum, section: 0)
-//        tableView.reloadRows(at: [indexPath], with: .none)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -199,15 +151,14 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-
-    
     @objc
     func refreshTable() {
-        getContainers(mainCallback: {() -> Void in
+        ContainersManager.shared().getContainers(mainCallback: {() -> Void in
             self.updateTable()
             self.refresher.endRefreshing()
-        }, callback: {() -> Void in
+        }, callback: { (_ containers: [Container]) -> Void in
             self.clearData()
+            self.fillContainers(containers)
         })
     }
 }
