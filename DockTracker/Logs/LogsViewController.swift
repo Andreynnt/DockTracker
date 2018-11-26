@@ -96,5 +96,10 @@ class LogsViewController: UIViewController {
             socket!.disconnect()
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.hidesBarsOnSwipe = false
+    }
 
 }

@@ -217,6 +217,8 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.hidesBarsOnSwipe = false
     }
     
     @IBAction func touchLogsButton(_ sender: UIButton) {

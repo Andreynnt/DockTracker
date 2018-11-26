@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let statusBarView = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else {
             return true
         }
+        navigationBarAppearace.isTranslucent = false
         statusBarView.backgroundColor = blueColor
         return true
     }

@@ -203,9 +203,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="3v2-R4-ONo">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="3v2-R4-ONo">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogsNumberCell" rowHeight="51" id="4kh-hi-qA8" customClass="ChoiceOfLogsAmountCell" customModule="DockTracker" customModuleProvider="target">
@@ -236,6 +235,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3v2-R4-ONo" firstAttribute="width" secondItem="hbj-LJ-z23" secondAttribute="width" id="RAh-An-pM2"/>
+                            <constraint firstItem="3v2-R4-ONo" firstAttribute="height" secondItem="hbj-LJ-z23" secondAttribute="height" id="U5G-zq-e2e"/>
+                            <constraint firstItem="3v2-R4-ONo" firstAttribute="leading" secondItem="4B4-P4-lZl" secondAttribute="leading" id="fCq-Ra-opM"/>
+                            <constraint firstAttribute="top" secondItem="3v2-R4-ONo" secondAttribute="top" id="rE6-P3-GdU"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="4B4-P4-lZl"/>
                     </view>
                     <connections>
