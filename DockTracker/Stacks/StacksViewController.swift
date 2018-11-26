@@ -38,6 +38,7 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.refreshControl = refresher
         tableView.separatorStyle = .none
         getContainers(callback: updateTable)
+        navigationController?.hidesBarsOnSwipe = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

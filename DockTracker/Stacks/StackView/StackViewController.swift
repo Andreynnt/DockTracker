@@ -51,5 +51,6 @@ class StackViewController: UIViewController, UITableViewDataSource, UITableViewD
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
+        navigationController?.hidesBarsOnSwipe = true
     }
 }

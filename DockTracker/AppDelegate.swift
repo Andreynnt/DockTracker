@@ -19,7 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //back button color
         navigationBarAppearace.tintColor = UIColor.white
         //tab bar color
-        navigationBarAppearace.barTintColor = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
+        let blueColor = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
+        navigationBarAppearace.barTintColor = blueColor
+        guard let statusBarView = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else {
+            return true
+        }
+        statusBarView.backgroundColor = blueColor
         return true
     }
 

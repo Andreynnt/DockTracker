@@ -169,6 +169,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
+        navigationController?.hidesBarsOnSwipe = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection num: Int) -> Int {
@@ -198,6 +199,8 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
+
+    
     @objc
     func refreshTable() {
         getContainers(mainCallback: {() -> Void in
@@ -208,3 +211,4 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         })
     }
 }
+
