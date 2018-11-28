@@ -47,6 +47,9 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         tableView.delegate = self
         tableView.refreshControl = refresher
         tableView.separatorStyle = .none
+        tableView.backgroundView = nil;
+        tableView.backgroundColor = UIColor.white
+        navigationItem.searchController = UISearchController(searchResultsController: nil)
         fillContainers(ContainersManager.shared().containers)
     }
     
@@ -121,7 +124,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
-        navigationController?.hidesBarsOnSwipe = true
+        //navigationController?.hidesBarsOnSwipe = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection num: Int) -> Int {

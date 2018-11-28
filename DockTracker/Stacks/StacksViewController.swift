@@ -36,7 +36,8 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         tableView.refreshControl = refresher
         tableView.separatorStyle = .none
-        navigationController?.hidesBarsOnSwipe = true
+        tableView.backgroundView = nil;
+        tableView.backgroundColor = UIColor.white
         fillStacksView(ContainersManager.shared().containers)
     }
     
@@ -77,6 +78,7 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
             let groupOfContainers = groupedContainers[self.selectedId]
             let groupController = segue.destination as! StackViewController
             groupController.containers = groupOfContainers!
+            groupController.mainTitle = groupedContainers[selectedId]?.first?.image.value
         }
     }
     

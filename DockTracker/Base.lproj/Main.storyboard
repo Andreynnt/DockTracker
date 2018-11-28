@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Container View Controller-->
+        <!--Title-->
         <scene sceneID="z9v-Pc-1O1">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="9RU-53-90V" customClass="ContainerViewController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -182,6 +182,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dzE-2A-YLg"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" largeTitleDisplayMode="never" id="dZu-xl-OS9"/>
                     <connections>
                         <outlet property="logsButton" destination="TIu-tV-9Df" id="hVx-hO-Mz1"/>
                         <outlet property="startStopButton" destination="Mzc-4g-DJe" id="jdk-nE-y2s"/>
@@ -341,12 +342,14 @@
             <objects>
                 <navigationController id="FCG-ai-Vrs" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Containers" image="icons8-docker-66" id="iIc-Kz-QEs"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="psR-ev-7Np">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="psR-ev-7Np">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.25861066579999997" green="0.58017712830000001" blue="0.97259587049999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
@@ -360,7 +363,7 @@
         <!--Containers-->
         <scene sceneID="t5I-AN-ahk">
             <objects>
-                <viewController id="PVR-zf-QMc" customClass="ContainersViewController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="PVR-zf-QMc" customClass="ContainersViewController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XEX-P9-m7H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -412,7 +415,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="tpN-09-sKK" secondAttribute="trailing" constant="30" id="8i4-cz-eft"/>
                                                 <constraint firstItem="XdJ-LG-iYG" firstAttribute="leading" secondItem="tpN-09-sKK" secondAttribute="leading" id="Arj-OO-Ede"/>
@@ -484,12 +487,14 @@
             <objects>
                 <navigationController id="rcM-rF-SrR" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Stacks" image="icons8-stack-42" id="jSC-aW-aIp"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jCc-1A-Tyj">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="jCc-1A-Tyj">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.25861066579999997" green="0.58017712830000001" blue="0.97259587049999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
@@ -505,12 +510,14 @@
             <objects>
                 <navigationController id="BFs-hj-IKh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" image="icons8-settings-60" id="vfK-ff-FGj"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="TOJ-hh-n0D">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="TOJ-hh-n0D">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.25861066579999997" green="0.58017712830000001" blue="0.97259587049999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         </textAttributes>
                     </navigationBar>
                     <connections>
@@ -524,7 +531,7 @@
         <!--Settings-->
         <scene sceneID="ylV-gv-EFe">
             <objects>
-                <viewController id="j07-JZ-U1D" customClass="SettingsViewController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="j07-JZ-U1D" customClass="SettingsViewController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zd3-lW-E3F">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -600,7 +607,7 @@
         <!--Account-->
         <scene sceneID="1VD-5P-hg3">
             <objects>
-                <viewController title="Account" id="itO-In-4EN" sceneMemberID="viewController">
+                <viewController title="Account" extendedLayoutIncludesOpaqueBars="YES" id="itO-In-4EN" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ntE-Lk-tl8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -615,7 +622,7 @@
         <!--Server-->
         <scene sceneID="yLn-9j-PLN">
             <objects>
-                <viewController title="Server" id="cXe-Bt-Vq7" customClass="ServerViewController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Server" extendedLayoutIncludesOpaqueBars="YES" id="cXe-Bt-Vq7" customClass="ServerViewController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yTD-Gw-dbj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -630,7 +637,7 @@
         <!--Stacks-->
         <scene sceneID="5o7-5I-cmF">
             <objects>
-                <viewController id="az2-Me-uLl" customClass="StacksViewController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="az2-Me-uLl" customClass="StacksViewController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Yf-lM-9XU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -678,7 +685,7 @@
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="uEe-ag-Cmp" firstAttribute="centerY" secondItem="e2z-ia-Ua2" secondAttribute="centerY" id="6zD-Yb-k1Y"/>
                                                 <constraint firstItem="S4c-ep-0GG" firstAttribute="centerY" secondItem="e2z-ia-Ua2" secondAttribute="centerY" id="Djw-Cb-1ly"/>
@@ -723,7 +730,7 @@
         <!--Containers-->
         <scene sceneID="Bez-hB-sg5">
             <objects>
-                <viewController title="Containers" id="3EY-A6-gCL" customClass="StackViewController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Containers" extendedLayoutIncludesOpaqueBars="YES" id="3EY-A6-gCL" customClass="StackViewController" customModule="DockTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fgt-D1-cPO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -764,6 +771,7 @@
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="5Pw-xQ-x9h"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="o61-EC-EMT"/>
                     <connections>
                         <outlet property="tableView" destination="d9e-aG-yxc" id="hZv-CU-IAz"/>
                         <segue destination="9RU-53-90V" kind="show" identifier="openContainer" id="AeE-Es-ij0"/>

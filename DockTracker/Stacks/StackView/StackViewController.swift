@@ -12,6 +12,7 @@ class StackViewController: UIViewController, UITableViewDataSource, UITableViewD
     var containers = [Container]()
     let cellIdentifier = "container"
     var selectedContainerNum: Int!
+    var mainTitle: String?
     
     @IBOutlet var tableView: UITableView!
     
@@ -19,6 +20,9 @@ class StackViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.backgroundView = nil;
+        tableView.backgroundColor = UIColor.white
+        self.title = mainTitle ?? "Containers"
         // Do any additional setup after loading the view.
     }
     
@@ -51,6 +55,5 @@ class StackViewController: UIViewController, UITableViewDataSource, UITableViewD
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
-        navigationController?.hidesBarsOnSwipe = true
     }
 }

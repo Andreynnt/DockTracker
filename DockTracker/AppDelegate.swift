@@ -15,17 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let navigationBarAppearace = UINavigationBar.appearance()
-        //back button color
-        navigationBarAppearace.tintColor = UIColor.white
-        //tab bar color
-        let blueColor = UIColor(red:0.00, green:0.48, blue:1.00, alpha:1.0)
-        navigationBarAppearace.barTintColor = blueColor
-        guard let statusBarView = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView else {
-            return true
-        }
-        navigationBarAppearace.isTranslucent = false
-        statusBarView.backgroundColor = blueColor
+          let navigationBarAppearace = UINavigationBar.appearance()
+          navigationBarAppearace.isTranslucent = false
         return true
     }
 
