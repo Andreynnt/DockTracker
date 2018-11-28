@@ -6,5 +6,6 @@ target 'DockTracker' do
   use_frameworks!
 
   # Pods for DockTracker
+  pod 'FLAnimatedImage'
   pod 'Starscream', '~> 3.0.2'
 end

@@ -1,16 +1,20 @@
 PODS:
+  - FLAnimatedImage (1.0.12)
   - Starscream (3.0.6)
 
 DEPENDENCIES:
+  - FLAnimatedImage
   - Starscream (~> 3.0.2)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - FLAnimatedImage
     - Starscream
 
 SPEC CHECKSUMS:
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
 
-PODFILE CHECKSUM: 18821826f418443bc47c41682d63cd8af9d51d36
+PODFILE CHECKSUM: e7087a170c23451ebe6caa0f616bcfbeb369e926
 
 COCOAPODS: 1.5.3

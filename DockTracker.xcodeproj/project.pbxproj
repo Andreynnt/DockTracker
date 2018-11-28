@@ -14,6 +14,7 @@
 		6D0924412192DF6F004E138B /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0924402192DF6F004E138B /* AccountViewController.swift */; };
 		6D0FD12A218F92B4005D7088 /* buttonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FD129218F92B4005D7088 /* buttonCell.swift */; };
 		6D1560DC21AABDC100A0CD3B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1560DB21AABDC100A0CD3B /* TabBarController.swift */; };
+		6D329A9321AED4490064C5DA /* spinner1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6D329A9221AED4490064C5DA /* spinner1.gif */; };
 		6D47EF37218E4E930054F7E3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D47EF36218E4E930054F7E3 /* SettingsViewController.swift */; };
 		6D4D363F21A99C0C005E0F93 /* СontainerParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D363E21A99C0C005E0F93 /* СontainerParameter.swift */; };
 		6D4D364121A9A245005E0F93 /* LogsDateSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4D364021A9A245005E0F93 /* LogsDateSwitchCell.swift */; };
@@ -44,6 +45,7 @@
 		6D0924402192DF6F004E138B /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		6D0FD129218F92B4005D7088 /* buttonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buttonCell.swift; sourceTree = "<group>"; };
 		6D1560DB21AABDC100A0CD3B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		6D329A9221AED4490064C5DA /* spinner1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = spinner1.gif; sourceTree = "<group>"; };
 		6D47EF36218E4E930054F7E3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		6D4D363E21A99C0C005E0F93 /* СontainerParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "СontainerParameter.swift"; sourceTree = "<group>"; };
 		6D4D364021A9A245005E0F93 /* LogsDateSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsDateSwitchCell.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				6DFA98B42187200C00F0AD0C /* Main.storyboard */,
+				6D329A9221AED4490064C5DA /* spinner1.gif */,
 				6D9F9BB521AC7D610084DEAD /* ContainersManager */,
 				6D9F9BB421AC7D500084DEAD /* Preloader */,
 				6D4D364421A9B7FA005E0F93 /* ChoiceOfLogsAmount */,
@@ -312,6 +315,7 @@
 			files = (
 				6D87F84A21904305005DE656 /* icons.xcassets in Resources */,
 				6DFA98BB2187200D00F0AD0C /* LaunchScreen.storyboard in Resources */,
+				6D329A9321AED4490064C5DA /* spinner1.gif in Resources */,
 				6DFA98B62187200C00F0AD0C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,12 +354,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-DockTracker/Pods-DockTracker-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

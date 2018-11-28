@@ -292,25 +292,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xHI-H4-ebN">
-                                <rect key="frame" x="67" y="242" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="up5-Dv-dnA">
-                                        <rect key="frame" x="59" y="43" width="123" height="42"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y30-um-gZC" customClass="FLAnimatedImageView">
+                                <rect key="frame" x="127.5" y="288.5" width="120" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="90" id="MHF-ox-yic"/>
+                                    <constraint firstAttribute="width" constant="120" id="gPi-o8-XzA"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="y30-um-gZC" firstAttribute="centerY" secondItem="H0T-09-07f" secondAttribute="centerY" id="Bfa-A9-HNS"/>
+                            <constraint firstItem="y30-um-gZC" firstAttribute="centerX" secondItem="H0T-09-07f" secondAttribute="centerX" id="k0o-mF-dl2"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="NUv-Gd-lov"/>
                     </view>
                     <connections>
+                        <outlet property="preloaderView" destination="y30-um-gZC" id="UCV-qM-ufH"/>
                         <segue destination="cDQ-uZ-BD8" kind="show" identifier="openApp" id="Mqg-rm-Yq0"/>
                     </connections>
                 </viewController>

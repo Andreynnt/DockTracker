@@ -7,13 +7,26 @@
 //
 
 import UIKit
+import FLAnimatedImage
 
 class PreloaderViewController: UIViewController {
     let segueName = "openApp"
     
+    @IBOutlet var preloaderView: FLAnimatedImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        fillPreloader()
         fillContainersManager()
+    }
+    
+    func fillPreloader() {
+        let path1 : String = Bundle.main.path(forResource: "spinner1", ofType: "gif")!
+        let url = URL(fileURLWithPath: path1)
+        if let gifData = try? Data(contentsOf: url) {
+            let imageData = FLAnimatedImage(animatedGIFData: gifData)
+            preloaderView.animatedImage = imageData
+        }
     }
     
     func fillContainersManager() {
@@ -22,10 +35,4 @@ class PreloaderViewController: UIViewController {
             self.performSegue(withIdentifier: self.segueName, sender: self)
         })
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let containersView = segue.destination as! ContainersViewController
-//        containersView.containers = containers
-//    }
-    
 }
