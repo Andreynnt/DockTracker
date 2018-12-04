@@ -8,16 +8,21 @@
 
 import UIKit
 
-class ContainerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet var startStopButton: UIButton!
+class ContainerViewController: UIViewController {
+    
+    //IBOutlets
     @IBOutlet var logsButton: UIButton!
+    @IBOutlet var tableCard: UIView!
+    @IBOutlet var mainBackground: UIView!
+    @IBOutlet var containerTopCard: UIView!
+    @IBOutlet weak var buttonsWrapperCard: UIView!
+    @IBOutlet weak var topBackgroundCard: UIView!
     
     var container = Container()
     var numberOfLogs = -1
     var needLogsDates = false
-    var numberOfLogsCell: NumberOfLogsCell?
     var stateFieldNum = -1
+    let cornerRadius = CGFloat(6)
     
     //segues names
     let openLogsSegue = "openLogs"
@@ -28,197 +33,102 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
     let LogsDateCellIdentifier = "LogsDateCell"
     let numberOfLogsCellIdentifier = "NumberOfLogsCell"
     
-    struct ParametersSections {
-        var name: String!
-        var fields: [Any]!
-        var footer: String!
+    var containersParameters = [СontainerParameter]()
+    
+    //settings view controller inside tableCard
+    lazy var settingsViewController: ContainerSettingsViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ContainerSettingsViewController") as! ContainerSettingsViewController
+        self.addViewToTableCard(viewController: viewController)
+        return viewController
+    }()
+    
+     //information view controller inside tableCard
+    lazy var informationViewController: ContainerInformationViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ContainerInformationViewController") as! ContainerInformationViewController
+        viewController.containerParameters = containersParameters
+        self.addViewToTableCard(viewController: viewController)
+        return viewController
+    }()
+    
+    func addViewToTableCard(viewController: UIViewController) {
+        tableCard.addSubview(viewController.view)
+        viewController.view.frame = tableCard.bounds
+        viewController.view.autoresizingMask = [.flexibleHeight, .flexibleHeight]
+        viewController.didMove(toParent: self)
     }
-    
-    var sections = [
-        ParametersSections(name: "Container's information", fields: [СontainerParameter](), footer: ""),
-        ParametersSections(name: "Options", fields: ["Date switch", "NumberOfLogsCell"], footer: "Logs options"),
-        //пустые секции в самом конце, чтобы было расстояние над кнопками
-        ParametersSections(name: "", fields: [String](), footer: ""),
-        ParametersSections(name: "", fields: [String](), footer: "")
-    ]
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        if container.state.value == "running" {
-            self.startStopButton.setTitle("Stop", for: .normal)
-        }
-        sections[0].fields = container.getParametersArray()
-        makeButtonStylish(startStopButton)
+        containersParameters = container.getParametersArray()
+        makeMainBackgroundStylish()
+        makeButtonsWrapperStylish()
         makeButtonStylish(logsButton)
-        self.navigationItem.title = container.name.value
-        tableView.dataSource = self
-        tableView.delegate = self
+        let img = UIImage(named: "bottom@2x.png")
+        topBackgroundCard.backgroundColor = UIColor(patternImage: img!)
+        
+        //add container top card
+        let frame = CGRect(x: 0, y: 0, width: containerTopCard.frame.width, height: containerTopCard.frame.height)
+        let card = TopContainerCardView(frame: frame, container: container)
+        card.layer.cornerRadius = cornerRadius
+        containerTopCard.layer.cornerRadius = cornerRadius
+        card.clipsToBounds = true
+        containerTopCard.addSubview(card)
+        
+        //init lazy information and view controllers
+        _ = informationViewController
+        //_ = settingsViewController
     }
     
+    func makeButtonsWrapperStylish() {
+        buttonsWrapperCard.layer.shadowColor = UIColor.darkGray.cgColor
+        buttonsWrapperCard.layer.shadowRadius = 3
+        buttonsWrapperCard.layer.shadowOpacity = 0.7
+        buttonsWrapperCard.layer.shadowOffset = CGSize(width: 0, height: 2)
+    }
+
+    func makeMainBackgroundStylish() {
+        mainBackground.layer.shadowColor = UIColor.darkGray.cgColor
+        mainBackground.layer.shadowRadius = 5
+        mainBackground.layer.shadowOpacity = 0.7
+        mainBackground.layer.shadowOffset = CGSize(width: 0, height: -5)
+    }
+  
     func makeButtonStylish(_ button: UIButton!) {
         button.layer.cornerRadius = button.frame.height / 2
         button.layer.shadowColor = UIColor.darkGray.cgColor
         button.layer.shadowRadius = 3
-        button.layer.shadowOpacity = 0.3
+        button.layer.shadowOpacity = 0.5
         button.layer.shadowOffset = CGSize(width: 0, height: 5)
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: UITableViewCell?
-        if indexPath.section == 0 {
-            let parameter = sections[indexPath.section].fields[indexPath.row]
-            cell = tableView.dequeueReusableCell(withIdentifier: containerDataCellIdentifier, for: indexPath)
-            if let castedCell = cell as? ContainerDataCell {
-                castedCell.fillCell(with: parameter as! СontainerParameter)
-                castedCell.delegate = self
-            }
-        } else if indexPath.section == 1 && indexPath.row == 1 {
-            cell = tableView.dequeueReusableCell(withIdentifier: numberOfLogsCellIdentifier, for: indexPath)
-            if let castedCell = cell as? NumberOfLogsCell {
-                castedCell.fill(with: String(numberOfLogs))
-                numberOfLogsCell = castedCell
-            }
-        } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: LogsDateCellIdentifier, for: indexPath)
-            if let castedCell = cell as? LogsDateSwitchCell {
-                castedCell.delegate = self
-            }
-        }
-        cell?.selectionStyle = UITableViewCell.SelectionStyle.none
-        return cell!
-    }
-    
-    @IBAction func startStopContainer(_ sender: UIButton) {
-        if (container.isStarted()) {
-            stopContainer(with: container.name.value)
-        } else {
-            startContainer(with: container.name.value)
-        }
-    }
-    
-    func startContainer(with name: String) {
-        guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
-        let urlString = savedUrl + "/containers/\(name)/start?p=80:3000"
-      
-        self.startStopButton.setTitle("Starting", for: .normal)
-        guard let url = URL(string: urlString) else { return }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            guard let httpResponse = response as? HTTPURLResponse else {
-                print("Can't httpResponse = response as? HTTPURLResponse")
-                return
-            }
-            
-            switch httpResponse.statusCode {
-            case 204:
-                DispatchQueue.main.async {
-                    self.container.state.value = "running"
-                     self.changeMainButtonTitle("Stop")
-                }
-            case 304:
-                print("Container already started")
-                self.changeMainButtonTitle("Start")
-            case 500:
-                print("Server error")
-                self.changeMainButtonTitle("Start")
-            default:
-                print("Unexpected error")
-                self.changeMainButtonTitle("Start")
-            }
-        }.resume()
-    }
-    
-    func stopContainer(with name: String) {
-        guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
-        let urlString = savedUrl + "/containers/\(name)/stop"
-        
-        self.startStopButton.setTitle("Stopping", for: .normal)
-        print("Going to request \(urlString)")
-        guard let url = URL(string: urlString) else { return }
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            guard let httpResponse = response as? HTTPURLResponse else {
-                print("Can't httpResponse = response as? HTTPURLResponse")
-                return
-            }
-            
-            switch httpResponse.statusCode {
-            case 204:
-                print("Successful stop")
-                DispatchQueue.main.async {
-                    self.container.state.value = "exited"
-                    self.changeMainButtonTitle("Start")
-                }
-            case 304:
-                print("Container already stopped")
-                self.changeMainButtonTitle("Stop")
-            case 500:
-                print("Server error")
-                self.changeMainButtonTitle("Stop")
-            default:
-                print("Unexpected error")
-                self.changeMainButtonTitle("Stop")
-            }
-       }.resume()
-    }
-    
-    func changeMainButtonTitle(_ status: String) {
-        DispatchQueue.main.async {
-            self.startStopButton.setTitle(status, for: .normal)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection num: Int) -> Int {
-        return sections[num].fields.count
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].name
-    }
-    
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return sections[section].footer
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (indexPath.section == 1 && indexPath.row == 1) {
-            performSegue(withIdentifier: openNumberOfLogsSegue, sender: self)
-        }
-        
-        let cell = tableView.cellForRow(at: indexPath)
-        if let castedCell = cell as? ContainerDataCell {
-            if castedCell.needHideText {
-                castedCell.changeText()
-            }
-        }
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
-        if let index = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: index, animated: true)
-        }
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.hidesBarsOnSwipe = false
+          //rm table
+//        if let index = tableView.indexPathForSelectedRow {
+//            tableView.deselectRow(at: index, animated: true)
+//        }
+        let img = UIImage(named: "top@2x.png")
+        navigationController?.navigationBar.setBackgroundImage(img, for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.barTintColor = UIColor(red:0.51, green:0.68, blue:0.81, alpha:1.0)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.shadowImage = nil
+        navigationController?.navigationBar.tintColor = UIColor.black
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        navigationController?.navigationBar.barTintColor = UIColor.white
     }
     
     @IBAction func touchLogsButton(_ sender: UIButton) {
         performSegue(withIdentifier: openLogsSegue, sender: self)
+    }
+    
+    @IBAction func clickSettingsButton(_ sender: UIButton) {
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -228,30 +138,11 @@ class ContainerViewController: UIViewController, UITableViewDataSource, UITableV
             logsView.needDates = needLogsDates
             logsView.tail = String(numberOfLogs)
         }
-        if segue.identifier == openNumberOfLogsSegue {
-            let view = segue.destination as! ChoiceOfLogsAmountController
-            view.selectedValue = numberOfLogs
-            view.delegate = self
-        }
-    }
-}
-
-extension ContainerViewController: CellDelegate {
-    func contentDidChange() {
-        self.tableView.beginUpdates()
-        self.tableView.endUpdates()
-    }
-}
-
-extension ContainerViewController: ChoiceOfLogsAmountControllerDelegate {
-    func changeAmountOfLogs(amount: Int) {
-        self.numberOfLogs = amount
-        self.numberOfLogsCell?.fill(with: String(amount))
     }
 }
 
 extension ContainerViewController: LogsDateSwitchCellDelegate {
-    func chageNeedLogs(need: Bool) {
+    func changeNeedLogs(need: Bool) {
         self.needLogsDates = need
     }
 }

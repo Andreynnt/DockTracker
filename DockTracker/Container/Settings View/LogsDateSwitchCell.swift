@@ -9,7 +9,7 @@
 import UIKit
 
 protocol LogsDateSwitchCellDelegate {
-    func chageNeedLogs(need: Bool)
+    func changeNeedLogs(need: Bool)
 }
 
 class LogsDateSwitchCell: UITableViewCell {
@@ -25,7 +25,7 @@ class LogsDateSwitchCell: UITableViewCell {
     
     @IBAction func clickOnSwitch(_ sender: Any) {
        needDate = !needDate
-       delegate?.chageNeedLogs(need: needDate)
+       delegate?.changeNeedLogs(need: needDate)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

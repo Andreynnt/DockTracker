@@ -1,19 +1,20 @@
 //
-//  LogsNumberViewController.swift
+//  ContainerSettingsViewController.swift
 //  DockTracker
 //
-//  Created by Андрей Бабков on 24/11/2018.
+//  Created by Андрей Бабков on 04/12/2018.
 //  Copyright © 2018 Андрей Бабков. All rights reserved.
 //
 
 import UIKit
 
-class ChoiceOfLogsAmountController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ContainerSettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
+    
     var selectedIndexPath: IndexPath?
     var selectedValue = -1
-
+    
     struct Sections {
         var name: String!
         var fields: [Int]
@@ -48,7 +49,7 @@ class ChoiceOfLogsAmountController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let logsAmount = sections[indexPath.section].fields[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LogsNumberCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ChoiceOfLogsAmountCell", for: indexPath)
         if let castedCell = cell as? ChoiceOfLogsAmountCell {
             castedCell.fill(with: logsAmount)
             if (selectedValue == logsAmount) {
@@ -68,9 +69,10 @@ class ChoiceOfLogsAmountController: UIViewController, UITableViewDataSource, UIT
             tableView.cellForRow(at: selectedIndexPath!)?.accessoryType = UITableViewCell.AccessoryType.none
         }
         selectedValue = sections[indexPath.section].fields[indexPath.row]
-
+        //delegate?.changeAmountOfLogs(amount: selectedValue)
         selectedIndexPath = indexPath
         tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.checkmark
     }
-
+    
+    
 }

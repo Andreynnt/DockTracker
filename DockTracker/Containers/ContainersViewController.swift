@@ -42,14 +42,14 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserSettings.addUrl(domain: "andrey-babkov.ru", port: 5555)
+        //UserSettings.addUrl(domain: "andrey-babkov.ru", port: 5555)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.refreshControl = refresher
         tableView.separatorStyle = .none
         tableView.backgroundView = nil;
         tableView.backgroundColor = UIColor.white
-        navigationItem.searchController = UISearchController(searchResultsController: nil)
+        navigationController?.title = "Containers"
         fillContainers(ContainersManager.shared().containers)
     }
     
@@ -124,7 +124,6 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
-        //navigationController?.hidesBarsOnSwipe = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection num: Int) -> Int {

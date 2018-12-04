@@ -14,9 +14,10 @@ protocol CellDelegate: class {
 
 class ContainerDataCell: UITableViewCell {
 
-    @IBOutlet weak var value: UILabel!
     @IBOutlet weak var name: UILabel!
-    @IBOutlet var button: UIButton!
+    @IBOutlet weak var value: UILabel!
+    @IBOutlet weak var button: UIButton!
+    
     
     weak var delegate: CellDelegate?
     var needHideText = false
