@@ -16,7 +16,6 @@ class TopContainerCardView: UIView {
     @IBOutlet weak var imageLabel: UILabel!
     @IBOutlet weak var stateLabel: UILabel!
     @IBOutlet weak var imageContainer: UIImageView!
-    @IBOutlet weak var startStopButton: UIButton!
     
     var container: Container?
     
@@ -38,7 +37,6 @@ class TopContainerCardView: UIView {
     private func myInit(_ container: Container? = nil) {
         Bundle.main.loadNibNamed("TopContainerCardView", owner: self, options: nil)
         addSubview(backgroundView)
-        makeButtonStylish(startStopButton)
         backgroundView.frame = self.bounds
         backgroundView.clipsToBounds = true
         backgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -48,21 +46,20 @@ class TopContainerCardView: UIView {
         stateLabel.text = container?.status.value
     }
     
-    @IBAction func touchStartStopButton(_ sender: UIButton) {
-        if let cont = container {
-            if (cont.isStarted()) {
-                stopContainer(with: cont.name.value)
-            } else {
-                startContainer(with: cont.name.value)
-            }
-        }
-    }
+//    @IBAction func touchStartStopButton(_ sender: UIButton) {
+//        if let cont = container {
+//            if (cont.isStarted()) {
+//                stopContainer(with: cont.name.value)
+//            } else {
+//                startContainer(with: cont.name.value)
+//            }
+//        }
+//    }
     
     func startContainer(with name: String) {
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/\(name)/start?p=80:3000"
         
-        self.startStopButton.setTitle("Starting", for: .normal)
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -100,7 +97,6 @@ class TopContainerCardView: UIView {
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/\(name)/stop"
         
-        self.startStopButton.setTitle("Stopping", for: .normal)
         print("Going to request \(urlString)")
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)

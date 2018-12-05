@@ -15,7 +15,6 @@
                 <outlet property="imageContainer" destination="sYY-qK-l02" id="gAa-FR-QQl"/>
                 <outlet property="imageLabel" destination="nhs-Vf-34Q" id="X2t-4N-WcD"/>
                 <outlet property="nameLabel" destination="0mM-TX-b6j" id="JV9-xf-YfG"/>
-                <outlet property="startStopButton" destination="vtU-8v-aa3" id="xcP-GH-haL"/>
                 <outlet property="stateLabel" destination="RPC-Zw-cb0" id="Snd-64-GZ5"/>
             </connections>
         </placeholder>
@@ -43,7 +42,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="State" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RPC-Zw-cb0">
-                            <rect key="frame" x="20" y="116" width="183" height="21"/>
+                            <rect key="frame" x="20" y="109" width="42.5" height="21"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -55,20 +54,6 @@
                                 <constraint firstAttribute="width" constant="26" id="Lyb-um-ck5"/>
                             </constraints>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vtU-8v-aa3">
-                            <rect key="frame" x="213" y="107" width="26" height="26"/>
-                            <color key="backgroundColor" red="0.39993500710000002" green="0.826302588" blue="0.95296388860000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="26" id="RyM-wI-yRh"/>
-                                <constraint firstAttribute="height" constant="26" id="pcZ-Jn-jED"/>
-                            </constraints>
-                            <state key="normal" image="icons06060">
-                                <color key="titleColor" red="0.39993500710000002" green="0.826302588" blue="0.95296388860000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            </state>
-                            <connections>
-                                <action selector="touchStartStopButton:" destination="-1" eventType="touchUpInside" id="WTV-Bt-Uvp"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -78,16 +63,13 @@
                         <constraint firstItem="0mM-TX-b6j" firstAttribute="leading" secondItem="EGN-i6-9fz" secondAttribute="leading" constant="20" id="SMX-e0-SGx"/>
                         <constraint firstItem="sYY-qK-l02" firstAttribute="top" secondItem="EGN-i6-9fz" secondAttribute="top" constant="33" id="Vpe-l0-vHM"/>
                         <constraint firstItem="RPC-Zw-cb0" firstAttribute="leading" secondItem="EGN-i6-9fz" secondAttribute="leading" constant="20" id="XLu-d2-b8q"/>
-                        <constraint firstAttribute="trailing" secondItem="vtU-8v-aa3" secondAttribute="trailing" constant="130" id="aSZ-Qk-WUE"/>
                         <constraint firstItem="nhs-Vf-34Q" firstAttribute="top" secondItem="0mM-TX-b6j" secondAttribute="bottom" constant="8" id="aU0-wE-IDH"/>
-                        <constraint firstAttribute="bottom" secondItem="RPC-Zw-cb0" secondAttribute="bottom" constant="23" id="dIP-Jr-e2j"/>
+                        <constraint firstAttribute="bottom" secondItem="RPC-Zw-cb0" secondAttribute="bottom" constant="30" id="dIP-Jr-e2j"/>
                         <constraint firstItem="0mM-TX-b6j" firstAttribute="top" secondItem="EGN-i6-9fz" secondAttribute="top" constant="20" id="i22-aa-kMS"/>
                         <constraint firstItem="sYY-qK-l02" firstAttribute="leading" secondItem="0mM-TX-b6j" secondAttribute="trailing" constant="10" id="iKu-M6-EZL"/>
                         <constraint firstItem="nhs-Vf-34Q" firstAttribute="leading" secondItem="0mM-TX-b6j" secondAttribute="leading" constant="-2" id="iaa-y1-dVb"/>
-                        <constraint firstItem="vtU-8v-aa3" firstAttribute="leading" secondItem="RPC-Zw-cb0" secondAttribute="trailing" constant="10" id="jzT-AT-fNC"/>
                         <constraint firstAttribute="height" constant="160" id="mB4-DD-tzF"/>
                         <constraint firstAttribute="trailing" secondItem="sYY-qK-l02" secondAttribute="trailing" constant="130" id="ofp-8Y-WTi"/>
-                        <constraint firstItem="vtU-8v-aa3" firstAttribute="top" secondItem="sYY-qK-l02" secondAttribute="bottom" constant="48" id="yuv-uh-XUE"/>
                     </constraints>
                 </view>
             </subviews>
@@ -103,7 +85,6 @@
         </view>
     </objects>
     <resources>
-        <image name="icons06060" width="45" height="45"/>
         <image name="icons8-box-52.png" width="26" height="26"/>
     </resources>
 </document>

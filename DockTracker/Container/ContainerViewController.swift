@@ -20,9 +20,9 @@ class ContainerViewController: UIViewController {
     //menu
     @IBOutlet weak var buttonsWrapperCard: UIView!
 
-
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var informationButton: UIButton!
+    @IBOutlet weak var controlButton: UIButton!
     
     var container = Container()
     var numberOfLogs = -1
@@ -41,9 +41,12 @@ class ContainerViewController: UIViewController {
     
     var containersParameters = [СontainerParameter]()
     
+    var movingIndicator: UIView?
+    
     //views inside tableCard
     let settingsViewControllerName = "settingsViewName"
     let informationViewControllerName = "informationViewName"
+    let controlViewControllerName = "controlViewControllerName"
     var activeViewContollerName = "informationViewName"
     var viewsInsideTableCard = [String: UIViewController]()
     
@@ -53,6 +56,15 @@ class ContainerViewController: UIViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier: "ContainerSettingsViewController") as! ContainerSettingsViewController
         viewController.logsSwichDelegate = self
         viewController.logsAmountDelegate = self
+        self.addViewToTableCard(viewController: viewController)
+        viewController.view.isHidden = true
+        return viewController
+    }()
+    
+    //control view controller inside tableCard
+    lazy var controlViewController: ContainerControlViewController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ContainerControlViewController") as! ContainerControlViewController
         self.addViewToTableCard(viewController: viewController)
         viewController.view.isHidden = true
         return viewController
@@ -93,10 +105,24 @@ class ContainerViewController: UIViewController {
         addBottomBorder(to: buttonsWrapperCard)
         informationButton.setTitleColor(.black , for: .normal)
         
-        //init information and view controllers
+        //init internal view controllers
         viewsInsideTableCard[informationViewControllerName] = informationViewController
         viewsInsideTableCard[settingsViewControllerName] = settingsViewController
+        viewsInsideTableCard[controlViewControllerName] = controlViewController
         viewsInsideTableCard[activeViewContollerName]?.view.isHidden = false
+        
+        initIndicator()
+    }
+    
+    func initIndicator() {
+        let indicatorHeight = CGFloat(3)
+        movingIndicator = UIView(frame:CGRect(x: 0,
+              y: buttonsWrapperCard.bounds.height - indicatorHeight,
+              width: buttonsWrapperCard.bounds.width / 3,
+              height: indicatorHeight)
+        )
+        movingIndicator?.backgroundColor = Colors.secondColor
+        buttonsWrapperCard.addSubview(movingIndicator!)
     }
     
     func addBottomBorder(to subview: UIView) {
@@ -124,18 +150,16 @@ class ContainerViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        let img = UIImage(named: "top@2x.png")
-        navigationController?.navigationBar.setBackgroundImage(img, for: .default)
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.tintColor = UIColor.white
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.barTintColor = UIColor(red:0.51, green:0.68, blue:0.81, alpha:1.0)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = nil
         navigationController?.navigationBar.tintColor = UIColor.black
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         navigationController?.navigationBar.barTintColor = UIColor.white
     }
     
@@ -144,21 +168,75 @@ class ContainerViewController: UIViewController {
     }
     
     @IBAction func clickSettings(_ sender: UIButton) {
-        sender.setTitleColor(.black, for: .normal)
-        informationButton.setTitleColor(.lightGray, for: .normal)
+        if activeViewContollerName == settingsViewControllerName { return }
+        changeButtonTextColor(viewControllerName: settingsViewControllerName, color: .black)
+        changeButtonTextColor(viewControllerName: activeViewContollerName, color: .lightGray)
+        animateIndicator(moveTo: settingsViewControllerName)
         showViewController(name: settingsViewControllerName)
     }
     
     @IBAction func clickInformation(_ sender: UIButton) {
-        sender.setTitleColor(.black, for: .normal)
-        settingsButton.setTitleColor(.lightGray , for: .normal)
+        if activeViewContollerName == informationViewControllerName { return }
+        changeButtonTextColor(viewControllerName: informationViewControllerName, color: .black)
+        changeButtonTextColor(viewControllerName: activeViewContollerName, color: .lightGray)
+        animateIndicator(moveTo: informationViewControllerName)
         showViewController(name: informationViewControllerName)
     }
     
-    func showViewController(name: String) {
-        if activeViewContollerName == name {
+    @IBAction func clickControlButton(_ sender: UIButton) {
+        if activeViewContollerName == controlViewControllerName { return }
+        changeButtonTextColor(viewControllerName: controlViewControllerName, color: .black)
+        changeButtonTextColor(viewControllerName: activeViewContollerName, color: .lightGray)
+        animateIndicator(moveTo: controlViewControllerName)
+        showViewController(name: controlViewControllerName)
+    }
+    
+    func changeButtonTextColor(viewControllerName: String, color: UIColor) {
+        switch viewControllerName {
+        case settingsViewControllerName:
+            settingsButton.setTitleColor(color , for: .normal)
+        case controlViewControllerName:
+            controlButton.setTitleColor(color , for: .normal)
+        case informationViewControllerName:
+            informationButton.setTitleColor(color , for: .normal)
+        default:
             return
         }
+    }
+    
+    func animateIndicator(moveTo viewName: String) {
+        guard let indicator = movingIndicator else { return }
+
+        let indicatorWidth = indicator.bounds.size.width
+        let animationTime = 0.2
+        if viewName == informationViewControllerName {
+            let destination = CGFloat(indicatorWidth / 2)
+            UIView.animate(withDuration: animationTime,  delay: 0, options: [.curveEaseOut],
+                animations: {
+                        indicator.center.x = destination
+                },
+                completion: nil
+            )
+        } else if viewName == controlViewControllerName {
+            let destination = indicatorWidth + CGFloat(indicatorWidth / 2)
+            UIView.animate(withDuration: animationTime,  delay: 0, options: [.curveEaseOut],
+                animations: {
+                indicator.center.x = destination
+            },
+                completion: nil
+            )
+        } else if viewName == settingsViewControllerName {
+            let destination = 2 * indicatorWidth + CGFloat(indicatorWidth / 2)
+            UIView.animate(withDuration: animationTime,  delay: 0, options: [.curveEaseOut],
+                animations: {
+                    indicator.center.x = destination
+                },
+                completion: nil
+            )
+        }
+    }
+    
+    func showViewController(name: String) {
         viewsInsideTableCard[activeViewContollerName]?.view.isHidden = true
         viewsInsideTableCard[name]?.view.isHidden = false
         activeViewContollerName = name
