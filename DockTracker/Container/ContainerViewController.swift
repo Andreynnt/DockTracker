@@ -15,8 +15,14 @@ class ContainerViewController: UIViewController {
     @IBOutlet var tableCard: UIView!
     @IBOutlet var mainBackground: UIView!
     @IBOutlet var containerTopCard: UIView!
-    @IBOutlet weak var buttonsWrapperCard: UIView!
     @IBOutlet weak var topBackgroundCard: UIView!
+    
+    //menu
+    @IBOutlet weak var buttonsWrapperCard: UIView!
+
+
+    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet weak var informationButton: UIButton!
     
     var container = Container()
     var numberOfLogs = -1
@@ -45,6 +51,8 @@ class ContainerViewController: UIViewController {
     lazy var settingsViewController: ContainerSettingsViewController = {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let viewController = storyboard.instantiateViewController(withIdentifier: "ContainerSettingsViewController") as! ContainerSettingsViewController
+        viewController.logsSwichDelegate = self
+        viewController.logsAmountDelegate = self
         self.addViewToTableCard(viewController: viewController)
         viewController.view.isHidden = true
         return viewController
@@ -82,11 +90,22 @@ class ContainerViewController: UIViewController {
         containerTopCard.layer.cornerRadius = cornerRadius
         card.clipsToBounds = true
         containerTopCard.addSubview(card)
+        addBottomBorder(to: buttonsWrapperCard)
+        informationButton.setTitleColor(.black , for: .normal)
         
         //init information and view controllers
         viewsInsideTableCard[informationViewControllerName] = informationViewController
         viewsInsideTableCard[settingsViewControllerName] = settingsViewController
         viewsInsideTableCard[activeViewContollerName]?.view.isHidden = false
+    }
+    
+    func addBottomBorder(to subview: UIView) {
+        let border = CALayer()
+        border.backgroundColor = UIColor.lightGray.cgColor
+        let height = 1.5
+        let y = Double(subview.frame.height) - height
+        border.frame = CGRect(x: 0, y: y, width: Double(subview.frame.width), height: height)
+        buttonsWrapperCard.layer.addSublayer(border)
     }
     
     func makeMainBackgroundStylish() {
@@ -105,10 +124,6 @@ class ContainerViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-          //rm table
-//        if let index = tableView.indexPathForSelectedRow {
-//            tableView.deselectRow(at: index, animated: true)
-//        }
         let img = UIImage(named: "top@2x.png")
         navigationController?.navigationBar.setBackgroundImage(img, for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -129,21 +144,24 @@ class ContainerViewController: UIViewController {
     }
     
     @IBAction func clickSettings(_ sender: UIButton) {
-        if activeViewContollerName == settingsViewControllerName {
-            return
-        }
-        viewsInsideTableCard[activeViewContollerName]?.view.isHidden = true
-        viewsInsideTableCard[settingsViewControllerName]?.view.isHidden = false
-        activeViewContollerName = settingsViewControllerName
+        sender.setTitleColor(.black, for: .normal)
+        informationButton.setTitleColor(.lightGray, for: .normal)
+        showViewController(name: settingsViewControllerName)
     }
     
     @IBAction func clickInformation(_ sender: UIButton) {
-        if activeViewContollerName == informationViewControllerName {
+        sender.setTitleColor(.black, for: .normal)
+        settingsButton.setTitleColor(.lightGray , for: .normal)
+        showViewController(name: informationViewControllerName)
+    }
+    
+    func showViewController(name: String) {
+        if activeViewContollerName == name {
             return
         }
         viewsInsideTableCard[activeViewContollerName]?.view.isHidden = true
-        viewsInsideTableCard[informationViewControllerName]?.view.isHidden = false
-        activeViewContollerName = informationViewControllerName
+        viewsInsideTableCard[name]?.view.isHidden = false
+        activeViewContollerName = name
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -159,5 +177,11 @@ class ContainerViewController: UIViewController {
 extension ContainerViewController: LogsDateSwitchCellDelegate {
     func changeNeedLogs(need: Bool) {
         self.needLogsDates = need
+    }
+}
+
+extension ContainerViewController: ChoiceOfLogsAmountCellDelegate {
+    func changeAmountOfLogs(amount: Int) {
+        self.numberOfLogs = amount
     }
 }

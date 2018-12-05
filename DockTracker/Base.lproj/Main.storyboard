@@ -40,22 +40,22 @@
                                 <rect key="frame" x="0.0" y="219" width="375" height="448"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3zQ-Xz-chf" userLabel="buttons card">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e4A-G2-sTp">
-                                                <rect key="frame" x="35" y="0.0" width="83" height="40"/>
+                                                <rect key="frame" x="35" y="0.0" width="83" height="45"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <state key="normal" title="Information">
-                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="clickInformation:" destination="9RU-53-90V" eventType="touchUpInside" id="rXj-Gg-zbq"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28L-lG-AHJ">
-                                                <rect key="frame" x="263" y="0.0" width="57" height="40"/>
+                                                <rect key="frame" x="263" y="0.0" width="57" height="45"/>
                                                 <state key="normal" title="Settings">
-                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="clickSettings:" destination="9RU-53-90V" eventType="touchUpInside" id="9td-hG-vWb"/>
@@ -67,7 +67,7 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="28L-lG-AHJ" secondAttribute="trailing" constant="55" id="8ri-eq-Jpq"/>
                                             <constraint firstAttribute="bottom" secondItem="e4A-G2-sTp" secondAttribute="bottom" id="EJ1-BS-hwN"/>
-                                            <constraint firstAttribute="height" constant="40" id="Gak-jz-1Mi"/>
+                                            <constraint firstAttribute="height" constant="45" id="Gak-jz-1Mi"/>
                                             <constraint firstAttribute="bottom" secondItem="28L-lG-AHJ" secondAttribute="bottom" id="L9I-CO-1Nh"/>
                                             <constraint firstItem="e4A-G2-sTp" firstAttribute="leading" secondItem="3zQ-Xz-chf" secondAttribute="leading" constant="35" id="bCX-aH-eot"/>
                                             <constraint firstItem="28L-lG-AHJ" firstAttribute="top" secondItem="3zQ-Xz-chf" secondAttribute="top" id="irm-HV-6yh"/>
@@ -75,7 +75,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i9G-BX-mzS" userLabel="table card">
-                                        <rect key="frame" x="0.0" y="40" width="375" height="408"/>
+                                        <rect key="frame" x="0.0" y="45" width="375" height="403"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -123,8 +123,10 @@
                     <connections>
                         <outlet property="buttonsWrapperCard" destination="3zQ-Xz-chf" id="1xG-JS-IKw"/>
                         <outlet property="containerTopCard" destination="gql-Q1-2Ni" id="ld5-fq-TtY"/>
+                        <outlet property="informationButton" destination="e4A-G2-sTp" id="YFM-wl-VSp"/>
                         <outlet property="logsButton" destination="TIu-tV-9Df" id="hVx-hO-Mz1"/>
                         <outlet property="mainBackground" destination="3fd-Lz-igm" id="AeZ-mr-0Pd"/>
+                        <outlet property="settingsButton" destination="28L-lG-AHJ" id="Fpu-uy-7mi"/>
                         <outlet property="tableCard" destination="i9G-BX-mzS" id="95P-Wl-uLs"/>
                         <outlet property="topBackgroundCard" destination="vjn-uP-MFQ" id="N28-i7-nRw"/>
                         <segue destination="uks-L4-RtB" kind="show" identifier="openLogs" id="5vL-zQ-CXC"/>
@@ -584,8 +586,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Fcw-9g-FiI" firstAttribute="bottom" secondItem="C9T-NU-M0D" secondAttribute="bottom" id="Kut-VT-tz3"/>
+                            <constraint firstItem="C9T-NU-M0D" firstAttribute="leading" secondItem="Fcw-9g-FiI" secondAttribute="leading" id="S1Q-pn-Nlc"/>
                             <constraint firstItem="C9T-NU-M0D" firstAttribute="leading" secondItem="Fcw-9g-FiI" secondAttribute="leading" id="bgI-mA-xCF"/>
+                            <constraint firstItem="C9T-NU-M0D" firstAttribute="top" secondItem="Fcw-9g-FiI" secondAttribute="top" id="fCj-ae-ptD"/>
+                            <constraint firstItem="C9T-NU-M0D" firstAttribute="trailing" secondItem="Fcw-9g-FiI" secondAttribute="trailing" id="gJ7-4Y-R5E"/>
                             <constraint firstItem="C9T-NU-M0D" firstAttribute="top" secondItem="Fcw-9g-FiI" secondAttribute="top" id="iru-hY-QyC"/>
+                            <constraint firstItem="C9T-NU-M0D" firstAttribute="bottom" secondItem="Fcw-9g-FiI" secondAttribute="bottom" id="moa-Vh-ixW"/>
                             <constraint firstItem="Fcw-9g-FiI" firstAttribute="trailing" secondItem="C9T-NU-M0D" secondAttribute="trailing" id="qIJ-ve-3nt"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Fcw-9g-FiI"/>
@@ -606,9 +612,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="zOe-qx-LEh">
-                                <rect key="frame" x="0.0" y="10" width="375" height="647"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="zOe-qx-LEh">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChoiceOfLogsAmountCell" rowHeight="51" id="Dgt-Jg-lVv" customClass="ChoiceOfLogsAmountCell" customModule="DockTracker" customModuleProvider="target">
@@ -635,7 +640,7 @@
                                             <outlet property="amountLabel" destination="c48-eV-Kv1" id="Y5B-hm-798"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogsDateCell" rowHeight="57" id="bjH-g5-Eit" customClass="LogsDateSwitchCell" customModule="DockTracker" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogsDateSwitchCell" rowHeight="57" id="bjH-g5-Eit" customClass="LogsDateSwitchCell" customModule="DockTracker" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="106.5" width="375" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bjH-g5-Eit" id="5On-ta-oEZ">
@@ -646,6 +651,7 @@
                                                     <rect key="frame" x="313" y="13" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="clickOnSwitch:" destination="H7w-dh-iab" eventType="valueChanged" id="Pz7-tA-aUb"/>
+                                                        <action selector="clickSwitch:" destination="bjH-g5-Eit" eventType="valueChanged" id="drb-qZ-TbB"/>
                                                         <action selector="switchInCLick:" destination="H7w-dh-iab" eventType="valueChanged" id="Aj0-85-1rJ"/>
                                                     </connections>
                                                 </switch>
@@ -664,11 +670,20 @@
                                                 <constraint firstItem="Z38-ms-BUu" firstAttribute="leading" secondItem="5On-ta-oEZ" secondAttribute="leading" constant="20" id="seW-pg-raS"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="dateSwitch" destination="7kB-is-I9a" id="P3b-2a-Gjf"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="UTE-ze-Ell" firstAttribute="bottom" secondItem="zOe-qx-LEh" secondAttribute="bottom" id="7rv-jP-uq9"/>
+                            <constraint firstItem="zOe-qx-LEh" firstAttribute="trailing" secondItem="UTE-ze-Ell" secondAttribute="trailing" id="HpK-d1-f6f"/>
+                            <constraint firstItem="zOe-qx-LEh" firstAttribute="leading" secondItem="UTE-ze-Ell" secondAttribute="leading" id="JWo-bk-O1f"/>
+                            <constraint firstItem="zOe-qx-LEh" firstAttribute="top" secondItem="4ch-nw-Sgd" secondAttribute="top" id="meP-cw-Vje"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="UTE-ze-Ell"/>
                     </view>
                     <connections>

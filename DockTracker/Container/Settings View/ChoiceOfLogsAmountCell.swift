@@ -8,11 +8,15 @@
 
 import UIKit
 
+protocol ChoiceOfLogsAmountCellDelegate {
+    func changeAmountOfLogs(amount: Int)
+}
 
 class ChoiceOfLogsAmountCell: UITableViewCell {
 
     @IBOutlet var amountLabel: UILabel!
     var logsAmount = 0
+    var delegate: ChoiceOfLogsAmountCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,5 +34,4 @@ class ChoiceOfLogsAmountCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
 }

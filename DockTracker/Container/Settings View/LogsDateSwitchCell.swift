@@ -14,7 +14,8 @@ protocol LogsDateSwitchCellDelegate {
 
 class LogsDateSwitchCell: UITableViewCell {
     
-    @IBOutlet var dateSwitch: UISwitch!
+    @IBOutlet weak var dateSwitch: UISwitch!
+    
     var needDate = false
     var delegate: LogsDateSwitchCellDelegate?
     
@@ -22,12 +23,11 @@ class LogsDateSwitchCell: UITableViewCell {
         super.awakeFromNib()
         dateSwitch.isOn = false
     }
-    
-    @IBAction func clickOnSwitch(_ sender: Any) {
-       needDate = !needDate
-       delegate?.changeNeedLogs(need: needDate)
+    @IBAction func clickSwitch(_ sender: UISwitch) {
+        needDate = !needDate
+        delegate?.changeNeedLogs(need: needDate)
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }

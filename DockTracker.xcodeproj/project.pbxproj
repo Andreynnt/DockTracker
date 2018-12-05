@@ -155,9 +155,9 @@
 		6D90DF5021B717A600D98987 /* Settings View */ = {
 			isa = PBXGroup;
 			children = (
+				6D90DF4E21B70C2A00D98987 /* ContainerSettingsViewController.swift */,
 				6D4D364021A9A245005E0F93 /* LogsDateSwitchCell.swift */,
 				6D4D364521A9B8E2005E0F93 /* ChoiceOfLogsAmountCell.swift */,
-				6D90DF4E21B70C2A00D98987 /* ContainerSettingsViewController.swift */,
 			);
 			path = "Settings View";
 			sourceTree = "<group>";

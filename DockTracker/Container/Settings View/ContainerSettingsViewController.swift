@@ -14,6 +14,8 @@ class ContainerSettingsViewController: UIViewController, UITableViewDataSource, 
     
     var selectedIndexPath: IndexPath?
     var selectedValue = -1
+    var logsSwichDelegate: LogsDateSwitchCellDelegate?
+    var logsAmountDelegate: ChoiceOfLogsAmountCellDelegate?
     
     struct Sections {
         var name: String!
@@ -22,6 +24,7 @@ class ContainerSettingsViewController: UIViewController, UITableViewDataSource, 
     }
     
     var sections = [
+        Sections(name: "", fields: [1], footer: ""),
         Sections(name: "Number of logs", fields: [-1, 10, 100, 500, 1000, 3000], footer: "Only return this number of log lines from the end of the logs")
     ]
     
@@ -48,9 +51,17 @@ class ContainerSettingsViewController: UIViewController, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath.section == 0) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LogsDateSwitchCell", for: indexPath) as! LogsDateSwitchCell
+            cell.delegate = self.logsSwichDelegate
+            cell.selectionStyle = .none
+            return cell
+        }
+
         let logsAmount = sections[indexPath.section].fields[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChoiceOfLogsAmountCell", for: indexPath)
         if let castedCell = cell as? ChoiceOfLogsAmountCell {
+            castedCell.delegate = self.logsAmountDelegate
             castedCell.fill(with: logsAmount)
             if (selectedValue == logsAmount) {
                 selectedIndexPath = indexPath
@@ -62,6 +73,9 @@ class ContainerSettingsViewController: UIViewController, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            return
+        }
         if selectedIndexPath != nil {
             if selectedIndexPath == indexPath {
                 return
@@ -69,10 +83,8 @@ class ContainerSettingsViewController: UIViewController, UITableViewDataSource, 
             tableView.cellForRow(at: selectedIndexPath!)?.accessoryType = UITableViewCell.AccessoryType.none
         }
         selectedValue = sections[indexPath.section].fields[indexPath.row]
-        //delegate?.changeAmountOfLogs(amount: selectedValue)
         selectedIndexPath = indexPath
+        logsAmountDelegate?.changeAmountOfLogs(amount: selectedValue)
         tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.checkmark
     }
-    
-    
 }
