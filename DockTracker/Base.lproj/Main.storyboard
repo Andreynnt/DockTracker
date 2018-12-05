@@ -48,15 +48,17 @@
                                                 <state key="normal" title="Information">
                                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="clickInformation:" destination="9RU-53-90V" eventType="touchUpInside" id="rXj-Gg-zbq"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28L-lG-AHJ">
-                                                <rect key="frame" x="260" y="0.0" width="60" height="40"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28L-lG-AHJ">
+                                                <rect key="frame" x="263" y="0.0" width="57" height="40"/>
                                                 <state key="normal" title="Settings">
                                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="clickSettingsButton:" destination="9RU-53-90V" eventType="touchUpInside" id="2lr-iM-TS9"/>
+                                                    <action selector="clickSettings:" destination="9RU-53-90V" eventType="touchUpInside" id="9td-hG-vWb"/>
                                                 </connections>
                                             </button>
                                         </subviews>

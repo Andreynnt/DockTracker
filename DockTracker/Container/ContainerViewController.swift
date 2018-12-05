@@ -35,20 +35,28 @@ class ContainerViewController: UIViewController {
     
     var containersParameters = [СontainerParameter]()
     
+    //views inside tableCard
+    let settingsViewControllerName = "settingsViewName"
+    let informationViewControllerName = "informationViewName"
+    var activeViewContollerName = "informationViewName"
+    var viewsInsideTableCard = [String: UIViewController]()
+    
     //settings view controller inside tableCard
     lazy var settingsViewController: ContainerSettingsViewController = {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let viewController = storyboard.instantiateViewController(withIdentifier: "ContainerSettingsViewController") as! ContainerSettingsViewController
         self.addViewToTableCard(viewController: viewController)
+        viewController.view.isHidden = true
         return viewController
     }()
     
-     //information view controller inside tableCard
+    //information view controller inside tableCard
     lazy var informationViewController: ContainerInformationViewController = {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let viewController = storyboard.instantiateViewController(withIdentifier: "ContainerInformationViewController") as! ContainerInformationViewController
         viewController.containerParameters = containersParameters
         self.addViewToTableCard(viewController: viewController)
+        viewController.view.isHidden = true
         return viewController
     }()
     
@@ -63,7 +71,6 @@ class ContainerViewController: UIViewController {
         super.viewDidLoad()
         containersParameters = container.getParametersArray()
         makeMainBackgroundStylish()
-        makeButtonsWrapperStylish()
         makeButtonStylish(logsButton)
         let img = UIImage(named: "bottom@2x.png")
         topBackgroundCard.backgroundColor = UIColor(patternImage: img!)
@@ -76,18 +83,12 @@ class ContainerViewController: UIViewController {
         card.clipsToBounds = true
         containerTopCard.addSubview(card)
         
-        //init lazy information and view controllers
-        _ = informationViewController
-        //_ = settingsViewController
+        //init information and view controllers
+        viewsInsideTableCard[informationViewControllerName] = informationViewController
+        viewsInsideTableCard[settingsViewControllerName] = settingsViewController
+        viewsInsideTableCard[activeViewContollerName]?.view.isHidden = false
     }
     
-    func makeButtonsWrapperStylish() {
-        buttonsWrapperCard.layer.shadowColor = UIColor.darkGray.cgColor
-        buttonsWrapperCard.layer.shadowRadius = 3
-        buttonsWrapperCard.layer.shadowOpacity = 0.7
-        buttonsWrapperCard.layer.shadowOffset = CGSize(width: 0, height: 2)
-    }
-
     func makeMainBackgroundStylish() {
         mainBackground.layer.shadowColor = UIColor.darkGray.cgColor
         mainBackground.layer.shadowRadius = 5
@@ -127,8 +128,22 @@ class ContainerViewController: UIViewController {
         performSegue(withIdentifier: openLogsSegue, sender: self)
     }
     
-    @IBAction func clickSettingsButton(_ sender: UIButton) {
-        
+    @IBAction func clickSettings(_ sender: UIButton) {
+        if activeViewContollerName == settingsViewControllerName {
+            return
+        }
+        viewsInsideTableCard[activeViewContollerName]?.view.isHidden = true
+        viewsInsideTableCard[settingsViewControllerName]?.view.isHidden = false
+        activeViewContollerName = settingsViewControllerName
+    }
+    
+    @IBAction func clickInformation(_ sender: UIButton) {
+        if activeViewContollerName == informationViewControllerName {
+            return
+        }
+        viewsInsideTableCard[activeViewContollerName]?.view.isHidden = true
+        viewsInsideTableCard[informationViewControllerName]?.view.isHidden = false
+        activeViewContollerName = informationViewControllerName
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
