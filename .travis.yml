@@ -2,7 +2,7 @@ branches:
   only:
     - develop
     - master
-language: swift
+language: objective-c
 os: osx
 osx_image: xcode10.1
 xcode_workspace: DockTracker.xcworkspace # path to your xcodeproj folder
