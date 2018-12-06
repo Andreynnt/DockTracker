@@ -53,6 +53,7 @@ class ContainerSettingsViewController: UIViewController, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if (indexPath.section == 0) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "LogsDateSwitchCell", for: indexPath) as! LogsDateSwitchCell
+            cell.dateSwitch.onTintColor = Colors.secondColor
             cell.delegate = self.logsSwichDelegate
             cell.selectionStyle = .none
             return cell
@@ -65,6 +66,7 @@ class ContainerSettingsViewController: UIViewController, UITableViewDataSource, 
             castedCell.fill(with: logsAmount)
             if (selectedValue == logsAmount) {
                 selectedIndexPath = indexPath
+                castedCell.tintColor = Colors.secondColor
                 castedCell.accessoryType = UITableViewCell.AccessoryType.checkmark
             }
         }
@@ -85,6 +87,7 @@ class ContainerSettingsViewController: UIViewController, UITableViewDataSource, 
         selectedValue = sections[indexPath.section].fields[indexPath.row]
         selectedIndexPath = indexPath
         logsAmountDelegate?.changeAmountOfLogs(amount: selectedValue)
+        tableView.cellForRow(at: indexPath)?.tintColor = Colors.secondColor
         tableView.cellForRow(at: indexPath)?.accessoryType = UITableViewCell.AccessoryType.checkmark
     }
 }

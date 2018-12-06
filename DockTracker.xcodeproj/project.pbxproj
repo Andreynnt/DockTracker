@@ -14,6 +14,9 @@
 		6D0924412192DF6F004E138B /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0924402192DF6F004E138B /* AccountViewController.swift */; };
 		6D0FD12A218F92B4005D7088 /* buttonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0FD129218F92B4005D7088 /* buttonCell.swift */; };
 		6D1560DC21AABDC100A0CD3B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1560DB21AABDC100A0CD3B /* TabBarController.swift */; };
+		6D1B7B6921B90D760023592A /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D1B7B6721B90D010023592A /* Montserrat-Medium.ttf */; };
+		6D1B7B6A21B90D780023592A /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D1B7B6821B90D660023592A /* Montserrat-Regular.ttf */; };
+		6D1B7B6B21B90D7A0023592A /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D1B7B6621B90CF90023592A /* Montserrat-Bold.ttf */; };
 		6D329A9321AED4490064C5DA /* spinner1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6D329A9221AED4490064C5DA /* spinner1.gif */; };
 		6D46CF7121B403EB00CE59F7 /* top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46CF7021B403EB00CE59F7 /* top@2x.png */; };
 		6D46CF7321B4046D00CE59F7 /* bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46CF7221B4046D00CE59F7 /* bottom@2x.png */; };
@@ -51,6 +54,9 @@
 		6D0924402192DF6F004E138B /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		6D0FD129218F92B4005D7088 /* buttonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buttonCell.swift; sourceTree = "<group>"; };
 		6D1560DB21AABDC100A0CD3B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		6D1B7B6621B90CF90023592A /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		6D1B7B6721B90D010023592A /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		6D1B7B6821B90D660023592A /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		6D329A9221AED4490064C5DA /* spinner1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = spinner1.gif; sourceTree = "<group>"; };
 		6D46CF7021B403EB00CE59F7 /* top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top@2x.png"; sourceTree = "<group>"; };
 		6D46CF7221B4046D00CE59F7 /* bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottom@2x.png"; sourceTree = "<group>"; };
@@ -112,6 +118,16 @@
 				6D0924402192DF6F004E138B /* AccountViewController.swift */,
 			);
 			path = AccountView;
+			sourceTree = "<group>";
+		};
+		6D1B7B6521B90CA90023592A /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				6D1B7B6721B90D010023592A /* Montserrat-Medium.ttf */,
+				6D1B7B6821B90D660023592A /* Montserrat-Regular.ttf */,
+				6D1B7B6621B90CF90023592A /* Montserrat-Bold.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 		6D47EF38218E50BF0054F7E3 /* Stacks */ = {
@@ -268,6 +284,7 @@
 				6D4F696A21B884DE00531AD7 /* Colors.swift */,
 				6D1560DB21AABDC100A0CD3B /* TabBarController.swift */,
 				6DFA98B02187200C00F0AD0C /* AppDelegate.swift */,
+				6D1B7B6521B90CA90023592A /* fonts */,
 				6D329A9221AED4490064C5DA /* spinner1.gif */,
 				6D46CF7021B403EB00CE59F7 /* top@2x.png */,
 				6D46CF7221B4046D00CE59F7 /* bottom@2x.png */,
@@ -355,12 +372,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D1B7B6B21B90D7A0023592A /* Montserrat-Bold.ttf in Resources */,
+				6D1B7B6A21B90D780023592A /* Montserrat-Regular.ttf in Resources */,
 				6D46CF7321B4046D00CE59F7 /* bottom@2x.png in Resources */,
 				6DF09DA721B13A7C00D8CBEF /* TopContainerCardView.xib in Resources */,
 				6D87F84A21904305005DE656 /* icons.xcassets in Resources */,
 				6D46CF7121B403EB00CE59F7 /* top@2x.png in Resources */,
 				6DFA98BB2187200D00F0AD0C /* LaunchScreen.storyboard in Resources */,
 				6D329A9321AED4490064C5DA /* spinner1.gif in Resources */,
+				6D1B7B6921B90D760023592A /* Montserrat-Medium.ttf in Resources */,
 				6DFA98B62187200C00F0AD0C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -92,6 +92,7 @@ class ContainerViewController: UIViewController {
         containersParameters = container.getParametersArray()
         makeMainBackgroundStylish()
         makeButtonStylish(logsButton)
+        //logsButton.backgroundColor = Colors.thirdColor
         let img = UIImage(named: "bottom@2x.png")
         topBackgroundCard.backgroundColor = UIColor(patternImage: img!)
         
