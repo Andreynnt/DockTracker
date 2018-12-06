@@ -1,5 +1,7 @@
 branches:
-  - develop
+  only:
+    - develop
+    - master
 language: swift
 xcode_workspace: DockTracker.xcworkspace # path to your xcodeproj folder
 xcode_destination: xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
