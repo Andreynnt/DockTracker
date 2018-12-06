@@ -1,8 +1,11 @@
+os:
+  - osx
+  - linux
+osx_image: xcode9
+language: generic
 branches:
   only:
     - develop
     - master
-language: swift
-osx_image: xcode10.1
 xcode_workspace: DockTracker.xcworkspace # path to your xcodeproj folder
 xcode_destination: platform=iOS Simulator,OS=11.3,name=iPhone X
