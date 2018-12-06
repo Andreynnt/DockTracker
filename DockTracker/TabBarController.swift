@@ -10,7 +10,7 @@ import UIKit
 
 class TabBarController: UITabBarController {
     @IBOutlet var myBar: UITabBar!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         myBar.isTranslucent = false

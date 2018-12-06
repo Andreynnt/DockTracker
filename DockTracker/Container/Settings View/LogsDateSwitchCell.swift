@@ -8,17 +8,17 @@
 
 import UIKit
 
-protocol LogsDateSwitchCellDelegate {
+protocol LogsDateSwitchCellDelegate: class {
     func changeNeedLogs(need: Bool)
 }
 
 class LogsDateSwitchCell: UITableViewCell {
-    
+
     @IBOutlet weak var dateSwitch: UISwitch!
-    
+
     var needDate = false
-    var delegate: LogsDateSwitchCellDelegate?
-    
+    weak var delegate: LogsDateSwitchCellDelegate?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         dateSwitch.isOn = false

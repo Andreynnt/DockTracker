@@ -11,7 +11,7 @@ import UIKit
 class ContainerInStackCell: UITableViewCell {
 
     @IBOutlet var nameLabel: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -19,7 +19,7 @@ class ContainerInStackCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     func fillCell(with name: String) {
         nameLabel.text = name
     }

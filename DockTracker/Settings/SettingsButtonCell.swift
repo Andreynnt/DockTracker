@@ -21,7 +21,7 @@ class SettingsButtonCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
     func fillCell(with text: String) {
         button!.setTitle(text, for: .normal)
     }

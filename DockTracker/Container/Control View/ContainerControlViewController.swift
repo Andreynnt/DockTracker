@@ -9,7 +9,7 @@
 import UIKit
 
 class ContainerControlViewController: UIViewController {
-    
+
     var container: Container?
 
     override func viewDidLoad() {
@@ -19,13 +19,13 @@ class ContainerControlViewController: UIViewController {
     func startContainer(with name: String) {
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/\(name)/start?p=80:3000"
-        
+
         //self.startStopButton.setTitle("Starting", for: .normal)
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+        URLSession.shared.dataTask(with: request) { (_, response, error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -34,7 +34,7 @@ class ContainerControlViewController: UIViewController {
                 print("Can't httpResponse = response as? HTTPURLResponse")
                 return
             }
-            
+
             switch httpResponse.statusCode {
             case 204:
                 DispatchQueue.main.async {
@@ -53,18 +53,18 @@ class ContainerControlViewController: UIViewController {
             }
             }.resume()
     }
-    
+
     func stopContainer(with name: String) {
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/\(name)/stop"
-        
+
         //self.startStopButton.setTitle("Stopping", for: .normal)
         print("Going to request \(urlString)")
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+        URLSession.shared.dataTask(with: request) { (_, response, error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -73,7 +73,7 @@ class ContainerControlViewController: UIViewController {
                 print("Can't httpResponse = response as? HTTPURLResponse")
                 return
             }
-            
+
             switch httpResponse.statusCode {
             case 204:
                 print("Successful stop")

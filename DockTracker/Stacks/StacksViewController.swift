@@ -11,7 +11,7 @@ import UIKit
 class StacksViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var containersTable: UITableView!
-    
+
     var containers = [Container]()
     var selectedContainer = Container()
     var groupedContainers = [String: [Container]]()
@@ -20,13 +20,13 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
     var reloadButtonIsBlocked = false
     let cellIdentifier = "containerCell"
     var selectedId: String!
-    
+
     lazy var refresher: UIRefreshControl = {
         let refreshControll = UIRefreshControl()
         refreshControll.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
         return refreshControll
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         UserSettings.clearUrls()
@@ -36,15 +36,15 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         tableView.refreshControl = refresher
         tableView.separatorStyle = .none
-        tableView.backgroundView = nil;
+        tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.white
         fillStacksView(ContainersManager.shared().containers)
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groupedContainers.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let id = idArray[indexPath.row]
         let groupOfContainers = groupedContainers[id]
@@ -56,7 +56,7 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         }
         return cell
     }
-    
+
     func fillStacksView(_ containersFromManager: [Container]) {
         for container in containersFromManager {
             if groupedContainers[container.imageId.value] != nil {
@@ -67,12 +67,12 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedId = idArray[indexPath.row]
         performSegue(withIdentifier: "openGroup", sender: self)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openGroup" {
             let groupOfContainers = groupedContainers[self.selectedId]
@@ -81,13 +81,13 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
             groupController.mainTitle = groupedContainers[selectedId]?.first?.image.value
         }
     }
-    
-    func changeContainerState(_ newState: String) -> Void {
+
+    func changeContainerState(_ newState: String) {
         containers[containerNum].state.value = newState
         let indexPath = IndexPath(item: containerNum, section: 0)
         tableView.reloadRows(at: [indexPath], with: .none)
     }
-    
+
     func clearData() {
         containers.removeAll()
         groupedContainers.removeAll()
@@ -98,17 +98,17 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
     func updateTable() {
         self.tableView.reloadData()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
-    
+
     @objc
     func refreshTable() {
         ContainersManager.shared().getContainers(mainCallback: {() -> Void in

@@ -9,20 +9,20 @@
 import UIKit
 
 class ContainerInformationViewController: UIViewController, UITableViewDataSource, CellDelegate {
-    
+
     var containerParameters = [СontainerParameter]()
     let containerParameterCellIdentifier = "containerParameterCellIdentifier"
     @IBOutlet weak var tableView: UITableView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return containerParameters.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
         let parameter = containerParameters[indexPath.row]
@@ -34,7 +34,7 @@ class ContainerInformationViewController: UIViewController, UITableViewDataSourc
         cell?.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell!
     }
-    
+
     func contentDidChange() {
         self.tableView.beginUpdates()
         self.tableView.endUpdates()

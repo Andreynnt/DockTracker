@@ -16,14 +16,14 @@ class UserSettings {
         urls.append(parsedUrl)
         UserDefaults.standard.set(urls, forKey: "urls")
     }
-    
+
     static func parseUrl(domain: String, port: Int) -> String {
         return parseDomain(domain) + ":" + String(parsePort(port))
     }
-    
-    static func printUrls() -> Void {
-        let s1 = getUrls()
-        print(s1)
+
+    static func printUrls() {
+        let str = getUrls()
+        print(str)
     }
 
     static func getUrls() -> [String] {
@@ -34,7 +34,7 @@ class UserSettings {
         UserDefaults.standard.set(newUrls, forKey: "urls")
         return newUrls
     }
-    
+
     static func getTuplesWithUrls() -> [(domain: String, port: Int)] {
         let urlsArray = getUrls()
         var urlsTupples = [(domain: String, port: Int)]()
@@ -45,7 +45,7 @@ class UserSettings {
         }
         return urlsTupples
     }
-    
+
     static func getDomains() -> [String] {
         let urlsArray = getUrls()
         print(urlsArray)
@@ -57,22 +57,22 @@ class UserSettings {
         }
         return domainsArray
     }
-    
+
     static func getDomainAndPort(_ url: String) -> (domain: String, port: Int)? {
         if let range = url.range(of: ":") {
             let domain = url[..<range.lowerBound]
             let port = Int(url[range.upperBound..<url.endIndex])
-            if (port != nil) {
+            if port != nil {
                  return (String(domain), port!)
             }
         }
         return nil
     }
-    
+
     static func getUrl(at num: Int = 0) -> String? {
         return "http://" + getUrls()[num]
     }
-    
+
     static func parseDomain(_ domain: String) -> String {
         var parsedDomain = domain
         if domain.last == "/" {
@@ -80,16 +80,16 @@ class UserSettings {
         }
         return parsedDomain
     }
-    
+
     static func parsePort(_ port: Int) -> Int {
         var parsedPort = port
-        if (port == 0) {
+        if port == 0 {
             parsedPort = 80
         }
         return parsedPort
     }
-    
-    static func clearUrls() -> Void {
+
+    static func clearUrls() {
         UserDefaults.standard.set([], forKey: "urls")
     }
 }

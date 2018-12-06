@@ -17,16 +17,15 @@ class ContainerDataCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var value: UILabel!
     @IBOutlet weak var button: UIButton!
-    
-    
+
     weak var delegate: CellDelegate?
     var needHideText = false
     var fullTextIsShown = false
-    
+
     var shortText: String?
     var fullText: String?
     let maxLength = 31
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -34,12 +33,12 @@ class ContainerDataCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+
     func fillCell(with containerParameter: СontainerParameter) {
         self.name.text = containerParameter.name
         self.value.text = containerParameter.value
         fullText = containerParameter.value
-        
+
         if containerParameter.value.count > maxLength {
             needHideText = true
             shortText = String(containerParameter.value.prefix(maxLength))
@@ -47,11 +46,11 @@ class ContainerDataCell: UITableViewCell {
             value.text = shortText
             return
         }
-        
+
         button.isHidden = true
         value.text = fullText
     }
-    
+
     func changeText() {
         if fullTextIsShown {
             value.text = shortText
@@ -61,11 +60,9 @@ class ContainerDataCell: UITableViewCell {
         fullTextIsShown = !fullTextIsShown
         delegate?.contentDidChange()
     }
-    
+
     @IBAction func clickMoreButton(_ sender: UIButton) {
         changeText()
     }
-    
+
 }
-
-

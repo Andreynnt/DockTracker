@@ -12,7 +12,7 @@ class ButtonCell: UITableViewCell {
 
     @IBOutlet weak var actionButton: UIButton!
     var callback: (() -> Void)?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,7 +26,7 @@ class ButtonCell: UITableViewCell {
     func fillCell(with text: String) {
         actionButton.setTitle(text, for: .normal)
     }
-    
+
     @IBAction func clickOnButton(_ sender: Any) {
         if callback != nil {
             callback!()

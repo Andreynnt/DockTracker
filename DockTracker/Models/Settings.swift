@@ -21,5 +21,4 @@ struct Settings: Codable {
 //        self.address = json[addressKey]
 //    }
 
-
 }
