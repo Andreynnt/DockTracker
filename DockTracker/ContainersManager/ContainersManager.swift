@@ -22,7 +22,6 @@ class ContainersManager {
         .fetchedResultsController(entityName: "FavouriteContainerCoreData", keyForSort: "id")
     var favouriteContainersMap = [String: Bool]()
     
-    
     private static var sharedContainersManager: ContainersManager = {
         let containersManager = ContainersManager()
         return containersManager
@@ -32,9 +31,7 @@ class ContainersManager {
         return sharedContainersManager
     }
 
-    private init() {
-        
-    }
+    private init() { }
     
     func getContainers(mainCallback: (() -> Void)? = nil, callback: ((_ containers: [Container]) -> Void)? = nil) {
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
@@ -49,20 +46,16 @@ class ContainersManager {
             guard let data = data else { return }
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
-
                 do {
-                    //берем из бд
                     try self.fetchedResultsController.performFetch()
                     let coreDataContainers = self.fetchedResultsController.fetchedObjects as! [FavouriteContainerCoreData]
                     self.fillFavouriteMap(coreDataContainers: coreDataContainers)
                 } catch {
                     print(error)
                 }
-                
                 self.containers = self.parseContainers(from: json)
-                
                 callback?(self.containers)
-
+                
                 if mainCallback != nil {
                     DispatchQueue.main.async {
                         mainCallback!()
@@ -93,7 +86,7 @@ class ContainersManager {
 
         for i in postsArray {
             guard let postDict = i as? NSDictionary,
-                let container = Container(dict: postDict) else { continue }
+                var container = Container(dict: postDict) else { continue }
             tmpContainers.append(container)
     
             if container.isStarted() {
@@ -102,10 +95,27 @@ class ContainersManager {
                 stoppedContainers.append(container)
             }
             
-            if let _ = favouriteContainersMap[container.id.value] {
+            if favouriteContainersMap[container.id.value] != nil {
+                container.isFavourite = true
                 favouriteContainers.append(container)
             }
         }
         return tmpContainers
     }
+    
+    func deleteFromFavourite(container: Container) {
+        for (index, favContainer) in favouriteContainers.enumerated() where favContainer.id.value == container.id.value {
+                favouriteContainers.remove(at: index)
+                return
+        }
+        if favouriteContainersMap[container.id.value] != nil {
+            favouriteContainersMap.removeValue(forKey: container.id.value)
+        }
+    }
+    
+    func addToFavourite(container: Container) {
+        favouriteContainersMap[container.id.value] = true
+        favouriteContainers.append(container)
+    }
+
 }

@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension FavouriteContainerCoreData {
     convenience init() {
         self.init(entity: CoreDataManager.instance.entityForName(entityName: "FavouriteContainerCoreData"), insertInto: CoreDataManager.instance.managedObjectContext)

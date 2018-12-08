@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ContainersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var tableView: UITableView!
@@ -23,25 +24,15 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     var noStoppedContainers = false
 
     var containers = [Container]()
-//    struct Sections {
-//        var name: String!
-//        var fields: [Container]!
-//        var footer: String!
-//    }
-//
-//    var sections = [
-//        Sections(name: "Working containers", fields: [Container](),
-//                 footer: "Running and paused containers"),
-//        Sections(name: "Stopped containers", fields: [Container](),
-//                 footer: "Containers wich were stopped by user or error")
-//    ]
 
     lazy var refresher: UIRefreshControl = {
         let refreshControll = UIRefreshControl()
         refreshControll.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
         return refreshControll
     }()
-
+    
+    var fetchController = ContainersManager.shared().fetchedResultsController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //UserSettings.addUrl(domain: "andrey-babkov.ru", port: 5555)
@@ -52,24 +43,9 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.white
         navigationController?.title = "Containers"
-        //fillContainers(ContainersManager.shared().containers)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if noRunningContainers == true && indexPath.section == runningSectionNum && indexPath.row == 0 {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: emptyCellIdentificator, for: indexPath)
-//            return cell
-//        } else if noStoppedContainers == true && indexPath.section == stoppedSectionNum && indexPath.row == 0 {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: emptyCellIdentificator, for: indexPath)
-//            return cell
-//        }
-
-//        let model = sections[indexPath.section].fields[indexPath.row]
-//        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-//
-//        if let castedCell = cell as? ContainerTableViewCell {
-//            castedCell.fillCell(with: model)
-//        }
         let model = containers[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
 
@@ -79,48 +55,79 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
 
-//    func fillContainers(_ containersFromManager: [Container]) {
-//        for container in containersFromManager {
-//            if container.isStarted() {
-//                    sections[runningSectionNum].fields.append(container)
-//            } else {
-//                    sections[stoppedSectionNum].fields.append(container)
-//            }
-//        }
-//        checkIfSectionsAreEmpty()
-//    }
-
-//    func checkIfSectionsAreEmpty() {
-//        if sections[runningSectionNum].fields.isEmpty {
-//            let emptyContainer = Container()
-//            sections[runningSectionNum].fields.append(emptyContainer)
-//            self.noRunningContainers = true
-//        } else {
-//             self.noRunningContainers = false
-//        }
-//
-//        if sections[stoppedSectionNum].fields.isEmpty {
-//            let emptyContainer = Container()
-//            sections[stoppedSectionNum].fields.append(emptyContainer)
-//            self.noStoppedContainers = true
-//        } else {
-//            self.noStoppedContainers = false
-//        }
-//    }
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedContainer = containers[indexPath.row]
         self.containerNum = indexPath.row
         performSegue(withIdentifier: "containers-container", sender: self)
     }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if noRunningContainers && indexPath.section == runningSectionNum {
-            return 50
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let favourite = importantAction(at: indexPath)
+        let delete = deleteAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [delete, favourite])
+    }
+    
+    func importantAction(at: IndexPath) -> UIContextualAction {
+        var selectedContainer = containers[at.row]
+        if selectedContainer.isFavourite {
+            let action = UIContextualAction(style: .normal, title: "Delete from imporatant") { (action, _, completion) in
+                self.deleteFromCoreData(container: selectedContainer)
+                selectedContainer.isFavourite = false
+                ContainersManager.shared().deleteFromFavourite(container: selectedContainer)
+                action.backgroundColor = UIColor.green
+                completion(true)
+            }
+            action.backgroundColor = UIColor.green
+            return action
         }
-        return 80
+        let action = UIContextualAction(style: .normal, title: "Add to imporatant") { (action, _, completion) in
+            self.saveToCoreData(container: selectedContainer)
+            selectedContainer.isFavourite = true
+            ContainersManager.shared().addToFavourite(container: selectedContainer)
+            action.backgroundColor = UIColor.green
+            completion(true)
+        }
+        action.backgroundColor = UIColor.green
+        return action
+    }
+    
+    func saveToCoreData(container: Container) {
+        let managedObject = FavouriteContainerCoreData()
+        managedObject.id = container.id.value
+        CoreDataManager.instance.saveContext()
     }
 
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, _, completion) in
+            let container = self.containers[indexPath.row]
+            if container.isFavourite {
+                ContainersManager.shared().deleteFromFavourite(container: container)
+                self.deleteFromCoreData(container: container)
+            }
+            self.containers.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            //TO DO
+            self.deleteContainerFromServer()
+            action.backgroundColor = UIColor.red
+            completion(true)
+        }
+        return action
+    }
+    
+    func deleteFromCoreData(container: Container) {
+        //очень долго, O(n)
+        let containers = self.fetchController.fetchedObjects as! [FavouriteContainerCoreData]
+        for (index, item) in containers.enumerated() {
+            if let id = item.id {
+                if id == container.id.value {
+                    let objectToDelete = self.fetchController.fetchedObjects?[index] as! NSManagedObject
+                    CoreDataManager.instance.managedObjectContext.delete(objectToDelete)
+                    CoreDataManager.instance.saveContext()
+                }
+            }
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "containers-container" {
             let containerView = segue.destination as! ContainerViewController
@@ -134,21 +141,24 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
 
+    func deleteContainerFromServer() {
+        
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection num: Int) -> Int {
         return containers.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if noRunningContainers && indexPath.section == runningSectionNum {
+            return 50
+        }
+        return 80
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return sections[section].name
-//    }
-
-//    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-//        return sections[section].footer
-//    }
 
     func updateTable() {
         self.tableView.reloadData()

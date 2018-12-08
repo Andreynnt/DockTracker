@@ -18,6 +18,7 @@ struct Container {
     var status = СontainerParameter(name: "Status", value: "")
     var command = СontainerParameter(name: "Command", value: "")
     var imageId = СontainerParameter(name: "Image id", value: "")
+    var isFavourite = false
     
     var parametersArray = [СontainerParameter]()
 

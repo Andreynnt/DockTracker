@@ -21,8 +21,8 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     
     let segueToContainersView = "menu-containers"
     
-    var fetchedResultsController = CoreDataManager.instance
-        .fetchedResultsController(entityName: "FavouriteContainerCoreData", keyForSort: "id")
+    //он уже выполнил fetch, поэтому можем спокойно работать
+    var fetchedResultsController = ContainersManager.shared().fetchedResultsController
     
     var favouriteContainers = [FavouriteContainerCoreData]()
     var containersToSend = [Container]()
@@ -30,7 +30,6 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchedResultsController.delegate = self
-    
         favouriteAmountLabel.text = String(ContainersManager.shared().favouriteContainers.count)
         workingAmountLabel.text = String(ContainersManager.shared().workingContainers.count)
         stoppedAmountLabel.text = String(ContainersManager.shared().stoppedContainers.count)
@@ -43,19 +42,6 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
         
         let tapStopped = UITapGestureRecognizer(target: self, action: #selector(handleTapOnStopped))
         stoppedSection.addGestureRecognizer(tapStopped)
-        
-//print all favourites containers
-//        do {
-//         try fetchedResultsController.performFetch()
-//        } catch {
-//            print("AA")
-//        }
-//        let containers = fetchedResultsController.fetchedObjects as! [FavouriteContainerCoreData]
-//        for container in containers {
-//            let id = container.id ?? "No id"
-//            print("id = \(id)")
-//        }
-        
     }
     
     @objc func handleTapOnFavourite(_ sender: UITapGestureRecognizer) {
@@ -76,31 +62,10 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == segueToContainersView {
             let containerView = segue.destination as! ContainersViewController
+            containerView.fetchController = self.fetchedResultsController
             containerView.containers = containersToSend
         }
     }
-    
-//    example how to delete
-//    @IBAction func touchDeleteButton(_ sender: UIButton) {
-//        let containers = fetchedResultsController.fetchedObjects as! [FavouriteContainerCoreData]
-//        for (index, container) in containers.enumerated() {
-//            if let id = container.id {
-//                if id == "3298" {
-//                    let objectToDelete = fetchedResultsController.fetchedObjects?[index] as! NSManagedObject
-//                    CoreDataManager.instance.managedObjectContext.delete(objectToDelete)
-//                    CoreDataManager.instance.saveContext()
-//                }
-//            }
-//        }
-//    }
-    
-//    example how to save
-//    @IBAction func touchAddButton(_ sender: UIButton) {
-//        let managedObject = FavouriteContainerCoreData()
-//        managedObject.id = "3589"
-//        CoreDataManager.instance.saveContext()
-//    }
-    
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
@@ -108,14 +73,17 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
             print(" case .update:")
         case .insert:
             print(" case .insert:")
+            let newValue = String(Int(self.favouriteAmountLabel.text ?? "0")! + 1)
+            self.favouriteAmountLabel.text = newValue
             return
         case .delete:
             print(" case .delete:")
+            let newValue = String(Int(self.favouriteAmountLabel.text ?? "0")! - 1)
+            self.favouriteAmountLabel.text = newValue
             return
         case .move:
             print(" case .move:")
             return
         }
     }
-    
 }
