@@ -22,18 +22,19 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     var noRunningContainers = false
     var noStoppedContainers = false
 
-    struct Sections {
-        var name: String!
-        var fields: [Container]!
-        var footer: String!
-    }
-
-    var sections = [
-        Sections(name: "Working containers", fields: [Container](),
-                 footer: "Running and paused containers"),
-        Sections(name: "Stopped containers", fields: [Container](),
-                 footer: "Containers wich were stopped by user or error")
-    ]
+    var containers = [Container]()
+//    struct Sections {
+//        var name: String!
+//        var fields: [Container]!
+//        var footer: String!
+//    }
+//
+//    var sections = [
+//        Sections(name: "Working containers", fields: [Container](),
+//                 footer: "Running and paused containers"),
+//        Sections(name: "Stopped containers", fields: [Container](),
+//                 footer: "Containers wich were stopped by user or error")
+//    ]
 
     lazy var refresher: UIRefreshControl = {
         let refreshControll = UIRefreshControl()
@@ -51,19 +52,25 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.white
         navigationController?.title = "Containers"
-        fillContainers(ContainersManager.shared().containers)
+        //fillContainers(ContainersManager.shared().containers)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if noRunningContainers == true && indexPath.section == runningSectionNum && indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: emptyCellIdentificator, for: indexPath)
-            return cell
-        } else if noStoppedContainers == true && indexPath.section == stoppedSectionNum && indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: emptyCellIdentificator, for: indexPath)
-            return cell
-        }
+//        if noRunningContainers == true && indexPath.section == runningSectionNum && indexPath.row == 0 {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: emptyCellIdentificator, for: indexPath)
+//            return cell
+//        } else if noStoppedContainers == true && indexPath.section == stoppedSectionNum && indexPath.row == 0 {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: emptyCellIdentificator, for: indexPath)
+//            return cell
+//        }
 
-        let model = sections[indexPath.section].fields[indexPath.row]
+//        let model = sections[indexPath.section].fields[indexPath.row]
+//        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+//
+//        if let castedCell = cell as? ContainerTableViewCell {
+//            castedCell.fillCell(with: model)
+//        }
+        let model = containers[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
 
         if let castedCell = cell as? ContainerTableViewCell {
@@ -72,37 +79,37 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
 
-    func fillContainers(_ containersFromManager: [Container]) {
-        for container in containersFromManager {
-            if container.isStarted() {
-                    sections[runningSectionNum].fields.append(container)
-            } else {
-                    sections[stoppedSectionNum].fields.append(container)
-            }
-        }
-        checkIfSectionsAreEmpty()
-    }
+//    func fillContainers(_ containersFromManager: [Container]) {
+//        for container in containersFromManager {
+//            if container.isStarted() {
+//                    sections[runningSectionNum].fields.append(container)
+//            } else {
+//                    sections[stoppedSectionNum].fields.append(container)
+//            }
+//        }
+//        checkIfSectionsAreEmpty()
+//    }
 
-    func checkIfSectionsAreEmpty() {
-        if sections[runningSectionNum].fields.isEmpty {
-            let emptyContainer = Container()
-            sections[runningSectionNum].fields.append(emptyContainer)
-            self.noRunningContainers = true
-        } else {
-             self.noRunningContainers = false
-        }
-
-        if sections[stoppedSectionNum].fields.isEmpty {
-            let emptyContainer = Container()
-            sections[stoppedSectionNum].fields.append(emptyContainer)
-            self.noStoppedContainers = true
-        } else {
-            self.noStoppedContainers = false
-        }
-    }
+//    func checkIfSectionsAreEmpty() {
+//        if sections[runningSectionNum].fields.isEmpty {
+//            let emptyContainer = Container()
+//            sections[runningSectionNum].fields.append(emptyContainer)
+//            self.noRunningContainers = true
+//        } else {
+//             self.noRunningContainers = false
+//        }
+//
+//        if sections[stoppedSectionNum].fields.isEmpty {
+//            let emptyContainer = Container()
+//            sections[stoppedSectionNum].fields.append(emptyContainer)
+//            self.noStoppedContainers = true
+//        } else {
+//            self.noStoppedContainers = false
+//        }
+//    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedContainer = sections[indexPath.section].fields[indexPath.row]
+        selectedContainer = containers[indexPath.row]
         self.containerNum = indexPath.row
         performSegue(withIdentifier: "containers-container", sender: self)
     }
@@ -128,30 +135,27 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection num: Int) -> Int {
-        return sections[num].fields.count
+        return containers.count
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return 1
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].name
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return sections[section].name
+//    }
 
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return sections[section].footer
-    }
+//    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+//        return sections[section].footer
+//    }
 
     func updateTable() {
         self.tableView.reloadData()
     }
 
     func clearData() {
-        let lastIndex = sections.count - 1
-        for i in 0...lastIndex {
-            sections[i].fields.removeAll()
-        }
+        containers.removeAll()
     }
 
     @objc
@@ -161,7 +165,8 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
             self.refresher.endRefreshing()
         }, callback: { (_ containers: [Container]) -> Void in
             self.clearData()
-            self.fillContainers(containers)
+            //TO DO DOEST WORKING
+            //self.fillContainers(containers)
         })
     }
 }

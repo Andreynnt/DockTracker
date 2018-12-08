@@ -70,6 +70,8 @@ class UserSettings {
     }
 
     static func getUrl(at num: Int = 0) -> String? {
+        //uncomment if no urls
+        //UserSettings.addUrl(domain: "andrey-babkov.ru", port: 5555)
         return "http://" + getUrls()[num]
     }
 

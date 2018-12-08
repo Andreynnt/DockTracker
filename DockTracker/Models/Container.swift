@@ -18,7 +18,7 @@ struct Container {
     var status = СontainerParameter(name: "Status", value: "")
     var command = СontainerParameter(name: "Command", value: "")
     var imageId = СontainerParameter(name: "Image id", value: "")
-
+    
     var parametersArray = [СontainerParameter]()
 
     func isStarted() -> Bool {

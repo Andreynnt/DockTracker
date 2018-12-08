@@ -10,21 +10,32 @@ import Foundation
 
 class ContainersManager {
 
+    //to do. Сейчас используется только для Stacks View
     var containers = [Container]()
+    
+    var stoppedContainers = [Container]()
+    var workingContainers = [Container]()
 
+    //favourite
+    var favouriteContainers = [Container]()
+    var fetchedResultsController = CoreDataManager.instance
+        .fetchedResultsController(entityName: "FavouriteContainerCoreData", keyForSort: "id")
+    var favouriteContainersMap = [String: Bool]()
+    
+    
     private static var sharedContainersManager: ContainersManager = {
         let containersManager = ContainersManager()
         return containersManager
     }()
-
-    private init() {
-
-    }
-
+    
     class func shared() -> ContainersManager {
         return sharedContainersManager
     }
 
+    private init() {
+        
+    }
+    
     func getContainers(mainCallback: (() -> Void)? = nil, callback: ((_ containers: [Container]) -> Void)? = nil) {
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
         let urlString = savedUrl + "/containers/json?all=1"
@@ -38,7 +49,18 @@ class ContainersManager {
             guard let data = data else { return }
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
+
+                do {
+                    //берем из бд
+                    try self.fetchedResultsController.performFetch()
+                    let coreDataContainers = self.fetchedResultsController.fetchedObjects as! [FavouriteContainerCoreData]
+                    self.fillFavouriteMap(coreDataContainers: coreDataContainers)
+                } catch {
+                    print(error)
+                }
+                
                 self.containers = self.parseContainers(from: json)
+                
                 callback?(self.containers)
 
                 if mainCallback != nil {
@@ -50,6 +72,16 @@ class ContainersManager {
                 print(error.localizedDescription)
             }
             }.resume()
+    }
+    
+    //добавляем в хэш мапку избранные контейнеры, чтобы потом было быстро О(1) проверять
+    //есть ли контейнер в избранных
+    func fillFavouriteMap(coreDataContainers: [FavouriteContainerCoreData]) {
+        for container in coreDataContainers {
+            if let id  = container.id {
+                favouriteContainersMap[id] = true
+            }
+        }
     }
 
     func parseContainers(from json: Any) -> [Container] {
@@ -63,6 +95,16 @@ class ContainersManager {
             guard let postDict = i as? NSDictionary,
                 let container = Container(dict: postDict) else { continue }
             tmpContainers.append(container)
+    
+            if container.isStarted() {
+                workingContainers.append(container)
+            } else {
+                stoppedContainers.append(container)
+            }
+            
+            if let _ = favouriteContainersMap[container.id.value] {
+                favouriteContainers.append(container)
+            }
         }
         return tmpContainers
     }
