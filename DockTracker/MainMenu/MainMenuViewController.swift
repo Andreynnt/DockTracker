@@ -47,19 +47,19 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     
     @objc func handleTapOnFavourite(_ sender: UITapGestureRecognizer) {
         containersToSend = ContainersManager.shared().favouriteContainers
-        section = ContainersSection.favourite
+        section = ContainersSection.Favourite
         performSegue(withIdentifier: segueToContainersView, sender: self)
     }
     
     @objc func handleTapOnWorking(_ sender: UITapGestureRecognizer) {
         containersToSend = ContainersManager.shared().workingContainers
-        section = ContainersSection.working
+        section = ContainersSection.Working
         performSegue(withIdentifier: segueToContainersView, sender: self)
     }
     
     @objc func handleTapOnStopped(_ sender: UITapGestureRecognizer) {
         containersToSend = ContainersManager.shared().stoppedContainers
-        section = ContainersSection.stopped
+        section = ContainersSection.Stopped
         performSegue(withIdentifier: segueToContainersView, sender: self)
     }
     

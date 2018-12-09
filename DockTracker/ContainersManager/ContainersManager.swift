@@ -145,11 +145,11 @@ class ContainersManager {
     func changeIsFavouriteInSection(section: ContainersSection?, at num: Int, to value: Bool) {
         if let section = section {
             switch section {
-            case .stopped:
+            case .Stopped:
                 self.stoppedContainers[num].isFavourite = value
-            case .working:
+            case .Working:
                 self.workingContainers[num].isFavourite = value
-            case .favourite:
+            case .Favourite:
                 return
             }
         }

@@ -9,7 +9,7 @@
 import Foundation
 
 enum ContainersSection {
-    case stopped
-    case working
-    case favourite
+    case Stopped
+    case Working
+    case Favourite
 }
