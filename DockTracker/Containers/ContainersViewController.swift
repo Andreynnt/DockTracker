@@ -64,16 +64,17 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         performSegue(withIdentifier: "containers-container", sender: self)
     }
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+        -> UISwipeActionsConfiguration? {
         let favourite = importantAction(at: indexPath)
         let delete = deleteAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [delete, favourite])
     }
     
     func importantAction(at indexPath: IndexPath) -> UIContextualAction {
-        //print("Name is = \(self.containers[indexPath.row].name.value) and fav = \(self.containers[indexPath.row].isFavourite)")
         if self.containers[indexPath.row].isFavourite {
-            let action = UIContextualAction(style: .normal, title: "Delete from imporatant") { (action, _, completion) in
+            let style = section == ContainersSection.Favourite ? UIContextualAction.Style.destructive : UIContextualAction.Style.normal
+            let action = UIContextualAction(style: style, title: "Delete from imporatant") { (action, _, completion) in
                 self.containers[indexPath.row].isFavourite = false
                 ContainersManager.shared().deleteFromFavourites(container: self.containers[indexPath.row], section: self.section, num: indexPath.row)
                 action.backgroundColor = UIColor.green
@@ -85,7 +86,8 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         }
         let action = UIContextualAction(style: .normal, title: "Add to imporatant") { (action, _, completion) in
             self.containers[indexPath.row].isFavourite = true
-            ContainersManager.shared().addToFavourite(container: self.containers[indexPath.row], section: self.section, num: indexPath.row)
+            ContainersManager.shared().addToFavourite(container: self.containers[indexPath.row],
+                                                      section: self.section, num: indexPath.row)
             action.backgroundColor = UIColor.green
             completion(true)
         }
@@ -98,13 +100,12 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
             let container = self.containers[indexPath.row]
             self.containers.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            //print("Name is = \(container.name.value) and fav = \(container.isFavourite)")
-            //print("Name is = \(container.name.value) and fav = \(container.isFavourite)")
             if container.isFavourite {
                 ContainersManager.shared().deleteFromFavourites(container: container, section: self.section, num: indexPath.row)
+            } else {
+                ContainersManager.shared().deleteCommonContainerFromArray(at: indexPath.row, section: self.section)
             }
-            //TO DO
-            self.deleteContainerFromServer()
+            self.deleteContainerFromServer(id: container.id.value)
             action.backgroundColor = UIColor.red
             completion(true)
         }
@@ -124,8 +125,19 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
 
-    func deleteContainerFromServer() {
-        
+    func deleteContainerFromServer(id: String) {
+        guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
+        let urlString = savedUrl + "/containers/\(id)"
+        let url = URL(string: urlString)!
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "DELETE"
+
+        URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+        }.resume()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection num: Int) -> Int {

@@ -29,11 +29,8 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad")
         fetchedResultsController.delegate = self
-        
-        favouriteAmountLabel.text = String(ContainersManager.shared().favouriteContainers.count)
-        workingAmountLabel.text = String(ContainersManager.shared().workingContainers.count)
-        stoppedAmountLabel.text = String(ContainersManager.shared().stoppedContainers.count)
         
         let tapFavourite = UITapGestureRecognizer(target: self, action: #selector(handleTapOnFavourite))
         favouriteSection.addGestureRecognizer(tapFavourite)
@@ -43,6 +40,12 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
         
         let tapStopped = UITapGestureRecognizer(target: self, action: #selector(handleTapOnStopped))
         stoppedSection.addGestureRecognizer(tapStopped)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        favouriteAmountLabel.text = String(ContainersManager.shared().favouriteContainers.count)
+        workingAmountLabel.text = String(ContainersManager.shared().workingContainers.count)
+        stoppedAmountLabel.text = String(ContainersManager.shared().stoppedContainers.count)
     }
     
     @objc func handleTapOnFavourite(_ sender: UITapGestureRecognizer) {

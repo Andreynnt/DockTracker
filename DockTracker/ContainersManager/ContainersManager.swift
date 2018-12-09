@@ -155,4 +155,17 @@ class ContainersManager {
         }
     }
     
+    func deleteCommonContainerFromArray(at position: Int, section: ContainersSection?) {
+        if let section = section {
+            switch section {
+            case .Stopped:
+                stoppedContainers.remove(at: position)
+            case .Working:
+                workingContainers.remove(at: position)
+            case .Favourite:
+                return
+            }
+        }
+    }
+    
 }
