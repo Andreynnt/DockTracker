@@ -24,6 +24,9 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     var noStoppedContainers = false
 
     var containers = [Container]()
+    
+    //секция, из которой попали в эту вьюху
+    var section: ContainersSection?
 
     lazy var refresher: UIRefreshControl = {
         let refreshControll = UIRefreshControl()
@@ -67,45 +70,39 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         return UISwipeActionsConfiguration(actions: [delete, favourite])
     }
     
-    func importantAction(at: IndexPath) -> UIContextualAction {
-        var selectedContainer = containers[at.row]
-        if selectedContainer.isFavourite {
+    func importantAction(at indexPath: IndexPath) -> UIContextualAction {
+        //print("Name is = \(self.containers[indexPath.row].name.value) and fav = \(self.containers[indexPath.row].isFavourite)")
+        if self.containers[indexPath.row].isFavourite {
             let action = UIContextualAction(style: .normal, title: "Delete from imporatant") { (action, _, completion) in
-                self.deleteFromCoreData(container: selectedContainer)
-                selectedContainer.isFavourite = false
-                ContainersManager.shared().deleteFromFavourite(container: selectedContainer)
+                self.containers[indexPath.row].isFavourite = false
+                ContainersManager.shared().deleteFromFavourites(container: self.containers[indexPath.row], section: self.section, num: indexPath.row)
                 action.backgroundColor = UIColor.green
                 completion(true)
+                //если мы в избранном, то удалять строчку
             }
             action.backgroundColor = UIColor.green
             return action
         }
         let action = UIContextualAction(style: .normal, title: "Add to imporatant") { (action, _, completion) in
-            self.saveToCoreData(container: selectedContainer)
-            selectedContainer.isFavourite = true
-            ContainersManager.shared().addToFavourite(container: selectedContainer)
+            self.containers[indexPath.row].isFavourite = true
+            ContainersManager.shared().addToFavourite(container: self.containers[indexPath.row], section: self.section, num: indexPath.row)
             action.backgroundColor = UIColor.green
             completion(true)
         }
         action.backgroundColor = UIColor.green
         return action
     }
-    
-    func saveToCoreData(container: Container) {
-        let managedObject = FavouriteContainerCoreData()
-        managedObject.id = container.id.value
-        CoreDataManager.instance.saveContext()
-    }
 
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: "Delete") { (action, _, completion) in
             let container = self.containers[indexPath.row]
-            if container.isFavourite {
-                ContainersManager.shared().deleteFromFavourite(container: container)
-                self.deleteFromCoreData(container: container)
-            }
             self.containers.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            //print("Name is = \(container.name.value) and fav = \(container.isFavourite)")
+            //print("Name is = \(container.name.value) and fav = \(container.isFavourite)")
+            if container.isFavourite {
+                ContainersManager.shared().deleteFromFavourites(container: container, section: self.section, num: indexPath.row)
+            }
             //TO DO
             self.deleteContainerFromServer()
             action.backgroundColor = UIColor.red
@@ -113,21 +110,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         }
         return action
     }
-    
-    func deleteFromCoreData(container: Container) {
-        //очень долго, O(n)
-        let containers = self.fetchController.fetchedObjects as! [FavouriteContainerCoreData]
-        for (index, item) in containers.enumerated() {
-            if let id = item.id {
-                if id == container.id.value {
-                    let objectToDelete = self.fetchController.fetchedObjects?[index] as! NSManagedObject
-                    CoreDataManager.instance.managedObjectContext.delete(objectToDelete)
-                    CoreDataManager.instance.saveContext()
-                }
-            }
-        }
-    }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "containers-container" {
             let containerView = segue.destination as! ContainerViewController

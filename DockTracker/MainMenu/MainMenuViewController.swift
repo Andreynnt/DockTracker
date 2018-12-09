@@ -20,16 +20,17 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     @IBOutlet weak var stoppedAmountLabel: UILabel!
     
     let segueToContainersView = "menu-containers"
+    var section: ContainersSection?
     
     //он уже выполнил fetch, поэтому можем спокойно работать
     var fetchedResultsController = ContainersManager.shared().fetchedResultsController
-    
     var favouriteContainers = [FavouriteContainerCoreData]()
     var containersToSend = [Container]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchedResultsController.delegate = self
+        
         favouriteAmountLabel.text = String(ContainersManager.shared().favouriteContainers.count)
         workingAmountLabel.text = String(ContainersManager.shared().workingContainers.count)
         stoppedAmountLabel.text = String(ContainersManager.shared().stoppedContainers.count)
@@ -46,16 +47,19 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     
     @objc func handleTapOnFavourite(_ sender: UITapGestureRecognizer) {
         containersToSend = ContainersManager.shared().favouriteContainers
+        section = ContainersSection.favourite
         performSegue(withIdentifier: segueToContainersView, sender: self)
     }
     
     @objc func handleTapOnWorking(_ sender: UITapGestureRecognizer) {
         containersToSend = ContainersManager.shared().workingContainers
+        section = ContainersSection.working
         performSegue(withIdentifier: segueToContainersView, sender: self)
     }
     
     @objc func handleTapOnStopped(_ sender: UITapGestureRecognizer) {
         containersToSend = ContainersManager.shared().stoppedContainers
+        section = ContainersSection.stopped
         performSegue(withIdentifier: segueToContainersView, sender: self)
     }
     
@@ -63,6 +67,7 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
         if segue.identifier == segueToContainersView {
             let containerView = segue.destination as! ContainersViewController
             containerView.fetchController = self.fetchedResultsController
+            containerView.section = section
             containerView.containers = containersToSend
         }
     }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 class ContainersManager {
 
@@ -27,6 +28,7 @@ class ContainersManager {
         return containersManager
     }()
     
+    //singleton
     class func shared() -> ContainersManager {
         return sharedContainersManager
     }
@@ -47,6 +49,7 @@ class ContainersManager {
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                 do {
+                    //избранные контейнеры берем из бд
                     try self.fetchedResultsController.performFetch()
                     let coreDataContainers = self.fetchedResultsController.fetchedObjects as! [FavouriteContainerCoreData]
                     self.fillFavouriteMap(coreDataContainers: coreDataContainers)
@@ -67,8 +70,8 @@ class ContainersManager {
             }.resume()
     }
     
-    //добавляем в хэш мапку избранные контейнеры, чтобы потом было быстро О(1) проверять
-    //есть ли контейнер в избранных
+    //добавляем в хэш мапку избранные контейнеры, чтобы потом в методе parseContainers()
+    //было быстро О(1) проверять есть ли контейнер в избранных
     func fillFavouriteMap(coreDataContainers: [FavouriteContainerCoreData]) {
         for container in coreDataContainers {
             if let id  = container.id {
@@ -88,34 +91,68 @@ class ContainersManager {
             guard let postDict = i as? NSDictionary,
                 var container = Container(dict: postDict) else { continue }
             tmpContainers.append(container)
-    
-            if container.isStarted() {
-                workingContainers.append(container)
-            } else {
-                stoppedContainers.append(container)
-            }
             
             if favouriteContainersMap[container.id.value] != nil {
                 container.isFavourite = true
                 favouriteContainers.append(container)
             }
+            
+            if container.isStarted() {
+                workingContainers.append(container)
+            } else {
+                stoppedContainers.append(container)
+            }
         }
         return tmpContainers
     }
     
-    func deleteFromFavourite(container: Container) {
-        for (index, favContainer) in favouriteContainers.enumerated() where favContainer.id.value == container.id.value {
-                favouriteContainers.remove(at: index)
-                return
+    func deleteFromFavourites(container: Container, section: ContainersSection?, num: Int) {
+        //очень долго, O(n)
+        let fetchedContainers = self.fetchedResultsController.fetchedObjects as! [FavouriteContainerCoreData]
+        for (index, item) in fetchedContainers.enumerated() {
+            if item.id != nil && item.id! == container.id.value {
+                let objectToDelete = self.fetchedResultsController.fetchedObjects?[index] as! NSManagedObject
+                CoreDataManager.instance.managedObjectContext.delete(objectToDelete)
+                CoreDataManager.instance.saveContext()
+            }
         }
+    
+        //удаление из массива favouriteContainers[]
+        for (index, favContainer) in favouriteContainers.enumerated() where favContainer.id.value == container.id.value {
+            favouriteContainers.remove(at: index)
+        }
+        
+        //удаление из хеш-мапы favouriteContainersMap
         if favouriteContainersMap[container.id.value] != nil {
             favouriteContainersMap.removeValue(forKey: container.id.value)
         }
+        
+        changeIsFavouriteInSection(section: section, at: num, to: false)
     }
     
-    func addToFavourite(container: Container) {
+    func addToFavourite(container: Container, section: ContainersSection?, num: Int) {
+        let managedObject = FavouriteContainerCoreData()
+        managedObject.id = container.id.value
+        CoreDataManager.instance.saveContext()
+
+        changeIsFavouriteInSection(section: section, at: num, to: true)
         favouriteContainersMap[container.id.value] = true
         favouriteContainers.append(container)
     }
-
+    
+    //меняем значение isFavourite в stoppedContainers[] либо workingContainers[]
+    //необходимо сделать, тк эти массивы потом передаются из MainMenu в ContainersViewController
+    func changeIsFavouriteInSection(section: ContainersSection?, at num: Int, to value: Bool) {
+        if let section = section {
+            switch section {
+            case .stopped:
+                self.stoppedContainers[num].isFavourite = value
+            case .working:
+                self.workingContainers[num].isFavourite = value
+            case .favourite:
+                return
+            }
+        }
+    }
+    
 }
