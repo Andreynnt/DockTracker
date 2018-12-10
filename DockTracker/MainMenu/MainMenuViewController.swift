@@ -29,7 +29,6 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad")
         fetchedResultsController.delegate = self
         
         let tapFavourite = UITapGestureRecognizer(target: self, action: #selector(handleTapOnFavourite))
