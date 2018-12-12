@@ -38,12 +38,7 @@ class StackTableCell: UITableViewCell {
     func fillCell(with tuple: (name: String, amount: Int)) {
         imageNameTitle.text = tuple.name
         containersAmountLabel.text = String(tuple.amount)
-        stateImage.image = UIImage(named: "play")
-//        if container.isStarted() {
-//            stateImage.image = UIImage(named:"green-circle.png")
-//        } else {
-//            stateImage.image = UIImage(named:"grey-circle.png")
-//        }
+        //stateImage.image = UIImage(named: "play")
     }
 
 }

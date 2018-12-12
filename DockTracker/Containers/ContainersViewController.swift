@@ -74,24 +74,25 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     func importantAction(at indexPath: IndexPath) -> UIContextualAction {
         if self.containers[indexPath.row].isFavourite {
             let style = section == ContainersSection.Favourite ? UIContextualAction.Style.destructive : UIContextualAction.Style.normal
-            let action = UIContextualAction(style: style, title: "Delete from imporatant") { (action, _, completion) in
+            let action = UIContextualAction(style: style, title: "Delete imporatant") { (action, _, completion) in
                 self.containers[indexPath.row].isFavourite = false
                 ContainersManager.shared().deleteFromFavourites(container: self.containers[indexPath.row], section: self.section, num: indexPath.row)
-                action.backgroundColor = UIColor.green
                 completion(true)
                 //если мы в избранном, то удалять строчку
             }
-            action.backgroundColor = UIColor.green
+            action.backgroundColor = Colors.secondColor
+            action.image = UIImage(named: "icons8-dislike-80")
+            action.backgroundColor = Colors.secondColor
             return action
         }
-        let action = UIContextualAction(style: .normal, title: "Add to imporatant") { (action, _, completion) in
+        let action = UIContextualAction(style: .normal, title: "Add imporatant") { (action, _, completion) in
             self.containers[indexPath.row].isFavourite = true
             ContainersManager.shared().addToFavourite(container: self.containers[indexPath.row],
                                                       section: self.section, num: indexPath.row)
-            action.backgroundColor = UIColor.green
             completion(true)
         }
-        action.backgroundColor = UIColor.green
+        action.image = UIImage(named: "icons8-heart-outline-90")
+        action.backgroundColor = Colors.secondColor
         return action
     }
 
@@ -106,9 +107,10 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
                 ContainersManager.shared().deleteCommonContainerFromArray(at: indexPath.row, section: self.section)
             }
             self.deleteContainerFromServer(id: container.id.value)
-            action.backgroundColor = UIColor.red
             completion(true)
         }
+        action.image = UIImage(named: "icons8-waste-70")
+        action.backgroundColor = Colors.thirdColor
         return action
     }
 

@@ -161,8 +161,7 @@ class ContainerViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.shadowImage = nil
-        navigationController?.navigationBar.tintColor = UIColor.black
+        navigationController?.navigationBar.tintColor = Colors.secondColor
         navigationController?.navigationBar.barTintColor = UIColor.white
     }
 

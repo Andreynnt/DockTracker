@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
           let navigationBarAppearace = UINavigationBar.appearance()
           navigationBarAppearace.isTranslucent = false
-    
+        UITabBar.appearance().tintColor = Colors.secondColor
         return true
     }
 

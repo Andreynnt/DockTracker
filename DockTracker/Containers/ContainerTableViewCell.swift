@@ -38,7 +38,7 @@ class ContainerTableViewCell: UITableViewCell {
     func fillCell(with container: Container) {
         nameLabel.text = container.name.value
         imageLabel.text = container.image.value
-        statusImage.image = UIImage(named: "play")
+        //statusImage.image = UIImage(named: "play")
         let parsedStatus = parseStatus(container.status.value)
         timeLabel.text = parsedStatus
     }

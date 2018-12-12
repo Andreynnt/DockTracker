@@ -19,6 +19,12 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     @IBOutlet weak var stoppedSection: UIView!
     @IBOutlet weak var stoppedAmountLabel: UILabel!
     
+    @IBOutlet weak var serverBackgroundCard: UIView!
+    @IBOutlet weak var serverName: UILabel!
+    @IBOutlet weak var serverStatus: UILabel!
+    
+    @IBOutlet weak var mainBackground: UIView!
+    
     let segueToContainersView = "menu-containers"
     var section: ContainersSection?
     
@@ -30,6 +36,14 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchedResultsController.delegate = self
+        mainBackground.backgroundColor = Colors.secondColor
+        makeBackgroundStylish(view: serverBackgroundCard)
+        makeBackgroundStylish(view: stoppedSection)
+        makeBackgroundStylish(view: workingSection)
+        makeBackgroundStylish(view: favouriteSection)
+        serverName.textColor = Colors.secondColor
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
         
         let tapFavourite = UITapGestureRecognizer(target: self, action: #selector(handleTapOnFavourite))
         favouriteSection.addGestureRecognizer(tapFavourite)
@@ -39,12 +53,18 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
         
         let tapStopped = UITapGestureRecognizer(target: self, action: #selector(handleTapOnStopped))
         stoppedSection.addGestureRecognizer(tapStopped)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         favouriteAmountLabel.text = String(ContainersManager.shared().favouriteContainers.count)
         workingAmountLabel.text = String(ContainersManager.shared().workingContainers.count)
         stoppedAmountLabel.text = String(ContainersManager.shared().stoppedContainers.count)
+        
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.shadowImage = nil
+        navigationController?.navigationBar.tintColor = Colors.secondColor
+        navigationController?.navigationBar.barTintColor = UIColor.white
     }
     
     @objc func handleTapOnFavourite(_ sender: UITapGestureRecognizer) {
@@ -72,6 +92,16 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
             containerView.section = section
             containerView.containers = containersToSend
         }
+    }
+    
+    func makeBackgroundStylish(view: UIView) {
+        view.backgroundColor = UIColor.white
+        view.layer.cornerRadius = 10.0
+        view.layer.masksToBounds = false
+        view.layer.shadowColor = UIColor.darkGray.cgColor
+        view.layer.shadowRadius = 5
+        view.layer.shadowOpacity = 0.6
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
