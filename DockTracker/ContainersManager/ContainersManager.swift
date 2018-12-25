@@ -175,4 +175,16 @@ class ContainersManager {
         }
     }
     
+    func addCommonContainerToArray(container: Container, section: ContainersSection?) {
+        if let section = section {
+            switch section {
+            case .Stopped:
+                stoppedContainers.append(container)
+            case .Working:
+                workingContainers.append(container)
+            case .Favourite:
+                return
+            }
+        }
+    }
 }

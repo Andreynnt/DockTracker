@@ -16,6 +16,8 @@ class ContainerViewController: UIViewController {
     @IBOutlet var mainBackground: UIView!
     @IBOutlet var containerTopCard: UIView!
     @IBOutlet weak var topBackgroundCard: UIView!
+    var section: ContainersSection?
+    var containerNum = 0
 
     //menu
     @IBOutlet weak var buttonsWrapperCard: UIView!
@@ -67,6 +69,8 @@ class ContainerViewController: UIViewController {
         let viewController = storyboard.instantiateViewController(withIdentifier:
             "ContainerControlViewController") as! ContainerControlViewController
         viewController.container = self.container
+        viewController.containerNum = self.containerNum
+        viewController.section = self.section
         self.addViewToTableCard(viewController: viewController)
         viewController.view.isHidden = true
         return viewController

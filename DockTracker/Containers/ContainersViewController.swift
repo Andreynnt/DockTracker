@@ -118,6 +118,8 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         if segue.identifier == "containers-container" {
             let containerView = segue.destination as! ContainerViewController
             containerView.container = selectedContainer
+            containerView.section = section
+            containerView.containerNum = containerNum
         }
     }
 

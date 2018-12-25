@@ -12,6 +12,8 @@ class ContainerControlViewController: UIViewController {
 
     var container: Container?
     var isRequestingBackend = false
+    var section: ContainersSection?
+    var containerNum = 0
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var statusLabel: UILabel!
@@ -19,7 +21,6 @@ class ContainerControlViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         func makeButtonStylish(_ button: UIButton!) {
             button.setTitleColor(UIColor.white, for: .normal)
             button.layer.cornerRadius = 10
