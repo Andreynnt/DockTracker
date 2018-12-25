@@ -13,20 +13,20 @@ protocol CellDelegate: class {
 }
 
 class ContainerDataCell: UITableViewCell {
-
-    @IBOutlet weak var name: UILabel!
-    @IBOutlet weak var value: UILabel!
     @IBOutlet weak var button: UIButton!
-
+    private weak var name: UILabel?
+    private weak var value: UITextView?
+    
     weak var delegate: CellDelegate?
     var needHideText = false
     var fullTextIsShown = false
 
     var shortText: String?
     var fullText: String?
-    let maxLength = 31
-
+    var containerParameter: СontainerParameter?
+    
     override func awakeFromNib() {
+        self.clipsToBounds = true
         super.awakeFromNib()
     }
 
@@ -35,34 +35,57 @@ class ContainerDataCell: UITableViewCell {
     }
 
     func fillCell(with containerParameter: СontainerParameter) {
-        self.name.text = containerParameter.name
-        self.value.text = containerParameter.value
-        fullText = containerParameter.value
-
-        if containerParameter.value.count > maxLength {
-            needHideText = true
-            shortText = String(containerParameter.value.prefix(maxLength))
-            shortText! += "..."
-            value.text = shortText
-            return
+        self.containerParameter = containerParameter
+        if name == nil {
+            let label = UILabel(frame: CGRect(x: 14, y: 7, width: bounds.width - 30, height: 25))
+            addSubview(label)
+            label.font = UIFont(name: "Montserrat-Regular", size: 15)
+            name = label
         }
 
+        if value == nil {
+            //text view, потому что в label текст прыгает, тк он всегда в центре по вертикали
+            let textView = UITextView(frame: CGRect(x: 10, y: 30, width: bounds.width - 50, height: 30))
+            addSubview(textView)
+            textView.font = UIFont(name: "Montserrat-Regular", size: 15)
+            textView.textColor = UIColor.lightGray
+            textView.isUserInteractionEnabled = false
+            textView.isEditable = false
+            textView.isSelectable = false
+            value = textView
+        }
+        
+        name?.text = containerParameter.name
+        value?.text = containerParameter.value
+        fullText = containerParameter.value
+
+        if containerParameter.value.count > containerParameter.maxLineLength {
+            needHideText = true
+            shortText = String(containerParameter.value.prefix(containerParameter.maxLineLength))
+            shortText! += "..."
+            value?.text = shortText
+            return
+        }
         button.isHidden = true
-        value.text = fullText
+        value?.text = fullText
     }
 
     func changeText() {
         if fullTextIsShown {
-            value.text = shortText
-        } else {
-            value.text = fullText
+            return
         }
+        if var frame = value?.frame {
+            guard let containerParameter = containerParameter else { return }
+            frame.size.height = CGFloat(containerParameter.fullHeight)
+            value?.frame = frame
+        }
+        value?.text = fullText
+        button.isHidden = true
         fullTextIsShown = !fullTextIsShown
-        delegate?.contentDidChange()
     }
 
     @IBAction func clickMoreButton(_ sender: UIButton) {
-        changeText()
+        //changeText()
     }
 
 }

@@ -59,6 +59,7 @@ extension Container {
     init?(dict: NSDictionary) {
         if let image = dict["Image"] as? String {
             self.image.value = image
+            self.image.setup()
         }
 
         if let names = dict["Names"] as? [String] {
@@ -66,23 +67,29 @@ extension Container {
             if var name = names.first {
                 name.remove(at: name.startIndex)
                 self.name.value = name
+                self.name.setup()
             }
         }
         if let state = dict["State"] as? String {
             self.state.value = state
+            self.state.setup()
         }
         if let id = dict["Id"] as? String {
             self.id.value = id
+            self.id.setup()
         }
         if let imageId = dict["ImageID"] as? String {
             self.imageId.value = imageId
+            self.imageId.setup()
         }
 
         if let status = dict["Status"] as? String {
             self.status.value = status
+            self.status.setup()
         }
         if let command = dict["Command"] as? String {
             self.command.value = command
+            self.command.setup()
         }
         setParametersArray()
     }
