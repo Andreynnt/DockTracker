@@ -12,7 +12,7 @@ struct СontainerParameter {
     var name: String = ""
     var value: String = ""
 
-    var maxLineLength = 33
+    var maxLineLength = 34
     var shortHeight = 70
     var fullHeight = 70
     var isCompact = true

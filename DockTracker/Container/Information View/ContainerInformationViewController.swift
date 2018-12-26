@@ -30,8 +30,6 @@ class ContainerInformationViewController: UIViewController, UITableViewDataSourc
         cell.fillCell(with: parameter)
         cell.delegate = self
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.button.tag = indexPath.row
-        cell.button.addTarget(self, action: #selector(showFull), for: .touchUpInside)
         return cell
     }
     
@@ -40,9 +38,19 @@ class ContainerInformationViewController: UIViewController, UITableViewDataSourc
         return parameter.isCompact ? CGFloat(parameter.shortHeight) : CGFloat(parameter.fullHeight)
     }
     
-    @objc func showFull(sender: UIButton) {
+    func showFull(indexPath: IndexPath) {
         tableView.beginUpdates()
-        let indexPath = IndexPath(row: sender.tag, section: 0)
+        containerParameters[indexPath.row].isCompact = false
+        if let cell = tableView.cellForRow(at: indexPath) as? ContainerDataCell {
+            UIView.animate(withDuration: 0.25) {
+                cell.changeText()
+            }
+        }
+        tableView.endUpdates()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.beginUpdates()
         containerParameters[indexPath.row].isCompact = false
         if let cell = tableView.cellForRow(at: indexPath) as? ContainerDataCell {
             UIView.animate(withDuration: 0.25) {

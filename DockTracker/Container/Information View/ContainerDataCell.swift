@@ -45,7 +45,7 @@ class ContainerDataCell: UITableViewCell {
 
         if value == nil {
             //text view, потому что в label текст прыгает, тк он всегда в центре по вертикали
-            let textView = UITextView(frame: CGRect(x: 10, y: 30, width: bounds.width - 50, height: 30))
+            let textView = UITextView(frame: CGRect(x: 10, y: 30, width: bounds.width - 45, height: 30))
             addSubview(textView)
             textView.font = UIFont(name: "Montserrat-Regular", size: 15)
             textView.textColor = UIColor.lightGray
@@ -77,6 +77,7 @@ class ContainerDataCell: UITableViewCell {
         if var frame = value?.frame {
             guard let containerParameter = containerParameter else { return }
             frame.size.height = CGFloat(containerParameter.fullHeight)
+            frame.size.width += 25
             value?.frame = frame
         }
         value?.text = fullText
