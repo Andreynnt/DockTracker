@@ -25,6 +25,7 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     
     @IBOutlet weak var mainBackground: UIView!
     
+    @IBOutlet weak var logo: UILabel!
     let segueToContainersView = "menu-containers"
     var section: ContainersSection?
     
@@ -41,7 +42,12 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
         makeBackgroundStylish(view: stoppedSection)
         makeBackgroundStylish(view: workingSection)
         makeBackgroundStylish(view: favouriteSection)
+        logo.textColor = UIColor.white
         serverName.textColor = Colors.secondColor
+        serverStatus.textColor = Colors.thirdColor
+        stoppedAmountLabel.textColor = Colors.thirdColor
+        workingAmountLabel.textColor = Colors.thirdColor
+        favouriteAmountLabel.textColor = Colors.thirdColor
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         
