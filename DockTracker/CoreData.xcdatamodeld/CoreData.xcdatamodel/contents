@@ -3,7 +3,12 @@
     <entity name="FavouriteContainerCoreData" representedClassName="FavouriteContainerCoreData" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="ServerCoreData" representedClassName="ServerCoreData" syncable="YES" codeGenerationType="class">
+        <attribute name="port" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="server" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="FavouriteContainerCoreData" positionX="-54" positionY="-9" width="128" height="60"/>
+        <element name="ServerCoreData" positionX="-45" positionY="9" width="128" height="75"/>
     </elements>
 </model>

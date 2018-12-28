@@ -54,7 +54,7 @@ class ContainersManager {
                     let coreDataContainers = self.fetchedResultsController.fetchedObjects as! [FavouriteContainerCoreData]
                     self.fillFavouriteMap(coreDataContainers: coreDataContainers)
                 } catch {
-                    print(error)
+                    print("fetchedResultsController.performFetch() error")
                 }
                 self.containers = self.parseContainers(from: json)
                 callback?(self.containers)
