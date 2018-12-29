@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ServerViewControllerProtocol: class {
+    func addServer(server: ServerCoreData) -> Void
+    func changeServer(server: ServerCoreData) -> Void
+}
+
 class ServerViewController: UIViewController {
     @IBOutlet weak var domainField: UITextField!
     @IBOutlet weak var portField: UITextField!
@@ -17,25 +22,64 @@ class ServerViewController: UIViewController {
         domain: "Domain",
         port: "Port"
     )
+    
+    var server: ServerCoreData?
     var domain: String?
     var port: Int16?
+    var delegate: ServerViewControllerProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         domainField.delegate = self
         portField.delegate = self
+        saveButton.tintColor = UIColor.lightGray
+        domainField.addTarget(self, action: #selector(domainChanged), for: .editingChanged)
+        portField.addTarget(self, action: #selector(portChanged), for: .editingChanged)
+        if let server = server {
+            port = server.port
+            domain = server.server
+            domainField.text = server.server
+            portField.text = String(server.port)
+            return
+        }
         domainField.placeholder = placeholders.domain
         portField.placeholder = placeholders.port
-        saveButton.tintColor = UIColor.lightGray
+    }
+    
+    @objc func domainChanged() {
+        print("@objc func domainChanged() {")
+        self.domain = getParsedDomain()
+    }
+    
+    @objc func portChanged() {
+         print("@objc func portChanged() {")
+        self.port = getParsedPort()
     }
     
     @IBAction func save(_ sender: UIBarButtonItem) {
         if !canSave() {
             return
         }
+        if let savedServer = self.server {
+            changeServer(server: savedServer)
+        } else {
+            createServer()
+        }
+        _ = navigationController?.popViewController(animated: true)
+    }
+    
+    func createServer() {
         let server = ServerCoreData()
         server.server = domain!
         server.port = port!
+        delegate?.addServer(server: server)
+        CoreDataManager.instance.saveContext()
+    }
+    
+    func changeServer(server: ServerCoreData) {
+        server.server = domain!
+        server.port = port!
+        delegate?.changeServer(server: server)
         CoreDataManager.instance.saveContext()
     }
     
@@ -55,7 +99,10 @@ class ServerViewController: UIViewController {
             if domain != nil {
                 saveButton.tintColor = UIColor.blue
             }
-            return Int16(port)!
+            if let parsedPort = Int16(port) {
+                return parsedPort
+            }
+            return 80
         }
         saveButton.tintColor = UIColor.lightGray
         return nil
@@ -80,11 +127,4 @@ extension ServerViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        port = getParsedPort()
-        domain = getParsedDomain()
-    }
 }
-
-

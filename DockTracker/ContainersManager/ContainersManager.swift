@@ -107,7 +107,6 @@ class ContainersManager {
     }
     
     func deleteFromFavourites(container: Container, section: ContainersSection?, num: Int) {
-        
         let predicate = NSPredicate(format: "id = %@", container.id.value)
         fetchedResultsController.fetchRequest.predicate = predicate
         do {
@@ -115,7 +114,6 @@ class ContainersManager {
         } catch {
             print("fetchedResultsController.performFetch() error")
         }
-        
         if let objects = self.fetchedResultsController.fetchedObjects {
             if !objects.isEmpty {
                 let objectToDelete = objects[0] as! FavouriteContainerCoreData
@@ -123,17 +121,14 @@ class ContainersManager {
                 CoreDataManager.instance.saveContext()
             }
         }
-        
         //удаление из массива favouriteContainers[]
         for (index, favContainer) in favouriteContainers.enumerated() where favContainer.id.value == container.id.value {
             favouriteContainers.remove(at: index)
         }
-        
         //удаление из хеш-мапы favouriteContainersMap
         if favouriteContainersMap[container.id.value] != nil {
             favouriteContainersMap.removeValue(forKey: container.id.value)
         }
-        
         changeIsFavouriteInSection(section: section, at: num, to: false)
     }
     

@@ -11,6 +11,8 @@ import UIKit
 class SettingsTableViewCell: UITableViewCell {
     @IBOutlet weak var port: UILabel!
     @IBOutlet weak var domain: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var infoButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,18 +21,20 @@ class SettingsTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     func fill(server: ServerCoreData) {
-        port.text = String(server.port)
+        port.text = ":" + String(server.port)
         domain.text = server.server
+        statusLabel.textColor = Colors.thirdColor
+        statusLabel.text = "Active"
     }
     
     func fill(with text: String) {
         domain.text = text
+        statusLabel.text = ""
         port.text = ""
+        infoButton.isHidden = true
     }
-
+    
 }

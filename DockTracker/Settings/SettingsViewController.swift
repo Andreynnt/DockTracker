@@ -21,26 +21,24 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         var fields: [Any]
         var footer: String!
     }
-    let buttonSectionPosition = 0
-    let serversSectionPosition = 1
+    let buttonSectionPosition = 1
+    let serversSectionPosition = 0
     var segueToServer = "openServer"
+    var clickedServerNum: Int?
     
     var sections = [Sections]()
     var servers: [ServerCoreData]?
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         servers = fetchServers()
         tableView.dataSource = self
         tableView.delegate = self
-        sections = [
-            Sections(name: "", fields: ["Add new"], footer: "")
-        ]
         if let servers = servers {
-            let section =  Sections(name: "Servers", fields: servers, footer: "Tracked servers")
+            let section = Sections(name: "Servers", fields: servers, footer: "Tracked servers")
             sections.append(section)
         }
+        sections.append(Sections(name: "", fields: ["Add new"], footer: ""))
     }
     
     func fetchServers() -> [ServerCoreData]? {
@@ -64,15 +62,22 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath) as! SettingsTableViewCell
-        if let servers = servers, !servers.isEmpty {
+        if let servers = sections[indexPath.section].fields as? [ServerCoreData], !servers.isEmpty {
              let server = servers[indexPath.row]
              cell.fill(server: server)
+             cell.infoButton.tag = indexPath.row
+             cell.infoButton.addTarget(self, action: #selector(clickOninfo), for: .touchUpInside)
              return cell
         }
         cell.fill(with: "No servers")
         return cell
     }
 
+    @objc func clickOninfo(sender: UIButton) {
+        clickedServerNum = sender.tag
+        performSegue(withIdentifier: segueToServer, sender: self)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection num: Int) -> Int {
         if num == serversSectionPosition && servers!.isEmpty {
             return 1
@@ -96,5 +101,64 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         if indexPath.section == buttonSectionPosition {
                 performSegue(withIdentifier: segueToServer, sender: self)
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == segueToServer {
+            let viewController = segue.destination as! ServerViewController
+            viewController.delegate = self
+            if let serverNum  = clickedServerNum {
+                viewController.server = self.servers?[serverNum]
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == buttonSectionPosition {
+            return 45
+        }
+        return 60
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+        -> UISwipeActionsConfiguration? {
+            let delete = deleteAction(at: indexPath)
+            return UISwipeActionsConfiguration(actions: [delete])
+    }
+    
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, _, completion) in
+            guard let servers = self.servers else { return }
+            let server = servers[indexPath.row]
+            self.sections[indexPath.section].fields.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            CoreDataManager.instance.managedObjectContext.delete(server)
+            CoreDataManager.instance.saveContext()
+            completion(true)
+        }
+        action.image = UIImage(named: "icons8-waste-70")
+        action.backgroundColor = Colors.thirdColor
+        return action
+    }
+}
+
+extension SettingsViewController: ServerViewControllerProtocol {
+    func addServer(server: ServerCoreData) {
+        let position = self.sections[serversSectionPosition].fields.count
+        self.sections[serversSectionPosition].fields.append(server)
+        self.servers?.append(server)
+        tableView.beginUpdates()
+        tableView.insertRows(at: [IndexPath(row: position, section: serversSectionPosition)], with: .automatic)
+        tableView.endUpdates()
+    }
+    
+    func changeServer(server: ServerCoreData) {
+        guard let row = clickedServerNum else { return }
+        self.sections[serversSectionPosition].fields[row] = server
+        self.servers?[row] = server
+        tableView.beginUpdates()
+        tableView.reloadRows(at: [IndexPath(row: row, section: serversSectionPosition)], with: .automatic)
+        tableView.endUpdates()
+        clickedServerNum = nil
     }
 }
