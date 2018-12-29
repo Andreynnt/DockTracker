@@ -18,7 +18,6 @@ class ContainerControlViewController: UIViewController {
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var statusLabel: UILabel!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         func makeButtonStylish(_ button: UIButton!) {
@@ -36,7 +35,6 @@ class ContainerControlViewController: UIViewController {
         makeButtonStylish(startButton)
         makeButtonStylish(stopButton)
     }
-
     
     func colorButtons() {
         if container?.state.value == "running" {
@@ -68,8 +66,6 @@ class ContainerControlViewController: UIViewController {
         }
         startContainer(with: container!.name.value)
     }
-    
-
     
     func startContainer(with name: String) {
         guard let savedUrl = UserSettings.getUrl(at: 0) else { return }

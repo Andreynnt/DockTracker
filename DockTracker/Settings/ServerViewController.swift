@@ -9,8 +9,8 @@
 import UIKit
 
 protocol ServerViewControllerProtocol: class {
-    func addServer(server: ServerCoreData) -> Void
-    func changeServer(server: ServerCoreData) -> Void
+    func addServer(server: ServerCoreData)
+    func changeServer(server: ServerCoreData)
 }
 
 class ServerViewController: UIViewController {
@@ -47,12 +47,10 @@ class ServerViewController: UIViewController {
     }
     
     @objc func domainChanged() {
-        print("@objc func domainChanged() {")
         self.domain = getParsedDomain()
     }
     
     @objc func portChanged() {
-         print("@objc func portChanged() {")
         self.port = getParsedPort()
     }
     

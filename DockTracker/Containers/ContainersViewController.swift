@@ -74,7 +74,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     func importantAction(at indexPath: IndexPath) -> UIContextualAction {
         if self.containers[indexPath.row].isFavourite {
             let style = section == ContainersSection.Favourite ? UIContextualAction.Style.destructive : UIContextualAction.Style.normal
-            let action = UIContextualAction(style: style, title: "Delete imporatant") { (action, _, completion) in
+            let action = UIContextualAction(style: style, title: "Delete imporatant") { (_, _, completion) in
                 self.containers[indexPath.row].isFavourite = false
                 ContainersManager.shared().deleteFromFavourites(container: self.containers[indexPath.row], section: self.section, num: indexPath.row)
                 completion(true)
@@ -85,7 +85,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
             action.backgroundColor = Colors.secondColor
             return action
         }
-        let action = UIContextualAction(style: .normal, title: "Add imporatant") { (action, _, completion) in
+        let action = UIContextualAction(style: .normal, title: "Add imporatant") { (_, _, completion) in
             self.containers[indexPath.row].isFavourite = true
             ContainersManager.shared().addToFavourite(container: self.containers[indexPath.row],
                                                       section: self.section, num: indexPath.row)
@@ -97,7 +97,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
-        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, _, completion) in
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completion) in
             let container = self.containers[indexPath.row]
             self.containers.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -136,7 +136,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "DELETE"
 
-        URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+        URLSession.shared.dataTask(with: urlRequest) { (_, _, error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
