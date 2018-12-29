@@ -56,10 +56,15 @@ class SettingsViewController: UIViewController {
         if segue.identifier == segueToServer {
             let viewController = segue.destination as! ServerViewController
             viewController.delegate = self
-            if let serverNum  = clickedServerNum {
+            if let serverNum = clickedServerNum {
                 viewController.server = (self.sections[serversSectionPosition].fields[serverNum] as! ServerCoreData)
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        clickedServerNum = nil
+        navigationController?.navigationBar.tintColor = Colors.secondColor
     }
     
     func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
@@ -76,6 +81,7 @@ class SettingsViewController: UIViewController {
         action.backgroundColor = Colors.thirdColor
         return action
     }
+    
 }
 
 // MARK: table view delegates & data source
@@ -104,7 +110,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == buttonSectionPosition {
-            return 45
+            return 40
         }
         return 60
     }

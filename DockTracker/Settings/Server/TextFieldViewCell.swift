@@ -1,5 +1,5 @@
 //
-//  SettingsTableViewCell.swift
+//  TextFieldViewCell.swift
 //  DockTracker
 //
 //  Created by Андрей Бабков on 29/12/2018.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class ServerTableViewCell: UITableViewCell {
+class TextFieldViewCell: UITableViewCell {
     @IBOutlet weak var textField: UITextField!
     
-    var callback: (() -> Void)?
+    var positionNum: Int?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,20 +21,23 @@ class ServerTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
     
-    func fill(with text: String) {
+    func fill(with text: String, num: Int) {
         textField.placeholder = text
+        positionNum = num
     }
     
+    func fill(with text: String) {
+        textField.text = text
+    }
+
 }
 
-extension ServerTableViewCell: UITextFieldDelegate {
+extension TextFieldViewCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        callback?()
         return true
     }
 }

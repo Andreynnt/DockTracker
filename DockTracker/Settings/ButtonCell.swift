@@ -13,6 +13,7 @@ class ButtonCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        addTitle.textColor = Colors.secondColor
         // Initialization code
     }
     
