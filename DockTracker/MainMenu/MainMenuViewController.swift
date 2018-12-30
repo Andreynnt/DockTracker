@@ -34,6 +34,9 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
     var favouriteContainers = [FavouriteContainerCoreData]()
     var containersToSend = [Container]()
     
+    var server: ServerCoreData?
+    var noServers = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchedResultsController.delegate = self
@@ -62,7 +65,23 @@ class MainMenuViewController: UIViewController, NSFetchedResultsControllerDelega
         
     }
     
+    func fillMainWrapper() {
+        guard let serv = ServerService.shared().preferredServer else {
+            serverName.text = "No servers"
+            serverStatus.text = ""
+            return
+        }
+        
+        serverName.text = serv.server ?? ""
+        if ServerService.shared().preferredServerIsConnected {
+            serverStatus.text = "Connected"
+        } else {
+            serverStatus.text = "Couldn't connect"
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
+        fillMainWrapper()
         favouriteAmountLabel.text = String(ContainersManager.shared().favouriteContainers.count)
         workingAmountLabel.text = String(ContainersManager.shared().workingContainers.count)
         stoppedAmountLabel.text = String(ContainersManager.shared().stoppedContainers.count)

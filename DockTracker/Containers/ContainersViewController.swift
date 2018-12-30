@@ -18,30 +18,18 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
     var containerNum = 0
     var runningSectionNum = 0
     var stoppedSectionNum = 1
-
     var reloadButtonIsBlocked = false
     var noRunningContainers = false
     var noStoppedContainers = false
-
     var containers = [Container]()
-    
     //секция, из которой попали в эту вьюху
     var section: ContainersSection?
-
-    lazy var refresher: UIRefreshControl = {
-        let refreshControll = UIRefreshControl()
-        refreshControll.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
-        return refreshControll
-    }()
-    
     var fetchController = ContainersManager.shared().fetchedResultsController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //UserSettings.addUrl(domain: "andrey-babkov.ru", port: 5555)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.refreshControl = refresher
         tableView.separatorStyle = .none
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.white
@@ -127,6 +115,7 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
         if let index = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: index, animated: true)
         }
+        navigationController?.navigationBar.isTranslucent = false
     }
 
     func deleteContainerFromServer(id: String) {
@@ -157,25 +146,5 @@ class ContainersViewController: UIViewController, UITableViewDataSource, UITable
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
-    }
-
-    func updateTable() {
-        self.tableView.reloadData()
-    }
-
-    func clearData() {
-        containers.removeAll()
-    }
-
-    @objc
-    func refreshTable() {
-        ContainersManager.shared().getContainers(mainCallback: {() -> Void in
-            self.updateTable()
-            self.refresher.endRefreshing()
-        }, callback: { (_ containers: [Container]) -> Void in
-            self.clearData()
-            //TO DO DOEST WORKING
-            //self.fillContainers(containers)
-        })
     }
 }

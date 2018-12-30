@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DockTracker/Settings/Server/ServerViewController.swift"
-            timestampString = "567812914.712984"
+            filePath = "DockTracker/ServerService.swift"
+            timestampString = "567898461.241763"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "getStatus(server:callback:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

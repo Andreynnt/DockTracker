@@ -21,12 +21,6 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
     let cellIdentifier = "containerCell"
     var selectedId: String!
 
-    lazy var refresher: UIRefreshControl = {
-        let refreshControll = UIRefreshControl()
-        refreshControll.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
-        return refreshControll
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         UserSettings.clearUrls()
@@ -34,7 +28,6 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         UserSettings.addUrl(domain: "mail.ru", port: 88)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.refreshControl = refresher
         tableView.separatorStyle = .none
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.white
@@ -109,14 +102,4 @@ class StacksViewController: UIViewController, UITableViewDataSource, UITableView
         return 70
     }
 
-    @objc
-    func refreshTable() {
-        ContainersManager.shared().getContainers(mainCallback: {() -> Void in
-            self.updateTable()
-            self.refresher.endRefreshing()
-        }, callback: { (_ containers: [Container]) -> Void in
-            self.clearData()
-            self.fillStacksView(containers)
-        })
-    }
 }

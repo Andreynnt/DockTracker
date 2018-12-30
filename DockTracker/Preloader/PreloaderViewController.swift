@@ -10,14 +10,17 @@ import UIKit
 import FLAnimatedImage
 
 class PreloaderViewController: UIViewController {
-    let segueName = "openApp"
-
+    
+    enum Segues: String {
+        case openApp
+    }
+  
     @IBOutlet var preloaderView: FLAnimatedImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         fillPreloader()
-        fillContainersManager()
+        setup()
     }
 
     func fillPreloader() {
@@ -29,10 +32,30 @@ class PreloaderViewController: UIViewController {
         }
     }
 
-    func fillContainersManager() {
-        let manager = ContainersManager.shared()
-        manager.getContainers(mainCallback: {() -> Void in
-            self.performSegue(withIdentifier: self.segueName, sender: self)
-        })
+    func setup() {
+        let service = ServerService.shared()
+        
+        guard let preferredServer = service.preferredServer else {
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: Segues.openApp.rawValue, sender: self)
+            }
+            return
+        }
+    
+        service.getStatus(server: preferredServer) { (canConnect, text) -> Void in
+            if canConnect {
+                service.preferredServerIsConnected = true
+                let url = service.getUrl(server: preferredServer)
+                ContainersManager.shared().getContainers(url: url, mainCallback: {() -> Void in
+                    self.performSegue(withIdentifier: Segues.openApp.rawValue, sender: self)
+                })
+                return
+            }
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: Segues.openApp.rawValue, sender: self)
+            }
+        }
     }
+    
+    
 }

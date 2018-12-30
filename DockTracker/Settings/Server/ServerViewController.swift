@@ -84,6 +84,7 @@ class ServerViewController: UIViewController {
         let server = ServerCoreData()
         server.server = domain!
         server.port = port!
+        server.selected = false
         server.webProtocol = webProtocol
         delegate?.addServer(server: server)
         CoreDataManager.instance.saveContext()

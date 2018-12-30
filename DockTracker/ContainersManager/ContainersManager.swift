@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 
 class ContainersManager {
-
     //to do. Сейчас используется только для Stacks View
     var containers = [Container]()
     
@@ -35,12 +34,19 @@ class ContainersManager {
 
     private init() { }
     
-    func getContainers(mainCallback: (() -> Void)? = nil, callback: ((_ containers: [Container]) -> Void)? = nil) {
-        guard let savedUrl = UserSettings.getUrl(at: 0) else { return }
-        let urlString = savedUrl + "/containers/json?all=1"
-        guard let url = URL(string: urlString) else { return }
-
-        URLSession.shared.dataTask(with: url) { (data, _, error) in
+    func clearAll() {
+        containers = [Container]()
+        stoppedContainers = [Container]()
+        workingContainers = [Container]()
+        favouriteContainersMap = [String: Bool]()
+        favouriteContainers = [Container]()
+    }
+    
+    func getContainers(url: String, mainCallback: (() -> Void)? = nil, callback: ((_ containers: [Container]) -> Void)? = nil) {
+        let urlString = url + "/containers/json?all=1"
+        guard let parsedUrl = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: parsedUrl) { (data, _, error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
