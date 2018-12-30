@@ -218,5 +218,3 @@ extension SettingsViewController: SettingsTableViewCellDelegate {
         clickedServerNum = tappedIndexPath.row
     }
 }
-
-

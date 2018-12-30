@@ -12,7 +12,7 @@ import FLAnimatedImage
 class PreloaderViewController: UIViewController {
     
     enum Segues: String {
-        case openApp
+        case OpenApp
     }
   
     @IBOutlet var preloaderView: FLAnimatedImageView!
@@ -37,7 +37,7 @@ class PreloaderViewController: UIViewController {
         
         guard let preferredServer = service.preferredServer else {
             DispatchQueue.main.async {
-                self.performSegue(withIdentifier: Segues.openApp.rawValue, sender: self)
+                self.performSegue(withIdentifier: Segues.OpenApp.rawValue, sender: self)
             }
             return
         }
@@ -47,12 +47,12 @@ class PreloaderViewController: UIViewController {
                 service.preferredServerIsConnected = true
                 let url = service.getUrl(server: preferredServer)
                 ContainersManager.shared().getContainers(url: url, mainCallback: {() -> Void in
-                    self.performSegue(withIdentifier: Segues.openApp.rawValue, sender: self)
+                    self.performSegue(withIdentifier: Segues.OpenApp.rawValue, sender: self)
                 })
                 return
             }
             DispatchQueue.main.async {
-                self.performSegue(withIdentifier: Segues.openApp.rawValue, sender: self)
+                self.performSegue(withIdentifier: Segues.OpenApp.rawValue, sender: self)
             }
         }
     }
